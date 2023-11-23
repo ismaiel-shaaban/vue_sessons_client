@@ -551,7 +551,13 @@
                             }}:</span>
                             <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">
                                 <label class="position-relative mb-1">
-                                {{ carsHistory[0]?carsHistory[0].name :'' }}
+                                {{ carsHistory[0]?
+                                 $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name 
+                                
+                                :'' 
+                                
+                                }}
+                              
                             </label>
                             </span>
                         </label>

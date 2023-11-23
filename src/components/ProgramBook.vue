@@ -113,7 +113,7 @@
                                         {{ $t("programs.cardInfo.trip.allowedWeight") }}
                                     </label>
                                     <span class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                        {{ +flightTrip.allowedWeight  }}
+                                        {{ flightTrip.allowedWeight  }}
                                     </span>
                                 </div>
                             </div>
@@ -554,7 +554,12 @@
                             <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.transport')
                             }}:</span>
                             <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">
-                                {{ carsHistory[0]?carsHistory[0].name :'' }}
+                                {{ carsHistory[0]?
+                                 $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name 
+                                
+                                :'' 
+                                
+                                }}
                             </span>
                         </label>
                     </div>
@@ -1139,11 +1144,14 @@ onMounted(async () => {
         })
     if (programDetails.value.includes_flight == "1") {
         axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
+            console.log(flightTrip ,"flightTrip flightTrip flightTrip");
+            console.log(programDetails.value ,"programDetails.value");
             flightTrip.value = data.data.filter((ele) => {
                 if (
                     ele.flightNumber == programDetails.value.flight_number &&
                     ele.departureDate >= new Date().toLocaleDateString("en-CA")
                 ) {
+                    console.log(ele,"ismaaaaaaaaaaaaa");
                     return ele;
                 }
             })[0];

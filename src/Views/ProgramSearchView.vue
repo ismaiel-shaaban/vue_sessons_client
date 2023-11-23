@@ -298,6 +298,7 @@ const search = async () => {
         loading.value = true
         allPrograms.value.forEach(el => {
             if (searchInfo.value.includeFlight == '1') {
+                console.log(el,'el');
                 if (el.return_airline == searchInfo.value.city && // <-- program destination
                     el.from_date >= searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
                     el.includes_flight == searchInfo.value.includeFlight
