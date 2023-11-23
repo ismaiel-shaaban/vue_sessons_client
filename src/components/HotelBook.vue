@@ -293,20 +293,20 @@
                         </label>
                     </div>
                     <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
-                        <label class="w-100" v-if="prices.has('4')">
+                        <label class="w-100" v-if="prices.has('5')">
                             <span class="d-block mb-1 fw-semibold">
                                 {{ $t("programs.search.childWithBedPrice") }}:
                             </span>
                             <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(hotelDetails.child_no_bed_price) }}
+                                {{ USDollar.format(hotelDetails.child_with_bed_price) }}
                             </span>
                         </label>
-                        <label class="w-100" v-if="prices.has('5')">
+                        <label class="w-100" v-if="prices.has('4')">
                             <span class="d-block mb-1 fw-semibold">
                                 {{ $t("programs.search.childWithoutBedPrice") }}:
                             </span>
                             <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(hotelDetails.child_with_bed_price) }}
+                                {{ USDollar.format(hotelDetails.child_no_bed_price) }}
                             </span>
                         </label>
                         <!-- <label class="w-100" v-if="prices.has('6')">

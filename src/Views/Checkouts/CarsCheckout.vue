@@ -76,7 +76,7 @@
                 <tr>
                     <td  class="text-capitalize">
                         <!-- {{ bookInfo.Type_id }} -->
-                        روفر
+                        روفر{{ bookInfo.Type_id }}
                     </td>
                     <td>
                         {{ bookInfo.with_driver === '0' ? 'Without Driver' : 'With Driver' }}

@@ -271,6 +271,7 @@ const search = () => {
         allHotels.value.forEach(el => {
             if (el.city == searchInfo.value.city &&
                 el.status == '0') {
+                    console.log(el,'tttttttttttttttttt');
                 searchResults.value.push(el)
                 loading.value = false
                 forward.value = '2'
