@@ -523,21 +523,25 @@
                                         <td class="text-center">
                                             {{ index + 1 }}
                                         </td>
-                                        <td v-if="city">
-                                        {{ city }}
+                                        <td >
+                                            {{
+                                                $i18n.locale === "en"
+                                                ? item.city?.name_en
+                                                : item.city?.name
+                                            }}
                                         </td>
                                         <td>
                                             {{
                                                 $i18n.locale === "en"
-                                                ? hotel_name_english
-                                                : hotel_name_arabic
+                                                ? item.hotel_name_english
+                                                : item.hotel_name_arabic
                                             }}
                                         </td>
                                         <td>
-                                            {{ newcheckIn }}
+                                            {{item.startDate }}
                                         </td>
                                         <td>
-                                            {{ $props.searchInfo.includeFlight == 1 ? checkOut : newcheckOut }}
+                                            {{ item.endDate }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -715,6 +719,7 @@ import i18n from '../i18n';
 import router from "../router";
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import { addDays, format ,parse } from 'date-fns';
 
 let image = ref(null);
 const uploadImageTomodal = (img)=>{
@@ -730,6 +735,7 @@ const loading = ref(false)
 const props = defineProps(["programId", "searchResults", "searchInfo", "cities", 'countries']);
 const programDetails = ref({});
 const allCities = ref([]);
+let allCitiesIds = ref([]);
 let carsHistory = ref('')
 const randomCode = ref('')
 const persons = ref({
@@ -1207,15 +1213,25 @@ onMounted(async () => {
         .then((data) => {
             // console.log(data);
             if (typeof data.data === "object") {
-                allCities.value = data.data;
-                console.log(allCities.value);
+                allCities.value = data.data
+                allCitiesIds = allCities.value.map((ele)=>{
+                    return ele.city_name
+                }); 
+
                 axios.get("https://seasonreal.seasonsge.com/cities-view")
                     .then(data => {
+                        let startDateObject1 =newcheckIn.value 
+                        let endDateObject ;
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
+                            const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
+                            endDateObject = addDays(startDateObject, el.num_of_nights-1);
+                            el.startDate =startDateObject1
+                            el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
+                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 1), 'MM/dd/yyyy')).value  
+                            endDateObject =''
                         });
                     })
-                // console.log(data);
 
                 // if (props.searchInfo.includeFlight == '0') {
                 //     allCities.value.map(el => {
