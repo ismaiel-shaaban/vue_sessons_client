@@ -54,12 +54,14 @@
                             <td>{{ USDollar.format(item.net) }}</td>
                             <td class="d-flex align-items-center flex-column gap-2">
                                 <router-link class="d-block text-center text-decoration-none"
-                                    :to="{ name: 'Agents Programs Checkout', params: { lang: $i18n.locale, id: item.id, with: 1 } }">
+                                    :to="{ name: 'Agents Programs Checkout', params: { lang: $i18n.locale, id: item.id, with: 1 } }"
+                                    @click="handleRouterLinkClick(item)">
                                     Export As PDF With Price
                                     <i class="fa-solid fa-share ms-1"></i>
                                 </router-link>
                                 <router-link class="d-block text-center text-decoration-none"
-                                    :to="{ name: 'Agents Programs Checkout', params: { lang: $i18n.locale, id: item.id, with: 2 } }">
+                                    :to="{ name: 'Agents Programs Checkout', params: { lang: $i18n.locale, id: item.id, with: 2 } }"
+                                    @click="handleRouterLinkClick(item)">
                                     Export As PDF Without Price
                                     <i class="fa-solid fa-share ms-1"></i>
                                 </router-link>
@@ -135,27 +137,38 @@ const getTotal = () => {
     // } else carsHistory.value.forEach(el => fullTotal.value += +el.net_amount)
 }
 
+const handleRouterLinkClick = (item) => {
+
+
+sessionStorage.setItem('Tax' , item.tax)
+sessionStorage.setItem('myNetTotal', item.net_amount);
+sessionStorage.setItem('Total', item.total);
+sessionStorage.setItem('agentDicount', item.user.discount );
+
+
+}
+
 onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("login")) {
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://api.seasonsge.com/br-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     programsHistory.value = data.data
                     programsHistory.value.forEach(el => {
-                        axios.get("https://api.seasonsge.com/cities-view")
+                        axios.get("https://seasonreal.seasonsge.com/cities-view")
                             .then(data => {
                                 el.city = data.data.filter((ele) => ele.id == el.City)[0];
                             })
                         el.persons_count = +el.number_of_adults + +el.number_of_children + +el.number_of_infants
                         const country = new FormData()
                         country.append("country_id", el.country)
-                        axios.post(`https://api.seasonsge.com/country-by-id`, country)
+                        axios.post(`https://seasonreal.seasonsge.com/country-by-id`, country)
                             .then(data => {
                                 el.countryName = data.data.country.name_en
                             })
-                        axios.get("https://api.seasonsge.com/usersview").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
                             el.user = data.data.filter((el) => el.id == userId.id)[0];
                         });
                     })

@@ -8,7 +8,7 @@
                         @change="previewAvatar($event)" />
                     <label for="img-input">
                         <img class="main-avatar rounded-circle" width="250" height="250"
-                            :src="`https://api.seasonsge.com/images/Agents/${updateUserInfo.img}`" alt="" />
+                            :src="`https://seasonreal.seasonsge.com/images/Agents/${updateUserInfo.img}`" alt="" />
                     </label>
                 </div>
                 <div class="user-info flex-fill">
@@ -120,7 +120,7 @@ const submitUpdate = () => {
         formData.append("balance", updateUserInfo.value.balance)
 
         loader.value = true
-        axios.post("https://api.seasonsge.com/user-edit", formData).then((response) => {
+        axios.post("https://seasonreal.seasonsge.com/user-edit", formData).then((response) => {
             if (response.data.success) {
                 uploadBytes(storageRef(storage, `avatar/${updateUserInfo.value.id}`), inputFile).then((snapshot) => {
                     console.log(snapshot);
@@ -138,7 +138,7 @@ const submitUpdate = () => {
 
 onMounted(async () => {
     loader.value = true
-    await axios.get("https://api.seasonsge.com/usersview").then(data => {
+    await axios.get("https://seasonreal.seasonsge.com/usersview").then(data => {
         data.data.forEach(el => {
             if (el.id == route.params.userId) {
                 updateUserInfo.value = {

@@ -26,7 +26,7 @@ import axios from 'axios';
 const termsAndConditions = ref([])
 
 onMounted(async () => {
-    await axios.get('https://api.seasonsge.com/termsAndConditions')
+    await axios.get('https://seasonreal.seasonsge.com/termsAndConditions')
         .then(data => {
             termsAndConditions.value = data.data[0]
         })

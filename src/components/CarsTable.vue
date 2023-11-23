@@ -13,7 +13,7 @@
                     <div class="col-lg-4 col-md-6 mb-4" v-for="(item, index) in viewCars" :key="index">
                         <div class="box rounded-1 overflow-hidden d-flex flex-column h-100">
                             <div class="img-cont">
-                                <img class="img-fluid" :src="`https://api.seasonsge.com/images/Agents/${item.type_image}`" alt="">
+                                <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${item.type_image}`" alt="">
                             </div>
                             <div class="info p-3 flex-fill d-flex flex-column justify-content-between">
                                 <h2 class="text-capitalize">{{ $i18n.locale === 'en' ? item.name_en : item.name }}</h2>
@@ -51,7 +51,7 @@ onMounted(async () => {
     loading.value = true ;
    
     
-    await axios.get('https://api.seasonsge.com/carview').then((data)=>{
+    await axios.get('https://seasonreal.seasonsge.com/carview').then((data)=>{
     viewCars.value = data.data;
     console.log('cars data are');
     console.log(viewCars.value);
@@ -59,14 +59,14 @@ onMounted(async () => {
     })
     
 
-    await axios.get('https://api.seasonsge.com/cars-type-view')
+    await axios.get('https://seasonreal.seasonsge.com/cars-type-view')
         .then(data => {
             // debugger
             // console.log(data.data)
             carType.value = data.data
             loading.value = false
         })
-    await axios.get('https://api.seasonsge.com/cars-view')
+    await axios.get('https://seasonreal.seasonsge.com/cars-view')
         .then(data => {
             // debugger
             carInfo.value = data.data

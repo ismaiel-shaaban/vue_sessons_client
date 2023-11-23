@@ -4,7 +4,7 @@
             :class="`container d-flex align-items-center justify-content-between gap-4 ${router.currentRoute.value.path !== `/${$i18n.locale}` ? 'not-home' : ''}`">
             <div class="logo">
                 <router-link class="text-decoration-none" :to="`/${$i18n.locale}`">
-                    <img :src="`https://api.seasonsge.com/${info.logo}`" alt="">
+                    <img :src="`https://seasonreal.seasonsge.com/${info.logo}`" alt="">
                 </router-link>
             </div>
             <ul :class="`links d-flex align-items-center justify-content-between gap-5 w-100 ${openMenu ? 'open' : ''}`">
@@ -37,7 +37,7 @@
             <div v-if="Object.keys(userInfo).length > 0" type="button" @click="openAccountBox = !openAccountBox"
                 class="account position-relative text-black fw-bold d-flex align-items-center gap-2 ms-auto text-decoration-none">
                 <img width="50" height="50" style="object-fit: cover;" class="rounded-circle"
-                    :src="`https://api.seasonsge.com/images/Agents/${userInfo.img}`" alt="">
+                    :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" alt="">
                 <i class="fa-solid fa-chevron-down"></i>
 
                 <div v-if="openAccountBox" class="box rounded-2 d-flex flex-column bg-white">
@@ -105,14 +105,14 @@ const logOut = () => {
 }
 
 onMounted(async () => {
-    await axios.get('https://api.seasonsge.com/info')
+    await axios.get('https://seasonreal.seasonsge.com/info')
         .then(data => {
             info.value = data.data[0]
         })
     if (localStorage.getItem("clientLogin")) {
         const login = JSON.parse(localStorage.getItem("clientLogin"))
         if (login.success) {
-            axios.get("https://api.seasonsge.com/usersview")
+            axios.get("https://seasonreal.seasonsge.com/usersview")
                 .then(data => {
                     userInfo.value = data.data.filter(el => el.id == login.id)[0]
                 })

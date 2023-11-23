@@ -7,7 +7,7 @@
                 :dir="$i18n.locale === 'en' ? 'ltr' : 'rtl'">
                 <Slide class="min-vh-100 w-100 m-0" v-for="(item, index) in slider" :key="index">
                     <div class="carousel__item w-100 h-100 m-0">
-                        <img :src="`https://api.seasonsge.com/images/settings/${item.image}`" class="d-block w-100 vh-100"
+                        <img :src="`https://seasonreal.seasonsge.com/images/settings/${item.image}`" class="d-block w-100 vh-100"
                             style="object-fit: cover;" alt="..." />
                         <div :class="`container text-${$i18n.locale === 'en' ? 'start' : 'end'}`">
                             {{ item["title-en"] }}
@@ -203,12 +203,12 @@ const search = async () => {
     validation.value.$validate()
     if (!validation.value.$error) {
         loading.value = true
-        await axios.get(`https://api.seasonsge.com/boking-search?booking_code=${searchForm.value.searchInput}`)
+        await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${searchForm.value.searchInput}`)
             .then(data => {
                 console.log(data);
                 if (data.data.bookings.length > 0) {
                     const carsBooking = data.data.bookings[0]
-                    axios.get(`https://api.seasonsge.com/user-data?user_id=${carsBooking.account_owner}`)
+                    axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${carsBooking.account_owner}`)
                         .then(data => {
                             loading.value = false
                             if (data.data.type === 2) {
@@ -225,7 +225,7 @@ const search = async () => {
                         })
                 } else if (data.data.bookingss.length > 0) {
                     const flightsBooking = data.data.bookingss[0]
-                    axios.get(`https://api.seasonsge.com/user-data?user_id=${flightsBooking.email}`)
+                    axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${flightsBooking.email}`)
                         .then(data => {
                             loading.value = false
                             if (data.data.type === 2) {
@@ -242,7 +242,7 @@ const search = async () => {
                         })
                 } else if (data.data.hotel_reservations.length > 0) {
                     const HotelsBooking = data.data.hotel_reservations[0]
-                    axios.get(`https://api.seasonsge.com/user-data?user_id=${HotelsBooking.account_name}`)
+                    axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${HotelsBooking.account_name}`)
                         .then(data => {
                             loading.value = false
                             if (data.data.type === 2) {
@@ -259,7 +259,7 @@ const search = async () => {
                         })
                 } else if (data.data.reservations.length > 0) {
                     const ProgramsBooking = data.data.reservations[0]
-                    axios.get(`https://api.seasonsge.com/user-data?user_id=${ProgramsBooking.email}`)
+                    axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${ProgramsBooking.email}`)
                         .then(data => {
                             loading.value = false
                             if (data.data.type === 2) {
@@ -293,15 +293,15 @@ watch(aboutPopup, (newVal) => {
 
 onMounted(async () => {
     await axios
-        .get("https://api.seasonsge.com/slider")
+        .get("https://seasonreal.seasonsge.com/slider")
         .then((data) => {
             slider.value = data.data;
         })
     await axios
-        .get("https://api.seasonsge.com/info")
+        .get("https://seasonreal.seasonsge.com/info")
         .then((data) => {
             info.value = data.data[0]
-            document.getElementById("favicon").href = `https://api.seasonsge.com/${data.data[0].favicon}`;
+            document.getElementById("favicon").href = `https://seasonreal.seasonsge.com/${data.data[0].favicon}`;
         })
     setTimeout(() => {
         newPopup.value = true;

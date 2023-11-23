@@ -11,7 +11,7 @@
             </h1>
             <div class="inner d-flex py-5 gap-4">
                 <div class="img-cont w-50">
-                    <img class="img-fluid" :src="`https://api.seasonsge.com/images/Agents/${viewCarId[0].type_image}`" alt="" />
+                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].type_image}`" alt="" />
                 </div>
                 <div class="car-info flex-fill">
                     <div class="d-flex gap-3">
@@ -242,7 +242,7 @@ onMounted(async () => {
 
     price();
     loading.value = true
-    await axios.get("https://api.seasonsge.com/cars-view").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/cars-view").then((data) => {
         // debugger
         // carInfo.value =data.data.find((el)=>+el.type_id === props.carId)
         data.data.filter(el => {
@@ -255,7 +255,7 @@ onMounted(async () => {
         })
         // console.log(data.data)
     });
-    await axios.get("https://api.seasonsge.com/cars-type-view").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
         data.data.filter(el => {
             if (el.id == props.carId) {
                 carInfo.value['car_name_en'] = el.name_en
@@ -265,7 +265,7 @@ onMounted(async () => {
             // console.log(carInfo.value)
         })
     });
-    await axios.get("https://api.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/info")
         .then(data => {
             social.value = data.data[0]
             // console.log(data)
@@ -356,13 +356,13 @@ const submission = async () => {
             const userId = JSON.parse(localStorage.getItem("clientLogin"))
             userInfo.value.account_owner = userId.id
             loading.value = true
-            await axios.post('https://api.seasonsge.com/car-order', userInfo.value)
+            await axios.post('https://seasonreal.seasonsge.com/car-order', userInfo.value)
                 .then(response => {
                     if (response.data.status === 'success') {
                         document.querySelector('.alert').classList.add("active")
                         randomCode.value = response.data.random_code
                         loading.value = false
-                        axios.get(`https://api.seasonsge.com/car-rr?id=${userId.id}`)
+                        axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {

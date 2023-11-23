@@ -64,7 +64,7 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("clientLogin")) {
         const userId = JSON.parse(localStorage.getItem("clientLogin"))
-        await axios.get(`https://api.seasonsge.com/hotel--rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/hotel--rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     hotelHistory.value = data.data

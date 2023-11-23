@@ -235,7 +235,7 @@ const searching = async () => {
                 }
             }
         })
-        await axios.get("https://api.seasonsge.com/airlines-view")
+        await axios.get("https://seasonreal.seasonsge.com/airlines-view")
             .then(data => {
                 if (data.data.success) {
                     searchResults.value.forEach(el => {
@@ -247,7 +247,7 @@ const searching = async () => {
                     loading.value = false
                 }
             })
-        await axios.get('https://api.seasonsge.com/viewAirports').then(data => {
+        await axios.get('https://seasonreal.seasonsge.com/viewAirports').then(data => {
             if (data.data.success) {
                 searchResults.value.forEach(el => {
                     el.from = data.data.data.filter(ele => el.fromAirport == ele.id)[0]
@@ -275,14 +275,14 @@ onMounted(async () => {
 returnTravelValue.value = sessionStorage.getItem('return') ? sessionStorage.getItem('return') : 1;
 console.log(returnTravelValue.value); 
     loading.value = true
-    await axios.get('https://api.seasonsge.com/viewAirports').then(data => {
+    await axios.get('https://seasonreal.seasonsge.com/viewAirports').then(data => {
         if (data.data.success) {
             airPorts.value = data.data.data
             loading.value = false
         }
     })
 
-    await axios.get("https://api.seasonsge.com/flights?all")
+    await axios.get("https://seasonreal.seasonsge.com/flights?all")
         .then(data => {
             allFlights.value = data.data
             console.log('iam all flights');

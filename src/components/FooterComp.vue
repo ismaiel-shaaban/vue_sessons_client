@@ -4,7 +4,7 @@
             <div class="footer-cont d-flex justify-content-between gap-5">
                 <div class="logo">
                     <router-link class="text-decoration-none" :to="`/${$i18n.locale}`">
-                        <img :src="`https://api.seasonsge.com/${info.logo}`" alt="">
+                        <img :src="`https://seasonreal.seasonsge.com/${info.logo}`" alt="">
                     </router-link>
                 </div>
                 <ul class="links d-flex gap-5">
@@ -80,7 +80,7 @@ const router = useRouter()
 const info = ref([])
 
 onMounted(async () => {
-    await axios.get("https://api.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/info")
         .then(data => {
             info.value = data.data[0]
         }).catch(error => {

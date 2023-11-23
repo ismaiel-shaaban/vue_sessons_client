@@ -86,7 +86,7 @@ const logout = () => {
 onMounted(async () => {
     if (localStorage.getItem("clientLogin")) {
         const login = JSON.parse(localStorage.getItem("clientLogin"))
-        await axios.get("https://api.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/usersview")
             .then(data => {
                 userData.value = data.data.filter(el => el.id == login.id)[0]
             })

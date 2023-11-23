@@ -59,12 +59,16 @@
                             <td>{{ USDollar.format(item.net_amount) }}</td>
                             <td class="d-flex align-items-center flex-column gap-2">
                                 <router-link class="d-block text-center text-decoration-none"
-                                    :to="{ name: 'Agents Cars Checkout', params: { lang: $i18n.locale, id: item.id, with: 1 } }">
+                                    :to="{ name: 'Agents Cars Checkout', params: { lang: $i18n.locale, id: item.id, with: 1 } }"
+                                    @click="handleRouterLinkClick(item)"
+                                    >
                                     Export As PDF With Price
                                     <i class="fa-solid fa-share ms-1"></i>
                                 </router-link>
                                 <router-link class="d-block text-center text-decoration-none"
-                                    :to="{ name: 'Agents Cars Checkout', params: { lang: $i18n.locale, id: item.id, with: 2 } }">
+                                    :to="{ name: 'Agents Cars Checkout', params: { lang: $i18n.locale, id: item.id, with: 2 } }"
+                                    @click="handleRouterLinkClick(item)"
+                                    >
                                     Export As PDF Without Price
                                     <i class="fa-solid fa-share ms-1"></i>
                                 </router-link>
@@ -129,22 +133,32 @@ const getTotal = () => {
     //     filterList.value.forEach(el => fullTotal.value += +el.net_amount)
     // } else carsHistory.value.forEach(el => fullTotal.value += +el.net_amount)
 }
+const handleRouterLinkClick = (item) => {
+
+
+    sessionStorage.setItem('Tax' , item.tax)
+    sessionStorage.setItem('myNetTotal', item.net_amount);
+    sessionStorage.setItem('Total', item.total);
+    sessionStorage.setItem('agentDicount', item.user.discount );
+    
+
+}
 
 onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("login")) {
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://api.seasonsge.com/car-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     carsHistory.value = data.data
                     carsHistory.value.forEach(ele => {
-                        axios.get("https://api.seasonsge.com/cars-type-view")
+                        axios.get("https://seasonreal.seasonsge.com/cars-type-view")
                             .then(data => {
                                 ele.carType = data.data.filter(el => el.id == +ele.type_id)[0]
                                 loading.value = false
                             })
-                        axios.get("https://api.seasonsge.com/usersview").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
                             ele.user = data.data.filter((el) => el.id == userId.id)[0];
                         });
                     })

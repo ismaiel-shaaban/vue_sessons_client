@@ -378,7 +378,7 @@ const exportToPDFWithout = () => {
 onMounted(async () => {
     if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
-        await axios.get("https://api.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/usersview")
             .then(data => {
                 userInfo.value = data.data.filter(el => el.id == login.id)[0]
             })
@@ -394,12 +394,12 @@ onMounted(async () => {
         }catch (e) {
 
         }
-        await axios.get("https://api.seasonsge.com/info")
+        await axios.get("https://seasonreal.seasonsge.com/info")
             .then(data => {
                 social.value = data.data[0]
             })
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://api.seasonsge.com/fli-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/fli-rr?id=${userId.id}`)
             .then(data => {
                 console.log(data);
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
@@ -414,19 +414,19 @@ onMounted(async () => {
                         type: bookInfo.value[`person${i}`].split('-')[1],
                     })
                 }
-                axios.get(`https://api.seasonsge.com/flights?flight_id=${bookInfo.value.flight_number}`)
+                axios.get(`https://seasonreal.seasonsge.com/flights?flight_id=${bookInfo.value.flight_number}`)
                     .then(data => {
                         console.log(data);
                         bookInfo.value.flight = data.data
                         const from = new FormData()
                         const to = new FormData()
                         from.append("id", bookInfo.value.flight.fromAirport)
-                        axios.post("https://api.seasonsge.com/viewAirportById", from)
+                        axios.post("https://seasonreal.seasonsge.com/viewAirportById", from)
                             .then(data => {
                                 bookInfo.value.flight.from = data.data.data
                             })
                         to.append("id", bookInfo.value.flight.toAirport)
-                        axios.post("https://api.seasonsge.com/viewAirportById", to)
+                        axios.post("https://seasonreal.seasonsge.com/viewAirportById", to)
                             .then(data => {
                                 bookInfo.value.flight.to = data.data.data
                             })
@@ -443,7 +443,7 @@ onMounted(async () => {
         url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
     } else {
         url.value = window.location.href
-        await axios.get(`https://api.seasonsge.com/boking-search?booking_code=${route.params.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
             .then(data => {
                 bookInfo.value = data.data.bookingss[0]
                 for (let i = 2; i <= 8; i++) {
@@ -456,24 +456,24 @@ onMounted(async () => {
                         type: bookInfo.value[`person${i}`].split('-')[1],
                     })
                 }
-                axios.get(`https://api.seasonsge.com/flights?flight_id=${bookInfo.value.flight_number}`)
+                axios.get(`https://seasonreal.seasonsge.com/flights?flight_id=${bookInfo.value.flight_number}`)
                     .then(data => {
                         console.log(data);
                         bookInfo.value.flight = data.data
                         const from = new FormData()
                         const to = new FormData()
                         from.append("id", bookInfo.value.flight.fromAirport)
-                        axios.post("https://api.seasonsge.com/viewAirportById", from)
+                        axios.post("https://seasonreal.seasonsge.com/viewAirportById", from)
                             .then(data => {
                                 bookInfo.value.flight.from = data.data.data
                             })
                         to.append("id", bookInfo.value.flight.toAirport)
-                        axios.post("https://api.seasonsge.com/viewAirportById", to)
+                        axios.post("https://seasonreal.seasonsge.com/viewAirportById", to)
                             .then(data => {
                                 bookInfo.value.flight.to = data.data.data
                             })
                     })
-                axios.get(`https://api.seasonsge.com/user-data?user_id=${bookInfo.value.email}`)
+                axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${bookInfo.value.email}`)
                     .then(data => {
                         userInfo.value = data.data
                     })

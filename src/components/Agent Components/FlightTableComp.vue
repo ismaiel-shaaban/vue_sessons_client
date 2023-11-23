@@ -31,7 +31,7 @@
                     <tr v-if="searchResults.length > 0 || suggestions.length > 0"
                         v-for="(item, index) in  searchResults.length > 0 ? searchResults : suggestions" :key="index">
                         <td v-if="item.airLine">
-                            <img width="100" :src="`https://api.seasonsge.com/images/${item.airLine.image}`" alt="">
+                            <img width="100" :src="`https://seasonreal.seasonsge.com/images/${item.airLine.image}`" alt="">
                         </td>
                         <td v-if="searchInfo.no_adults > 0">{{ USDollar.format(item.adultPrice) }}</td>
                         <td v-if="searchInfo.no_children > 0">{{ USDollar.format(item.childPrice) }}</td>
@@ -76,7 +76,7 @@
                                 <i class="fa-solid fa-plane"></i>
                                 Departure
                             </span>
-                            <img width="100" :src="`https://api.seasonsge.com/images/${item.airLine.image}`" alt="">
+                            <img width="100" :src="`https://seasonreal.seasonsge.com/images/${item.airLine.image}`" alt="">
                             <span class="airline d-block fw-bold text-capitalize">
                                 {{ $i18n.locale === 'en' ? item.airLine.name_en : item.airLine.name_ar }}
                             </span>
@@ -131,7 +131,7 @@
                                 <i class="fa-solid fa-plane" style="transform: rotate(180deg);"></i>
                                 Return
                             </span>
-                            <img width="100" :src="`https://api.seasonsge.com/images/${item.airLine.image}`" alt="">
+                            <img width="100" :src="`https://seasonreal.seasonsge.com/images/${item.airLine.image}`" alt="">
                             <span class="airline d-block fw-bold text-capitalize">
                                 {{ $i18n.locale === 'en' ? item.airLine.name_en : item.airLine.name_ar }}
                             </span>

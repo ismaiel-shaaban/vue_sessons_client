@@ -101,7 +101,7 @@
                 </span>
                 <div class="profile p-3 px-4 d-flex align-items-center gap-2" @click="activeTabs = '6'">
                     <img width="40" height="40" class="rounded-circle"
-                        :src="`https://api.seasonsge.com/images/Agents/${userData.img}`" alt="">
+                        :src="`https://seasonreal.seasonsge.com/images/Agents/${userData.img}`" alt="">
                     <h4 class="text-white mb-0">{{ userData.name }}</h4>
                 </div>
             </div>
@@ -209,7 +209,7 @@ onMounted(async () => {
             name: 'Agent Dashboard',
             params: { lang: i18n.global.locale.value, userId: login.id }
         })
-        await axios.get("https://api.seasonsge.com/usersview").then(data => {
+        await axios.get("https://seasonreal.seasonsge.com/usersview").then(data => {
             data.data.forEach(el => {
                 if (el.id == route.params.userId) {
                     userData.value = el

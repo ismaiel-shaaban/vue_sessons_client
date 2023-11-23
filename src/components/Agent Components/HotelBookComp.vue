@@ -3,7 +3,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content mt-5">
-      <img class="w-100" :src="`https://api.seasonsge.com/images/${image}`" alt="" />
+      <img class="w-100" :src="`https://seasonreal.seasonsge.com/images/${image}`" alt="" />
     </div>
   </div>
 </div>
@@ -23,7 +23,7 @@
                      <div v-if="imageLoop2.length > 0" class="col-xl-6 col-lg-4 col-md-12 col-sm-12">
                     <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class="pt-5 pb-5">
                     <slide v-for="img in imageLoop2" :key="img.id">
-                    <img @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://api.seasonsge.com/images/${img}`" alt="" />
+                    <img @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonreal.seasonsge.com/images/${img}`" alt="" />
 
                      </slide>
 
@@ -509,7 +509,7 @@ visibleButton.value = false;
         }
 
         if (userInfo.value.balance > hotelBooking.value.net_total) {
-            axios.post("https://api.seasonsge.com/new-hotel-booking", formData)
+            axios.post("https://seasonreal.seasonsge.com/new-hotel-booking", formData)
                 .then(response => {
                     if (response.data.success) {
                         updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(hotelBooking.value.net_total)
@@ -522,7 +522,7 @@ visibleButton.value = false;
                         balance.append("discount", userInfo.value.discount)
                         balance.append("balance", updatedBalance.value)
 
-                        axios.post("https://api.seasonsge.com/user-edit", balance)
+                        axios.post("https://seasonreal.seasonsge.com/user-edit", balance)
                             .then(userResponse => {
                                 if (userResponse.data.success) {
                                     document.querySelector(".alert-success").classList.add("active")
@@ -534,12 +534,12 @@ visibleButton.value = false;
                                         allRooms.append("id_hotel", randomCode.value)
                                         allRooms.append("room_type", el.roomType)
                                         allRooms.append("chile_room", `${el.childReservation},${el.childCount}`)
-                                        axios.post("https://api.seasonsge.com/add_hotel_room", allRooms)
+                                        axios.post("https://seasonreal.seasonsge.com/add_hotel_room", allRooms)
                                             .then(data => {
                                                 console.log(data);
                                             })
                                     })
-                                    axios.get(`https://api.seasonsge.com/hotel--rr?id=${userId.id}`)
+                                    axios.get(`https://seasonreal.seasonsge.com/hotel--rr?id=${userId.id}`)
                                         .then(data => {
                                             const bookId = data.data.pop()
                                             setTimeout(() => {
@@ -581,7 +581,7 @@ let imageLoop2 = ref([]);
 onMounted(async () => {
     CheckIn.value = localStorage.getItem('lang') == 'ar' ? "تاريخ الدخول" : 'checkIn';
     Checkout.value = localStorage.getItem('lang') == 'ar' ? "تاريخ الخروج" : 'checkOut';
-    await axios.get("https://api.seasonsge.com/all-hotel")
+    await axios.get("https://seasonreal.seasonsge.com/all-hotel")
         .then(data => {
             console.log('iam all data');
             imageData.value = data.data.data;
@@ -639,7 +639,7 @@ console.log(imageData.value)
     //     prices.value.add("6")
     // }
     // hotelBooking.value.total += +hotelDetails.value.price_per_infant * props.searchInfo.no_infants;
-    await axios.get("https://api.seasonsge.com/usersview").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
         userInfo.value = data.data.filter((el) => el.id == route.params.userId)[0];
         loading.value = false
     });
@@ -658,7 +658,7 @@ console.log(imageData.value)
     }
     // hotelBooking.value.agent_discount = (hotelBooking.value.total * userInfo.value.discount) / 100
     // hotelBooking.value.net_amount = 
-    await axios.get("https://api.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/info")
         .then(data => {
             social.value = data.data[0]
         })

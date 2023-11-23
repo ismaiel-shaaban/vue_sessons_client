@@ -17,7 +17,7 @@
                 storeIdOfProgramm(item)
                 ">
                     <div>
-                        <img class="img-fluid" :src="`https://api.seasonsge.com/upload/${item.main_image}`" alt="">
+                        <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/upload/${item.main_image}`" alt="">
                     </div>
                     <div class="info p-3 bg-white">
                         <h4 class="text-capitalize fw-bold mb-0" v-if="item.destination">
@@ -51,7 +51,7 @@ const storeIdOfProgramm = (item)=>{
 
 onMounted(async () => {
     allResults.value = [...props.searchResults]
-    await axios.get("https://api.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/cities-view")
         .then(data => {
             allResults.value.forEach(el => {
                 el.destination = data.data.filter(ele => ele.id === el.return_airline)[0]

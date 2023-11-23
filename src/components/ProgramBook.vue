@@ -3,7 +3,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-75" role="document">
     <div class="modal-content mt-5">
-      <img class="w-100 modalImage" :src="`https://seasonsge.com/api/upload/${image}`" alt="" />
+      <img class="w-100 modalImage" :src="`https://seasonsge.com/seasonreal/upload/${image}`" alt="" />
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
             <div style="margin-top: 150px;" v-if="programmsImages.length > 0" class="justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100" style="border: none;">
     <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
-        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/api/upload/${img}`" alt="" />
+        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
     </slide>
     <template #addons>
       <navigation />
@@ -306,7 +306,7 @@
                     <div  style="border: none;" :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'" v-if="$props.searchInfo.includeFlight != 1">
     <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100" style="border: none;">
     <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
-        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/api/upload/${img}`" alt="" />
+        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
     </slide>
     <template #addons>
       <navigation />
@@ -553,7 +553,9 @@
                         <label class="w-100">
                             <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.transport')
                             }}:</span>
-                            <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">{{ $props.searchInfo.includeFlight != 1 ? 'Land-Trip' : $t("programs.cardInfo.trip.flightLine") }}</span>
+                            <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">
+                                {{ carsHistory[0]?carsHistory[0].name :'' }}
+                            </span>
                         </label>
                     </div>
                     <div class="box d-flex gap-3 mt-3 flex-md-row flex-column">
@@ -723,6 +725,7 @@ const loading = ref(false)
 const props = defineProps(["programId", "searchResults", "searchInfo", "cities", 'countries']);
 const programDetails = ref({});
 const allCities = ref([]);
+let carsHistory = ref('')
 const randomCode = ref('')
 const persons = ref({
     infants: props.searchInfo.no_infants,
@@ -804,13 +807,13 @@ const submission = async () => {
     localStorage.setItem('flightNum' , programDetails.value.flight_number)
    /* let getImage;
     let postImage;
-    let getData =  await axios.get('https://api.seasonsge.com/program-booking');
+    let getData =  await axios.get('https://seasonreal.seasonsge.com/program-booking');
     if(getData.status == 200){
         getImage = getData.data;
        // console.log(getImage);
     }
     console.log('iam fetch');
-   await axios.post('https://api.seasonsge.com/program-booking' , {
+   await axios.post('https://seasonreal.seasonsge.com/program-booking' , {
         image_name: selectedImage.value ,
     
    }).then((data)=>{
@@ -858,11 +861,11 @@ const submission = async () => {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
                     tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
-                    axios.post("https://api.seasonsge.com/ticket-out", tickets)
+                    axios.post("https://seasonreal.seasonsge.com/ticket-out", tickets)
                         .then(data => {
                             console.log(data);
                         })
-                    await axios.post("https://api.seasonsge.com/program-booking", formData ,{
+                    await axios.post("https://seasonreal.seasonsge.com/program-booking", formData ,{
                         headers: {
                             "Content-Type": "multipart/form-data",
     }
@@ -880,13 +883,13 @@ const submission = async () => {
                                 allRooms.append("id_hotel", randomCode.value)
                                 allRooms.append("room_type", el.roomType)
                                 allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                                axios.post("https://api.seasonsge.com/program-room", allRooms)
+                                axios.post("https://seasonreal.seasonsge.com/program-room", allRooms)
                                     .then(data => {
                                         console.log(data);
                                     })
                             })
 
-                            axios.get(`https://api.seasonsge.com/br-rr?id=${userId.id}`)
+                            axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
                                 .then(data => {
                                     const bookId = data.data.pop()
                                     setTimeout(() => {
@@ -901,7 +904,7 @@ const submission = async () => {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
                     tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
-                    await axios.post("https://api.seasonsge.com/ticket-out", tickets)
+                    await axios.post("https://seasonreal.seasonsge.com/ticket-out", tickets)
                         .then(data => {
                             
                             console.log(data);
@@ -909,11 +912,11 @@ const submission = async () => {
                     const returnTickets = new FormData()
                     returnTickets.append("ticket_id", flightTrip.value.id)
                     returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets - bookingInfo.value.adults_count)
-                    await axios.post("https://api.seasonsge.com/return_ticket", returnTickets)
+                    await axios.post("https://seasonreal.seasonsge.com/return_ticket", returnTickets)
                         .then(data => {
                             console.log(data);
                         })
-                    await axios.post("https://api.seasonsge.com/program-booking", formData,{
+                    await axios.post("https://seasonreal.seasonsge.com/program-booking", formData,{
                         headers: {
                             "Content-Type": "multipart/form-data",
     }
@@ -930,12 +933,12 @@ const submission = async () => {
                                 allRooms.append("id_hotel", randomCode.value)
                                 allRooms.append("room_type", el.roomType)
                                 allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                                axios.post("https://api.seasonsge.com/program-room", allRooms)
+                                axios.post("https://seasonreal.seasonsge.com/program-room", allRooms)
                                     .then(data => {
                                         console.log(data);
                                     })
                             })
-                            axios.get(`https://api.seasonsge.com/br-rr?id=${userId.id}`)
+                            axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
                                 .then(data => {
                                     const bookId = data.data.pop()
                                     setTimeout(() => {
@@ -952,7 +955,7 @@ const submission = async () => {
                     loading.value = false
                 }
             } else {
-                await axios.post("https://api.seasonsge.com/program-booking", formData ,{
+                await axios.post("https://seasonreal.seasonsge.com/program-booking", formData ,{
                     headers: {
                         "Content-Type": "multipart/form-data",
     }
@@ -968,13 +971,13 @@ const submission = async () => {
                             allRooms.append("id_hotel", randomCode.value)
                             allRooms.append("room_type", el.roomType)
                             allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                            axios.post("https://api.seasonsge.com/program-room", allRooms)
+                            axios.post("https://seasonreal.seasonsge.com/program-room", allRooms)
                                 .then(data => {
                                     console.log(data);
                                 })
                         })
 
-                        axios.get(`https://api.seasonsge.com/br-rr?id=${userId.id}`)
+                        axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
@@ -1054,7 +1057,7 @@ let flightLine;
 
 if(props.searchInfo.includeFlight == 1){
 
-await axios.get(`https://api.seasonsge.com/airline_id?id=${filterImages[0].flight_number}`)
+await axios.get(`https://seasonreal.seasonsge.com/airline_id?id=${filterImages[0].flight_number}`)
 .then((flightData)=>{
     console.log('iam flightData');
     console.log(flightData.data[0]); 
@@ -1078,7 +1081,7 @@ await axios.get(`https://api.seasonsge.com/airline_id?id=${filterImages[0].fligh
    
 });
 // get airl line 
- await axios.get('https://api.seasonsge.com/airlines-view')
+ await axios.get('https://seasonreal.seasonsge.com/airlines-view')
  .then((lineOfFlight)=>{
        let line = [];
        line.push(...lineOfFlight.data.airlines);
@@ -1122,13 +1125,20 @@ onMounted(async () => {
             programDetails.value = el;
         }
     });
-    await axios.get("https://api.seasonsge.com/cities-view").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/cities-view").then((data) => {
         programDetails.value.destination = data.data.filter(
             (ele) => ele.id == programDetails.value.return_airline
         )[0];
     });
+
+    await axios.get("https://seasonreal.seasonsge.com/cars-type-view")
+        .then(data => {
+            carsHistory = data.data.filter(el => el.id == props.searchResults[0].car_type)
+            console.log(carsHistory,'carsHistory');
+            
+        })
     if (programDetails.value.includes_flight == "1") {
-        axios.get("https://api.seasonsge.com/flights?all").then((data) => {
+        axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
             flightTrip.value = data.data.filter((ele) => {
                 if (
                     ele.flightNumber == programDetails.value.flight_number &&
@@ -1138,7 +1148,7 @@ onMounted(async () => {
                 }
             })[0];
             // console.log(data)
-            axios.get("https://api.seasonsge.com/airlines-view").then((data) => {
+            axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
                 if (data.data.success) {
                     flightTrip.value["flightAirLine"] = data.data.airlines.filter(
                         (airLine) => airLine.id == flightTrip.value.flightLine
@@ -1152,7 +1162,7 @@ onMounted(async () => {
         
             console.log(allprogramData.value[1].returnFlightNumber); 
             console.log(allprogramData.value); 
-            axios.get("https://api.seasonsge.com/viewAirports").then((data) => {
+            axios.get("https://seasonreal.seasonsge.com/viewAirports").then((data) => {
                 if (data.data.success) {
                     flightTrip.value["from"] = data.data.data.filter(
                         (element) => element.id == flightTrip.value.fromAirport
@@ -1185,13 +1195,13 @@ onMounted(async () => {
         }
     }
     await axios
-        .get(`https://api.seasonsge.com/pr-data?id=${props.programId}`)
+        .get(`https://seasonreal.seasonsge.com/pr-data?id=${props.programId}`)
         .then((data) => {
             // console.log(data);
             if (typeof data.data === "object") {
                 allCities.value = data.data;
                 console.log(allCities.value);
-                axios.get("https://api.seasonsge.com/cities-view")
+                axios.get("https://seasonreal.seasonsge.com/cities-view")
                     .then(data => {
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
@@ -1234,7 +1244,7 @@ onMounted(async () => {
         prices.value.add("6")
     }
     bookingInfo.value.total += +programDetails.value.price_per_infant * props.searchInfo.no_infants;
-    await axios.get("https://api.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/info")
         .then(data => {
             social.value = data.data[0]
             // console.log(data)

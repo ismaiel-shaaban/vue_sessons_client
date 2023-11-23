@@ -4,7 +4,7 @@
             <i :class="`fa-solid fa-xmark fa-2x close ${$i18n.locale === 'en' ? '' : 'ar'}`"
                 @click="$emit('close-newPopup')"></i>
             <div class="inner h-100 px-5 py-5 text-center">
-                <img class="w-25 mb-4" :src="`https://api.seasonsge.com/admin/images/${newPopup.image}`" alt="">
+                <img class="w-25 mb-4" :src="`https://seasonreal.seasonsge.com/admin/images/${newPopup.image}`" alt="">
                 <h1 class="mb-3 text-uppercase">{{ newPopup.text }}</h1>
                 <a v-if="isLoggedin" class="p-2 px-3 butn mt-5 text-decoration-none mx-auto d-flex align-items-center gap-3 px-4 rounded-1 "
                     :href="info.email">
@@ -31,7 +31,7 @@ onMounted(async () => {
     if (sessionStorage.getItem("clientLogin") || sessionStorage.getItem("login")) {
         isLoggedin.value = true
     }
-    await axios.get("https://api.seasonsge.com/popup").then(data => {
+    await axios.get("https://seasonreal.seasonsge.com/popup").then(data => {
         newPopup.value = data.data[0]
         console.log(newPopup.value.image );
     })

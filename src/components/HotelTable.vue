@@ -16,7 +16,7 @@
             <div class="col-lg-4 col-md-6 mb-4" v-for="(item, index) in allResults" :key="index">
                 <div class="box rounded-2 d-flex flex-column overflow-hidden" @click="$emit('getIdAndForward', item.id)">
                     <div class="image">
-                        <img class="img-fluid" :src="`https://api.seasonsge.com/images/${item.main_image}`" alt="">
+                        <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/${item.main_image}`" alt="">
                     </div>
                     <div class="info p-3">
                         <h5 class="text-muted">{{ item.name }}</h5>
@@ -41,7 +41,7 @@ const allResults = ref([])
 
 onMounted(async () => {
     allResults.value = [...props.searchResults]
-    await axios.get("https://api.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/cities-view")
         .then(data => {
             allResults.value.forEach(el => {
                 el.cityObj = data.data.filter(ele => ele.id == el.city)[0]

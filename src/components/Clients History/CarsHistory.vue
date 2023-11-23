@@ -69,12 +69,12 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("clientLogin")) {
         const userId = JSON.parse(localStorage.getItem("clientLogin"))
-        await axios.get(`https://api.seasonsge.com/car-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     carsHistory.value = data.data
                     carsHistory.value.forEach(ele => {
-                        axios.get("https://api.seasonsge.com/cars-type-view")
+                        axios.get("https://seasonreal.seasonsge.com/cars-type-view")
                             .then(data => {
                                 ele.carType = data.data.filter(el => el.id == +ele.type_id)[0]
                                 loading.value = false

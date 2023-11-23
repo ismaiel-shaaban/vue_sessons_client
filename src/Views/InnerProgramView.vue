@@ -5,7 +5,7 @@
             <div class="container">
                 <div class="details d-flex align-items-start gap-5">
                     <img v-if="programDetails.main_image !== ''"
-                        :src="`https://api.seasonsge.com/upload/${programDetails.main_image}`" alt="">
+                        :src="`https://seasonreal.seasonsge.com/upload/${programDetails.main_image}`" alt="">
                     <img v-else class="img-fluid rounded-1" src="https://placehold.co/500x500?text=?"
                         style="object-fit: cover;" alt="">
                     <div class="left-side flex-fill">
@@ -224,11 +224,11 @@ const flightTrip = ref({})
 
 
 onMounted(async () => {
-    await axios.get("https://api.seasonsge.com/all-program")
+    await axios.get("https://seasonreal.seasonsge.com/all-program")
         .then(data => {
             programDetails.value = data.data.filter(el => el.id == route.params.programId)[0]
             if (programDetails.value.includes_flight == '1') {
-                axios.get("https://api.seasonsge.com/flights?all").then(data => {
+                axios.get("https://seasonreal.seasonsge.com/flights?all").then(data => {
                     console.log(data.data);
                     flightTrip.value = data.data.filter(ele => {
                         if (ele.flightNumber === programDetails.value.flight_number &&
@@ -236,13 +236,13 @@ onMounted(async () => {
                             return ele
                         }
                     })[0]
-                    axios.get("https://api.seasonsge.com/airlines-view")
+                    axios.get("https://seasonreal.seasonsge.com/airlines-view")
                         .then(data => {
                             if (data.data.success) {
                                 flightTrip.value['flightAirLine'] = data.data.airlines.filter(airLine => airLine.id == flightTrip.value.flightLine)[0]
                             }
                         })
-                    axios.get("https://api.seasonsge.com/viewAirports")
+                    axios.get("https://seasonreal.seasonsge.com/viewAirports")
                         .then(data => {
                             if (data.data.success) {
                                 flightTrip.value['from'] = data.data.data.filter(element => element.id == flightTrip.value.fromAirport)[0]
@@ -254,7 +254,7 @@ onMounted(async () => {
                 })
             }
         })
-    await axios.get("https://api.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/cities-view")
         .then(data => {
             programDetails.value.destination = data.data.filter(el => el.id == programDetails.value.return_airline)[0]
         })
