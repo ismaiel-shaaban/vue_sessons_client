@@ -69,7 +69,19 @@
                         </label>
                     </div>
                     <!--نهاية رسبونزف البيانات الفندق-->
-                    <div class="group-4 mt-3 d-flex gap-3">
+                    <div class="group-4 mt-3 d-flex gap-3 flex-column flex-md-row">
+                        <label class="w-50 d-flex gap-2">
+                            <div class="w-100 p-1" v-if="hotelBooking.type === 'MR' || hotelBooking.type === 'MRS'">
+                                <span class="d-block mb-1 fw-semibold">
+                                    {{ $t('flightReservation.flightBook.type') }} :
+                                </span>
+                                <select class="w-100 p-2 px-3 rounded-1" v-model="hotelBooking.type">
+                                    <option value="MR">MR</option>
+                                    <option value="MRS">MRS</option>
+                                </select>
+                            </div>
+                   
+                        </label>
                         <label class="w-100">
                             <span class="d-block mb-1">{{ $t('hotelBook.details.fName') }}:</span>
                             <input :class="`rounded-1 w-100 p-2 px-3 ${validation.first_name.$error ? 'error' : ''
@@ -113,40 +125,8 @@
                    
                     <div class="box d-flex gap-3 mt-3 flex-md-row flex-column" v-if="hotelBooking.personsForm.length > 0"
                         v-for="(item, index) in hotelBooking.personsForm" :key="index">
-                        <label class="w-100 d-flex gap-2">
-                            <div class="w-100">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.firstName') }} {{ `(${index + 2})` }}:
-                                </span>
-                                <input
-                                    :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].firstName.$error ? 'error' : ''}`"
-                                    type="text" placeholder="First Name" v-model="item.firstName">
-                                <span v-if="validation.personsForm.$each.$response.$data[index].firstName.$error"
-                                    class="error text-danger fst-italic d-block">
-                                    {{ validation.personsForm.$each.$response.$errors[index].firstName[0].$validator ===
-                                        'required'
-                                        ? 'Field Required' : '' }}
-                                </span>
-                            </div>
-                         
-                            <div class="w-100">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.lastName') }} {{ `(${index + 2})` }}:
-                                </span>
-                                <input
-                                    :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].lastName.$error ? 'error' : ''}`"
-                                    type="text" placeholder="Last Name" v-model="item.lastName">
-                                <span v-if="validation.personsForm.$each.$response.$data[index].lastName.$error"
-                                    class="error text-danger fst-italic d-block">
-                                    {{ validation.personsForm.$each.$response.$errors[index].lastName[0].$validator ===
-                                        'required'
-                                        ? 'Field Required' : '' }}
-                                </span>
-                            </div>
-                        </label>
-                        
-                        <label class="w-100 d-flex gap-2">
-                            <div class="w-100" v-if="item.type === 'MR' || item.type === 'MRS'">
+                        <label class="w-100 d-flex sm-flex-nowrap flex-wrap row gap-2">
+                            <div class="col-12 col-sm-3" v-if="item.type === 'MR' || item.type === 'MRS'">
                                 <span class="d-block mb-1 fw-semibold">
                                     {{ $t('flightReservation.flightBook.type') }} {{ `(${index + 2})` }}:
                                 </span>
@@ -155,19 +135,54 @@
                                     <option value="MRS">MRS</option>
                                 </select>
                             </div>
-                            <div class="w-100">
+                            <div class="col-12 col-sm-3" v-if="item.type !== 'MR' && item.type !== 'MRS'">
                                 <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.type') }} {{ `(${index + 2})` }}:
+                                    {{ $t("flightReservation.flightBook.type") }} {{ `(${index + 2})` }}:
                                 </span>
-                                <input
-                                    :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].type.$error ? 'error' : ''}`"
-                                    type="text" placeholder="Type" v-model="item.type" disabled>
-                                <span v-if="validation.personsForm.$each.$response.$data[index].type.$error"
-                                    class="error text-danger fst-italic d-block">
-                                    {{ validation.personsForm.$each.$response.$errors[index].type[0].$validator ===
-                                        'required' ?
-                                        'Field Required' : '' }}
-                                </span>
+                                <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].type.$error
+                                    ? 'error'
+                                    : ''
+                                    }`" type="text" placeholder="Type" v-model="item.type" disabled />
+                           
+                            </div>
+                            <div class="d-flex col-12 col-sm-8 gap-2">
+
+                                <div class="w-100 ">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.firstName") }}
+                                        {{ `(${index + 2})` }}:
+                                    </span>
+                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].firstName.$error
+                                        ? 'error'
+                                        : ''
+                                        }`" type="text" placeholder="First Name" v-model="item.firstName" />
+                                    <span v-if="validation.personsForm.$each.$response.$data[index].firstName.$error
+                                        " class="error text-danger fst-italic d-block">
+                                        {{
+                                            validation.personsForm.$each.$response.$errors[index].firstName[0]
+                                                .$validator === "required"
+                                            ? "Field Required"
+                                            : ""
+                                        }}
+                                    </span>
+                                </div>
+                                <div class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.lastName") }}
+                                        {{ `(${index + 2})` }}:
+                                    </span>
+                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].lastName.$error
+                                        ? 'error'
+                                        : ''
+                                        }`" type="text" placeholder="Last Name" v-model="item.lastName" />
+                                    <span v-if="validation.personsForm.$each.$response.$data[index].lastName.$error
+                                        " class="error text-danger fst-italic d-block">
+                                        {{
+                                            validation.personsForm.$each.$response.$errors[index].lastName[0]
+                                                .$validator === "required"
+                                            ? "Field Required"
+                                            : ""
+                                        }}
+                                    </span>
+                                </div>
                             </div>
                         </label>
                     </div>
@@ -425,6 +440,7 @@ const hotelBooking = ref({
     first_name: '',
     last_name: '',
     email: null,
+    type:"MR",
     phone: "",
     start_date: props.searchInfo.start_date.toLocaleDateString("en-CA"),
     end_date: props.searchInfo.end_date.toLocaleDateString("en-CA"),
@@ -490,7 +506,7 @@ const submission = () => {
         formData.append("hotel_id", hotelBooking.value.hotel_id)
         formData.append("room_type", hotelBooking.value.adults_count)
         formData.append("child_room_type", [...prices.value].join(','))
-        formData.append("first_name", hotelBooking.value.first_name)
+        formData.append("first_name ",`${hotelBooking.value.first_name}` )
         formData.append("last_name", hotelBooking.value.last_name)
         formData.append("email", hotelBooking.value.email)
         formData.append("phone", hotelBooking.value.phone)

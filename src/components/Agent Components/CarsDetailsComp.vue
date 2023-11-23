@@ -41,6 +41,18 @@
                     </label>
                 
                 <div class="first d-flex flex-column flex-md-row gap-3 mt-3">
+                    <label class="w-50 d-flex gap-2">
+                            <div class="w-100 p-1" v-if="bookInfo.type === 'MR' || bookInfo.type === 'MRS'">
+                                <span class="d-block mb-1 fw-semibold">
+                                    {{ $t('flightReservation.flightBook.type') }} :
+                                </span>
+                                <select class="w-100 p-2 px-3 rounded-1" v-model="bookInfo.type">
+                                    <option value="MR">MR</option>
+                                    <option value="MRS">MRS</option>
+                                </select>
+                                </div>
+                    
+                        </label>
                     <div class="w-100 position-relative">
                         <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.fName') }}: </span>
                         <input :class="`p-2 px-3 w-100 rounded-1 ${validation.first_name.$error ? 'error' : ''}`"
@@ -281,6 +293,7 @@ const bookInfo = ref({
     width_driver: computed(() => carInfo.value.price_with_driver > 0 ? '1' : '0'),
     first_name: '',
     last_name: '',
+    type:"MR",
     email: props.searchInfo.country,
     phone_number: "",
     start_date: props.searchInfo.fromDate.toLocaleDateString('en-CA'),
