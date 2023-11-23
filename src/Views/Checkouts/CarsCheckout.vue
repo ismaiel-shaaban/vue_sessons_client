@@ -76,7 +76,12 @@
                 <tr>
                     <td  class="text-capitalize">
                         <!-- {{ bookInfo.Type_id }} -->
-                        روفر{{ bookInfo.Type_id }}
+                        {{ carsHistory[0]?
+                                 $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name 
+                                
+                                :'' 
+                                
+                                }}
                     </td>
                     <td>
                         {{ bookInfo.with_driver === '0' ? 'Without Driver' : 'With Driver' }}
@@ -229,6 +234,7 @@ const USDollar = Intl.NumberFormat('en-US', {
 
 let country = ref(null);
 let city = ref(null);
+let carsHistory = ref('')
 let tax = ref();
 let netTotal = ref();
 let total = ref();
@@ -322,16 +328,27 @@ onMounted(async () => {
             .then(data => {
                 social.value = data.data[0]
             })
+
+         
         const userId = JSON.parse(localStorage.getItem("clientLogin"))
         await axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
             .then(data => {
-                console.log(data);
+                console.log(data,';;;;;;;;;;;;;;;;;;;;;;;');
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
                 axios.get("https://seasonreal.seasonsge.com/cars-type-view")
                     .then(data => bookInfo.value.carType = data.data.filter(el => el.id == +bookInfo.value.type_id)[0])
             })
         url.value = window.location.href
         url.value = url.value.replace(/\/\d+$/ig, `/${bookInfo.value.random_code}`)
+
+        await axios.get("https://seasonreal.seasonsge.com/cars-type-view")
+            .then(data => {
+                console.log(bookInfo.value ,'bookInfo.value.type_id');
+                console.log(data.data ,'elelelelelel');
+                carsHistory = data.data.filter(el => el.id == bookInfo.value.type_id)
+                console.log(carsHistory,'carsHistory');
+                
+            })
     } else {
         url.value = window.location.href
         await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
