@@ -7,167 +7,186 @@
                 <i :class="`fa-solid fa-chevron-${$i18n.locale === 'en' ? 'left' : 'right'}`"></i>
             </span>
             <h3 class="position-relative mb-5">{{ $t('carBook.heading') }}</h3>
-            <form class="d-flex flex-column gap-3">
-                <div class="top d-flex gap-3 flex-md-row flex-column">
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.driver.head') }}:</span>
-                        <select @change="price()" class="p-2 px-3 w-100 rounded-1" name="driver" v-model="bookInfo.with_driver">
-                            <option value="1" v-if="viewCarId[0].price_with_driver > 0">{{ $t('carBook.details.driver.with') }}
-                            </option>
-                            <option value="0" v-if="viewCarId[0].price_per_day > 0">{{ $t('carBook.details.driver.without') }}
-                            </option>
-                        </select>
-                        <!--مع سائق او بدون سائق-->
-                        <span v-if="validation.with_driver.$error" class="error d-block text-danger fst-italic mx-2">
-                            {{
-                                validation.with_driver.$errors[0].$validator === "required"
-                                ? "Field Reuqired"
-                                : ""
-                            }}
-                        </span>
-                    </label>
+            <div class="inner d-flex py-5 gap-4">
+                <div class="img-cont w-50">
+                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].image_path}`" alt="" />
                 </div>
-                <label class="w-100">
-                        <div class="w-100">
-                            <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.price') }}: </span>
-                            <span class="price p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
+                <div class="car-info flex-fill">
+
+
+                    <div class="w-100">
+                                
+                                <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.type') }}: </span>
+                                <span class="text-capitalize p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{ $route.params.lang === 'en' ? viewCarId[0].type_english_name || 'Unknown' : viewCarId[0].type_arabic_name
+                                        || 'غير معروف' }}
+                                </span>
+                    </div>
+                    <label class="w-100">
+                            <div class="w-100">
+                                <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.price') }}: </span>
+                                <span class="price p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{
+                                        bookInfo.with_driver == "1"
+                                        ? USDollar.format(viewCarId[0].price_with_driver)
+                                        : USDollar.format(viewCarId[0].price_per_day)
+                                    }}
+                                </span>
+                            </div>
+                    </label>
+                    <div class="top d-flex gap-3 flex-md-row flex-column">
+                        <label class="w-100">
+                            <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.driver.head') }}:</span>
+                            <select @change="price()" class="p-2 px-3 w-100 rounded-1" name="driver" v-model="bookInfo.with_driver">
+                                <option value="1" v-if="viewCarId[0].price_with_driver > 0">{{ $t('carBook.details.driver.with') }}
+                                </option>
+                                <option value="0" v-if="viewCarId[0].price_per_day > 0">{{ $t('carBook.details.driver.without') }}
+                                </option>
+                            </select>
+                            <!--مع سائق او بدون سائق-->
+                            <span v-if="validation.with_driver.$error" class="error d-block text-danger fst-italic mx-2">
                                 {{
-                                    bookInfo.with_driver == "1"
-                                    ? USDollar.format(viewCarId[0].price_with_driver)
-                                    : USDollar.format(viewCarId[0].price_per_day)
+                                    validation.with_driver.$errors[0].$validator === "required"
+                                    ? "Field Reuqired"
+                                    : ""
                                 }}
                             </span>
-                        </div>
-                    </label>
-                
-                <div class="first d-flex flex-column flex-md-row gap-3 mt-3">
-                    <label class="w-50 d-flex gap-2">
-                            <div class="w-100 p-1" v-if="bookInfo.type === 'MR' || bookInfo.type === 'MRS'">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.type') }} :
-                                </span>
-                                <select class="w-100 p-2 px-3 rounded-1" v-model="bookInfo.type">
-                                    <option value="MR">MR</option>
-                                    <option value="MRS">MRS</option>
-                                </select>
-                                </div>
-                    
                         </label>
-                    <div class="w-100 position-relative">
-                        <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.fName') }}: </span>
-                        <input :class="`p-2 px-3 w-100 rounded-1 ${validation.first_name.$error ? 'error' : ''}`"
-                            type="text" v-model="bookInfo.first_name" placeholder="First Name" />
-                        <span v-if="validation.first_name.$error" class="error d-block text-danger fst-italic mx-2">
-                            {{
-                                validation.first_name.$errors[0].$validator === "required"
-                                ? "Field Reuqired"
-                                : ""
-                            }}
-                        </span>
                     </div>
-                    <div class="w-100 position-relative">
-                        <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.lName') }}: </span>
-                        <input :class="`p-2 px-3 w-100 rounded-1 ${validation.last_name.$error ? 'error' : ''}`" type="text"
-                            v-model="bookInfo.last_name" placeholder="Last Name" />
-                        <span v-if="validation.last_name.$error" class="error d-block text-danger fst-italic mx-2">
-                            {{
-                                validation.last_name.$errors[0].$validator === "required"
-                                ? "Field Reuqired"
-                                : ""
-                            }}
-                        </span>
-                    </div>
-                </div>
-                <div class="bottom-middle d-flex gap-3 flex-md-row flex-column">
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.phone') }}:</span>
-                        <input :class="`rounded-1 w-100 p-2 px-3 ${validation.phone_number.$error ? 'error' : ''
-                            }`" type="Phone" placeholder="Phone Number" v-model="bookInfo.phone_number" />
-                        <span v-if="validation.phone_number.$error" class="fst-italic text-danger d-block mt-2">
-                            {{
-                                validation.phone_number.$errors[0].$validator === "required"
-                                ? "Field Required"
-                                : "Invalid Phone Number"
-                            }}
-                        </span>
-                    </label>
-                </div>
-                <div class="bottom d-flex gap-3 flex-md-row flex-column">
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.fDate') }}:</span>
-                        <span class="p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
-                            {{ bookInfo.start_date }}
-                        </span>
-                    </label>
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.tDate') }}:</span>
-                        <span class="p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
-                            {{ bookInfo.end_date }}
-                        </span>
-                    </label>
-                </div>
-                <div class="group-1 d-flex gap-3 flex-md-row flex-column">
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.days') }}:</span>
-                        <span class="d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
-                            {{ bookInfo.total_days }}
-                        </span>
-                    </label>
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.total') }}:</span>
-                        <span class="netTotal d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
-                          <!--total-->
-                            {{ USDollar.format(myPrice * bookInfo.total_days )}}
+                    <form class="d-flex flex-column gap-3">
                         
-                        </span>
-                        
-                    </label>
+                        <div class="first d-flex flex-column flex-md-row gap-3 mt-3">
+                            <label class="w-50 d-flex gap-2">
+                                    <div class="w-100 p-1" v-if="bookInfo.type === 'MR' || bookInfo.type === 'MRS'">
+                                        <span class="d-block mb-1 fw-semibold">
+                                            {{ $t('flightReservation.flightBook.type') }} :
+                                        </span>
+                                        <select class="w-100 p-2 px-3 rounded-1" v-model="bookInfo.type">
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                        </select>
+                                        </div>
+                            
+                                </label>
+                            <div class="w-100 position-relative">
+                                <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.fName') }}: </span>
+                                <input :class="`p-2 px-3 w-100 rounded-1 ${validation.first_name.$error ? 'error' : ''}`"
+                                    type="text" v-model="bookInfo.first_name" placeholder="First Name" />
+                                <span v-if="validation.first_name.$error" class="error d-block text-danger fst-italic mx-2">
+                                    {{
+                                        validation.first_name.$errors[0].$validator === "required"
+                                        ? "Field Reuqired"
+                                        : ""
+                                    }}
+                                </span>
+                            </div>
+                            <div class="w-100 position-relative">
+                                <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.lName') }}: </span>
+                                <input :class="`p-2 px-3 w-100 rounded-1 ${validation.last_name.$error ? 'error' : ''}`" type="text"
+                                    v-model="bookInfo.last_name" placeholder="Last Name" />
+                                <span v-if="validation.last_name.$error" class="error d-block text-danger fst-italic mx-2">
+                                    {{
+                                        validation.last_name.$errors[0].$validator === "required"
+                                        ? "Field Reuqired"
+                                        : ""
+                                    }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="bottom-middle d-flex gap-3 flex-md-row flex-column">
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.phone') }}:</span>
+                                <input :class="`rounded-1 w-100 p-2 px-3 ${validation.phone_number.$error ? 'error' : ''
+                                    }`" type="Phone" placeholder="Phone Number" v-model="bookInfo.phone_number" />
+                                <span v-if="validation.phone_number.$error" class="fst-italic text-danger d-block mt-2">
+                                    {{
+                                        validation.phone_number.$errors[0].$validator === "required"
+                                        ? "Field Required"
+                                        : "Invalid Phone Number"
+                                    }}
+                                </span>
+                            </label>
+                        </div>
+                        <div class="bottom d-flex gap-3 flex-md-row flex-column">
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.fDate') }}:</span>
+                                <span class="p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{ bookInfo.start_date }}
+                                </span>
+                            </label>
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.tDate') }}:</span>
+                                <span class="p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{ bookInfo.end_date }}
+                                </span>
+                            </label>
+                        </div>
+                        <div class="group-1 d-flex gap-3 flex-md-row flex-column">
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.days') }}:</span>
+                                <span class="d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{ bookInfo.total_days }}
+                                </span>
+                            </label>
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.total') }}:</span>
+                                <span class="netTotal d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
+                                  <!--total-->
+                                    {{ USDollar.format(myPrice * bookInfo.total_days )}}
+                                
+                                </span>
+                                
+                            </label>
+                        </div>
+                        <div class="group-2 d-flex gap-3 flex-md-row flex-column">
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.tax') }}:</span>
+                                <span class="myTax d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{ (viewCarId[0].tax || 0) }}%
+                                </span>
+                            </label>
+                            <label class="w-100">
+                                <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.agentDiscount') }}:</span>
+                                <span class="d-block dicount p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
+                                    {{bookInfo.agent_discount 
+                                      }}% 
+                                </span>
+                            </label>
+                        </div>
+                        <label class="w-100">
+                            <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.net') }}:</span>
+                            <span class="myTotal d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
+                                <!-- {{ (bookInfo.net_amount || 0).toFixed(2) }}$ -->
+                                {{ 
+                                      
+                                    
+        
+                                     USDollar.format(((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))  - ( +(`0.${bookInfo.agent_discount}`) * ((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))))  
+                                    
+                                    
+                                       
+        
+                                }}
+                            </span>
+                        </label>
+                        <label class="w-100">
+                            <span class="d-block mb-1">{{ $t('carBook.details.notes') }}:</span>
+                            <textarea :class="`w-100 rounded-1 p-2 px-3 ${validation.notes.$error ? 'error' : ''}`" name="notes"
+                                :placeholder="$i18n.locale === 'en' ?
+                                    'Please write down the place the car will wait for you' :
+                                    'برجاء تحديد المكان الذي يتم استلام السياره منه'" v-model="bookInfo.notes"></textarea>
+                            <span v-if="validation.notes.$error" class="text-danger mt-1 d-block fst-italic">
+                                {{ validation.notes.required.$message }}
+                            </span>
+                        </label>
+                        <button v-if="visibleButton" class="butn rounded-1 p-2 px-3 text-uppercase fw-semibold" @click.prevent="submission">
+                            {{ $t('buttons.confirm') }}
+                        </button>
+                    </form>
                 </div>
-                <div class="group-2 d-flex gap-3 flex-md-row flex-column">
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.tax') }}:</span>
-                        <span class="myTax d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
-                            {{ (viewCarId[0].tax || 0) }}%
-                        </span>
-                    </label>
-                    <label class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.agentDiscount') }}:</span>
-                        <span class="d-block dicount p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
-                            {{bookInfo.agent_discount 
-                              }}% 
-                        </span>
-                    </label>
-                </div>
-                <label class="w-100">
-                    <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.net') }}:</span>
-                    <span class="myTotal d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
-                        <!-- {{ (bookInfo.net_amount || 0).toFixed(2) }}$ -->
-                        {{ 
-                              
-                            
 
-                             USDollar.format(((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))  - ( +(`0.${bookInfo.agent_discount}`) * ((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))))  
-                            
-                            
-                               
 
-                        }}
-                    </span>
-                </label>
-                <label class="w-100">
-                    <span class="d-block mb-1">{{ $t('carBook.details.notes') }}:</span>
-                    <textarea :class="`w-100 rounded-1 p-2 px-3 ${validation.notes.$error ? 'error' : ''}`" name="notes"
-                        :placeholder="$i18n.locale === 'en' ?
-                            'Please write down the place the car will wait for you' :
-                            'برجاء تحديد المكان الذي يتم استلام السياره منه'" v-model="bookInfo.notes"></textarea>
-                    <span v-if="validation.notes.$error" class="text-danger mt-1 d-block fst-italic">
-                        {{ validation.notes.required.$message }}
-                    </span>
-                </label>
-                <button v-if="visibleButton" class="butn rounded-1 p-2 px-3 text-uppercase fw-semibold" @click.prevent="submission">
-                    {{ $t('buttons.confirm') }}
-                </button>
-            </form>
+            </div>
         </div>
         <div :class="`alert alert-success alert-dismissible text-${$i18n.locale === 'en' ? 'start' : 'end'} position-fixed`"
             role="alert">
@@ -237,12 +256,12 @@ total.value = +(myPrice.value) * tax.value;
 console.log(total.value);
 }
 
-
+let filterCarId = ref({});
 let viewCarId = ref([]);
 onBeforeMount(async()=>{
     let id = localStorage.getItem('carId');
 let carsData  = JSON.parse(localStorage.getItem('carsData'));
-    let filterCarId = carsData.filter((car)=>{
+     filterCarId = carsData.filter((car)=>{
         return car.id == id;
     })
     viewCarId.value = [...filterCarId];
@@ -274,6 +293,7 @@ onMounted(async () => {
     });
     await axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
         userInfo.value = data.data.filter((el) => el.id == route.params.userId)[0];
+        console.log('userInfo' ,userInfo);
         loading.value = false
     });
     await axios.get("https://seasonreal.seasonsge.com/info")
@@ -289,7 +309,7 @@ const USDollar = Intl.NumberFormat("en-US", {
 })
 
 const bookInfo = ref({
-    type_id: props.carId,
+    type_id:'',
     width_driver: computed(() => carInfo.value.price_with_driver > 0 ? '1' : '0'),
     first_name: '',
     last_name: '',
@@ -339,6 +359,7 @@ const submission = async () => {
     setNetTotal();
     setTax();
     setTotal();
+    bookInfo.value.type_id =filterCarId[0].type_id
     validation.value.$validate();
     if (!validation.value.$error) {
         loading.value = true
@@ -348,7 +369,7 @@ const submission = async () => {
                     if (response.data.status) {
                         updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookInfo.value.net_amount)
                         const balance = new FormData()
-
+                        
                         balance.append("name", userInfo.value.name)
                         balance.append("email", userInfo.value.email)
                         balance.append("password", userInfo.value.password)

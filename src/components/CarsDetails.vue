@@ -9,9 +9,11 @@
             <h1 class="heading mb-5 position-relative">
                 {{ $t('carBook.heading') }}
             </h1>
+
+
             <div class="inner d-flex py-5 gap-4">
                 <div class="img-cont w-50">
-                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].type_image}`" alt="" />
+                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].image_path}`" alt="" />
                 </div>
                 <div class="car-info flex-fill">
                     <div class="d-flex gap-3">
@@ -232,16 +234,19 @@ sessionStorage.setItem('Tax' , myTax.value)
 
 
 let viewCarId = ref([]);
+let filterCarId = ref({});
 onBeforeMount(async()=>{
     console.log('country is');
     console.log(props.country);
     console.log('city is');
     console.log(props.city );
     let id = localStorage.getItem('carId');
-let carsData  = JSON.parse(localStorage.getItem('carsData'));
-    let filterCarId = carsData.filter((car)=>{
+    let carsData  = JSON.parse(localStorage.getItem('carsData'));
+     filterCarId = carsData.filter((car)=>{
         return car.id == id;
     })
+    console.log('filterCarId' ,filterCarId);
+    
     viewCarId.value = [...filterCarId];
    console.log('iam from details');
    console.log(viewCarId.value);
@@ -292,8 +297,9 @@ const USDollar = Intl.NumberFormat("en-US", {
 })
 
 
+console.log('props', props);
 const userInfo = ref({
-    type_id: props.carId,
+    type_id: '',
     // with_driver: computed(() => parseInt(carInfo.value.price_with_driver) > 0 ? carInfo.value.price_with_driver : 0),
 
     // with_driver: computed(() => {
@@ -363,6 +369,9 @@ const submission = async () => {
     setNetTotal();
     setTax();
     setTotal();
+    console.log('type_id' ,filterCarId);
+    userInfo.value.type_id =filterCarId[0].type_id
+    console.log("userInfo",userInfo);
     validation.value.$validate();
     if (!validation.value.$error) {
         if (localStorage.getItem("clientLogin")) {

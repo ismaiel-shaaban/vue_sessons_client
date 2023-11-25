@@ -64,22 +64,27 @@
         <table>
             <thead>
                 <tr>
-                    <th v-if="bookInfo.carType">Car Type</th>
+                    <th >Car Type</th>
                     <th>Driver</th>
                     <th>Days Count</th>
-                    <th>Notes</th>
+                 
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td v-if="bookInfo.carType" class="text-capitalize">
-                        {{ bookInfo.carType.name_en }}
+                    <td  class="text-capitalize">
+                        {{ bookInfo.carType?
+                                 $i18n.locale === 'en' ? bookInfo.carType.name_en : bookInfo.carType.name 
+                                
+                                :'' 
+                                
+                                }}
                     </td>
                     <td>
                         {{ bookInfo.with_driver === '0' ? 'Without Driver' : 'With Driver' }}
                     </td>
                     <td>{{ bookInfo.number_of_days }}</td>
-                    <td class="text-capitalize">{{ bookInfo.notes }}</td>
+                   
                 </tr>
             </tbody>
         </table>
@@ -382,8 +387,9 @@ onMounted(async () => {
             .then(data => {
                 console.log(data ,'data');
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
+                console.log(data.data);
                 axios.get("https://seasonreal.seasonsge.com/cars-type-view")
-                    .then(data => bookInfo.value.carType = data.data.filter(el => el.id === +bookInfo.value.type_id)[0])
+                    .then(data => bookInfo.value.carType = data.data.filter(el => el.id ==bookInfo.value.type_id)[0])
                     .catch(error => {
                         router.push({
                             name: 'Home',

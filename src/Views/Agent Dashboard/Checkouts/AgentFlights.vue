@@ -302,11 +302,41 @@ const USDollar = Intl.NumberFormat('en-US', {
     currency: 'USD',
     style: 'currency',
 })
-const urlParams = new URLSearchParams(window.location.search);
-const login = urlParams.get('login'); // 'en'
-console.log(urlParams ,'login');
+
+// const queryString = window.location.hash.split('&')[1];
+// const urlParams = new URLSearchParams(queryString);
+// const login = JSON.parse(urlParams.get('login')); // {"success":true,"id":"2351"}
+
+const fragment = window.location.hash.split('#')[1];
+
+// Split the fragment into an array of parameter strings
+const parameterStrings = fragment.split('&');
+
+// Create an object to store the parameters
+const parameters = {};
+
+// Parse each parameter string and add it to the parameters object
+parameterStrings.forEach(paramString => {
+  const [key, value] = paramString.split('=');
+  parameters[key] = decodeURIComponent(value);
+});
+
+
+const login = parameters.login; // '0'
+
+console.log(parameterStrings ,'parameterStrings');
 if(login!=null){
+
+    const stopHoursDepreature = parameters.stopHoursDepreature; // '0'
+    const stopplaces = parameters.stopplaces; // '0 | 0'
+    const stopHoursReturn = parameters.stopHoursReturn; // '0'
+   const  stopsNums = parameters.stopsNums
+    console.log("stopHoursDepreature" , stopHoursDepreature);
+    localStorage.setItem('stopHoursDepreature' ,stopHoursDepreature)
+    localStorage.setItem('stopHoursReturn' ,stopHoursReturn)
+    localStorage.setItem('stopplaces' ,stopplaces)
     localStorage.setItem('login' ,login)
+    localStorage.setItem('item-numStops' ,stopsNums)
 }
 
 const exportToPDF = () => {
@@ -383,6 +413,7 @@ const exportToPDFWithout = () => {
 
 onMounted(async () => {
     console.log('onmounted');
+ 
     if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
 
@@ -452,7 +483,7 @@ onMounted(async () => {
         url.value = window.location.href
         
         url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
-        url.value+=`&login=${JSON.stringify(login) }`
+        url.value+=`&login=${JSON.stringify(login) }&stopHoursDepreature=${stopHoursDepreature}&stopplaces=${stopplaces}&stopHoursReturn=${stopHoursReturn}&stopsNums=${stopsNums}`
     } else {
         console.log('bookInfo.value.booking_id' ,bookInfo.value.booking_id);
         url.value = window.location.href

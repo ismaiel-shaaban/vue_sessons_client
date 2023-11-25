@@ -60,6 +60,52 @@
                     </div>
                 </label>
             </div>
+            <div class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
+                <div class="d-flex align-items-center gap-3 w-100">
+                    <label v-if="stopsNums > 0" class="w-100">
+                        <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopNum') }}:</span>
+                        <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                            {{ flightDetails.numStops }}
+                            
+                        </span>
+                    </label>
+                    <label v-if="stopsNums == 0"  class="w-100">
+                        <span class="d-block mb-1 fw-semibold">
+                            {{ $t('flightReservation.flightBook.transitDirect') }}:
+                        </span>
+                        <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                            Direct
+                        </span>
+                    </label>
+                </div>
+                <!--hossam-->
+                <label  v-if="stopsNums > 0"  class="w-100">
+                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopHour') }}:</span>
+                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                        {{ flightDetails.hours_arriv }}
+                    </span>
+                </label>
+                <label  v-if="stopsNums > 0"  class="w-100">
+                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopPlaces') }}:</span>
+                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                        {{ flightDetails.locStops }}
+                    </span>
+                </label>
+            </div>
+            <div class="group-6 d-flex gap-3 mt-5 flex-md-row flex-column" v-if="searchInfo.allow_return == '1'">
+                <label class="w-100">
+                    <span class="d-block mb-1 fw-semibold">Return {{ $t('flightReservation.flightBook.flightNum') }}:</span>
+                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                        {{ bookingInfo.return_flight_number }}
+                    </span>
+                </label>
+                <label class="w-100">
+                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.allowWeight') }}:</span>
+                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                        {{ bookingInfo.return_weight_allowed }}
+                    </span>
+                </label>
+            </div>
             <div class="group-4 d-flex gap-3 mt-3 flex-md-row flex-column" v-if="searchInfo.allow_return == '1'">
                 <label class="w-100">
                     <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.returnFrom') }}:</span>
@@ -78,7 +124,7 @@
             <div class="group-5 d-flex gap-3 mt-3 flex-md-row flex-column" v-if="searchInfo.allow_return == '1'">
                 <label class="w-100">
                     <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.deptDate') }}:</span>
-                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-lg-row flex-column">
+                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-md-row flex-column">
                         <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                             {{ flightDetails.returnStartDate }}
                         </span>
@@ -89,7 +135,7 @@
                 </label>
                 <label class="w-100">
                     <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.arrivalDate') }}:</span>
-                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-lg-row flex-column">
+                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-md-row flex-column">
                         <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                             {{ flightDetails.returnEndDate }}
                         </span>
@@ -99,29 +145,17 @@
                     </div>
                 </label>
             </div>
-            <div class="group-6 d-flex gap-3 mt-3 align-items-end" v-if="searchInfo.allow_return == '1'">
-                <label class="w-100">
-                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.flightNum') }}:</span>
-                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                        {{ bookingInfo.return_flight_number }}
-                    </span>
-                </label>
-                <label class="w-100">
-                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.allowWeight') }}:</span>
-                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                        {{ bookingInfo.return_weight_allowed }}
-                    </span>
-                </label>
-            </div>
+         
             <div class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
                 <div class="d-flex align-items-center gap-3 w-100">
                     <label v-if="stopsNums > 0" class="w-100">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopNum') }}:</span>
+                        <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopNumReturn') }}:</span>
                         <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                            {{ flightDetails.numStops }}
+                            {{ flightDetails.num_stops_return }}
+                            
                         </span>
                     </label>
-                    <label v-if="stopsNums == 0" class="w-100">
+                    <label v-if="stopsNums == 0"  class="w-100">
                         <span class="d-block mb-1 fw-semibold">
                             {{ $t('flightReservation.flightBook.transitDirect') }}:
                         </span>
@@ -130,10 +164,17 @@
                         </span>
                     </label>
                 </div>
-                <label v-if="stopsNums > 0" class="w-100">
-                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopPlaces') }}:</span>
+                <!--hossam-->
+                <label  v-if="stopsNums > 0"  class="w-100">
+                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopHourReturn') }}:</span>
                     <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                        {{ stopPlaces }}
+                        {{ flightDetails.hours_stops_return }}
+                    </span>
+                </label>
+                <label  v-if="stopsNums > 0"  class="w-100">
+                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopPlacesReturn') }}:</span>
+                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                        {{ flightDetails.loc_stops_return }}
                     </span>
                 </label>
             </div>

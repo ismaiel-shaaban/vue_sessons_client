@@ -508,7 +508,7 @@
                     </div>
                     <div class="box my-5 d-flex gap-3 flex-column">
                         <h3 class="text-center">Cities In Program</h3>
-                        <div :class="x.matches ? 'overflow-auto responsive-table  d-flex justify-content-center':'responsive-table  d-flex justify-content-center'">
+                        <div :class="x.matches ? 'overflow-auto responsive-data3localfgrgregrggrgregtable  d-flex justify-content-center':'responsive-table  d-flex justify-content-center'">
                             <table class="w-100">
                                 <thead>
                                     <tr>
@@ -1093,6 +1093,7 @@ if(props.searchInfo.includeFlight == 1){
     allowedWeight.value = flightData.data[0].allowedWeight;
     flightLine = flightData.data[0].flightLine;
     if(flightData.data.length > 1){
+        console.log('flightData' ,flightData.data);
         returnFlightNum.value = flightData.data[1].returnFlightNumber
         localStorage.setItem('data2' , JSON.stringify(flightData.data[0])) 
         localStorage.setItem('data3' , JSON.stringify(flightData.data[1]))
@@ -1250,10 +1251,10 @@ onMounted(async () => {
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                             const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
-                            endDateObject = addDays(startDateObject, el.num_of_nights-1);
+                            endDateObject = addDays(startDateObject, el.num_of_nights);
                             el.startDate =startDateObject1
                             el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
-                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 1), 'MM/dd/yyyy')).value  
+                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
                             endDateObject =''
                         });
                     })

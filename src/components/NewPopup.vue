@@ -1,5 +1,5 @@
 <template>
-    <div :class="`overlay position-fixed w-100 h-100 ${openPopup ? '' : 'close'}`">
+    <div :class="`overlay d-md-none position-fixed w-100 h-100 ${openPopup ? '' : 'close'}`">
         <div :class="`new-popup position-fixed rounded-1 bg-white ${openPopup ? '' : 'close'}`">
             <i :class="`fa-solid fa-xmark fa-2x close ${$i18n.locale === 'en' ? '' : 'ar'}`"
                 @click="$emit('close-newPopup')"></i>
@@ -11,9 +11,9 @@
                     <i class="fa-solid fa-envelope text-white fs-5"></i>
                     {{ info.email }}
                 </a>
-                <router-link v-else class="butn text-uppercase text-decoration-none p-2 px-3 rounded-1" :to="`/${$i18n.locale}/client-login`">
-                    {{ $t('buttons.login') }}
-                </router-link>
+                <div v-else class="butn h-25 text-uppercase text-decoration-none p-2 px-3 rounded-1" >
+                    للاستفاده من تجربه افضل علي الموبايل برجاء تحميل التطبيق الخاص بنا
+            </div>
             </div>
         </div>
     </div>

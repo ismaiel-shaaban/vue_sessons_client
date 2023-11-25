@@ -13,10 +13,11 @@
                     <div class="col-lg-4 col-md-6 mb-4" v-for="(item, index) in viewCars" :key="index">
                         <div class="box rounded-1 overflow-hidden d-flex flex-column h-100">
                             <div class="img-cont">
-                                <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${item.type_image}`" alt="">
+                                <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${item.image_path}`" alt="">
                             </div>
                             <div class="info p-3 flex-fill d-flex flex-column justify-content-between">
-                                <h2 class="text-capitalize">{{ $i18n.locale === 'en' ? item.name_en : item.name }}</h2>
+                                <h2 class="text-capitalize">{{ $i18n.locale === 'en' ? item.type_english_name : item.type_arabic_name }}</h2>
+
                                 <button class="bg-transparent border-0 fw-bold" @click="$emit('getIdAndForward', item.id),
                                 uploadCarId(item)
                                 
@@ -66,10 +67,12 @@ onMounted(async () => {
             carType.value = data.data
             loading.value = false
         })
+        //hhhh
     await axios.get('https://seasonreal.seasonsge.com/cars-view')
         .then(data => {
             // debugger
             carInfo.value = data.data
+            console.log('llllllllllllllllllllll');
             console.log(data.data)
             loading.value = false
         })

@@ -506,7 +506,7 @@ const submission = () => {
         formData.append("hotel_id", hotelBooking.value.hotel_id)
         formData.append("room_type", hotelBooking.value.adults_count)
         formData.append("child_room_type", [...prices.value].join(','))
-        formData.append("first_name ",`${hotelBooking.value.first_name}` )
+        formData.append("first_name",`${hotelBooking.value.first_name}` )
         formData.append("last_name", hotelBooking.value.last_name)
         formData.append("email", hotelBooking.value.email)
         formData.append("phone", hotelBooking.value.phone)

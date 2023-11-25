@@ -68,7 +68,7 @@
                     <th>Car Type</th>
                     <th>Driver</th>
                     <th>Days Count</th>
-                    <th v-if="bookInfo.notes !=''">Notes</th>
+                  
                    
                 </tr>
             </thead>
@@ -76,8 +76,9 @@
                 <tr>
                     <td  class="text-capitalize">
                         <!-- {{ bookInfo.Type_id }} -->
-                        {{ carsHistory[0]?
-                                 $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name 
+                        
+                        {{ bookInfo.carType?
+                                 $i18n.locale === 'en' ? bookInfo.carType.name_en : bookInfo.carType.name 
                                 
                                 :'' 
                                 
@@ -87,7 +88,7 @@
                         {{ bookInfo.with_driver === '0' ? 'Without Driver' : 'With Driver' }}
                     </td>
                     <td>{{ bookInfo.number_of_days }}</td>
-                    <td class="text-capitalize">{{ bookInfo.notes }}</td>
+                
                 </tr>
             </tbody>
         </table>
