@@ -222,7 +222,7 @@
             src="https://ci4.googleusercontent.com/proxy/3nyBbG6GlI0QOhiDqPBwjAPv_D6a_9UdWFZGWZqc_F774ZtgLhcOyAZ_FkufbVP5wfZlWJogtg-Y4GbVPgQipHy0uGeQcejnBWXoKKmVXbMUhybO534z3JyFaVZTV3wPjuQzfQ51QhYNpBjenZ2VWjmMc_Y1UONT9UNIJOdw3Wp4YuWwTY0J=s0-d-e1-ft#https://api.qrserver.com/v1/create-qr-code/?data=https://seasonsge.com/showbookInfoing/tjpuuvlst3kck0so8cw4&amp;size=100x100"
             alt="" title="hello" style="width:100px;height:auto;float:right;margin:30px" class="CToWUd" data-bit="iit"
             width="100" height="100"> -->
-        <img :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${url}`"
+        <img :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`"
             style="width:100px;height:auto;float:right;margin:30px" width="100" height="100" alt="">
         <span>Regards,</span>
         <br>
@@ -440,7 +440,7 @@ onMounted(async () => {
             withAdnWithout.value = true
         }
         url.value = window.location.href
-        url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
+        // url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
     } else {
         url.value = window.location.href
         await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
