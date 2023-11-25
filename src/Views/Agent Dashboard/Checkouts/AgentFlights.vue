@@ -302,6 +302,12 @@ const USDollar = Intl.NumberFormat('en-US', {
     currency: 'USD',
     style: 'currency',
 })
+const urlParams = new URLSearchParams(window.location.search);
+const login = urlParams.get('login'); // 'en'
+console.log(urlParams ,'login');
+if(login!=null){
+    localStorage.setItem('login' ,login)
+}
 
 const exportToPDF = () => {
     html2pdf(document.querySelector(".orderSummary"), {
@@ -376,8 +382,10 @@ const exportToPDFWithout = () => {
 
 
 onMounted(async () => {
+    console.log('onmounted');
     if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
+
         await axios.get("https://seasonreal.seasonsge.com/usersview")
             .then(data => {
                 userInfo.value = data.data.filter(el => el.id == login.id)[0]
@@ -399,6 +407,7 @@ onMounted(async () => {
                 social.value = data.data[0]
             })
         const userId = JSON.parse(localStorage.getItem("login"))
+        console.log('bookInfo.value.booking_id' ,bookInfo.value.booking_id);
         await axios.get(`https://seasonreal.seasonsge.com/fli-rr?id=${userId.id}`)
             .then(data => {
                 console.log(data);
@@ -439,10 +448,15 @@ onMounted(async () => {
         } else {
             withAdnWithout.value = true
         }
+        console.log('bookInfo.value.booking_id' ,bookInfo.value.booking_id);
         url.value = window.location.href
-        // url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
+        
+        url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
+        url.value+=`&login=${JSON.stringify(login) }`
     } else {
+        console.log('bookInfo.value.booking_id' ,bookInfo.value.booking_id);
         url.value = window.location.href
+        url.value+=`&login=${JSON.stringify(login) }`
         await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
             .then(data => {
                 bookInfo.value = data.data.bookingss[0]
