@@ -378,6 +378,7 @@ const submission = async () => {
             const userId = JSON.parse(localStorage.getItem("clientLogin"))
             userInfo.value.account_owner = userId.id
             loading.value = true
+            userInfo.value.first_name = `${userInfo.value.type}  ${userInfo.value.first_name} `
             await axios.post('https://seasonreal.seasonsge.com/car-order', userInfo.value)
                 .then(response => {
                     if (response.data.status === 'success') {

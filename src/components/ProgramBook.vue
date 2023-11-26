@@ -853,7 +853,7 @@ const submission = async () => {
             formData.append("city", props.searchInfo.city.toString())
             formData.append("include_flight", props.searchInfo.includeFlight)
             formData.append("flightNumber", flightNumber.value)
-            formData.append("firstName",`${bookingInfo.value.type},${bookingInfo.value.first_name}` )
+            formData.append("firstName",`${bookingInfo.value.type} ${bookingInfo.value.first_name}` )
             formData.append("lastName", bookingInfo.value.last_name)
             formData.append("email", bookingInfo.value.email)
             formData.append("phoneNumber", bookingInfo.value.phone)

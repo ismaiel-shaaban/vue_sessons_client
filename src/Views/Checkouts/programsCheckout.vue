@@ -274,8 +274,9 @@
             </tbody>
         </table>
 
+        <h3 class="hide" v-if="$route.params.with != 2">Checkout</h3>
 
-        <table>
+        <table class="hide" v-if="$route.params.with != 2">
             <table>
             <thead>
                 <tr>
@@ -351,11 +352,23 @@
             </div>
         </footer>
     </div>
-    <div class="download mx-auto py-5" dir="ltr">
+    <div v-if="!withAdnWithout" class="download mx-auto py-5" dir="ltr">
         <button class="rounded-pill btn btn-success px-4 d-flex align-items-center gap-2" @click="exportToPDF">
             Download PDF
             <i class="fa-solid fa-download"></i>
         </button>
+    </div>
+    <div v-else class="download mx-auto py-5" dir="ltr">
+        <div class="d-flex gap-3 align-items-center">
+            <button class="rounded-pill btn btn-success px-4 d-flex align-items-center gap-2" @click="exportToPDFWith">
+                Download PDF With Price
+                <i class="fa-solid fa-download"></i>
+            </button>
+            <button class="rounded-pill btn btn-success px-4 d-flex align-items-center gap-2" @click="exportToPDFWithout">
+                Download PDF Without Price
+                <i class="fa-solid fa-download"></i>
+            </button>
+        </div>
     </div>
 </template>
 <script setup>
@@ -383,6 +396,7 @@ const bookInfo = ref({})
 const passengers = ref([])
 const flightTrip = ref({})
 const rooms = ref([])
+const withAdnWithout = ref(false)
 const allCities = ref([])
 let carInfo = ref('')
 let allCitiesIds = ref([]);
@@ -417,6 +431,58 @@ const exportToPDF = () => {
         }
     });
 }
+
+const exportToPDFWith = () => {
+    document.querySelectorAll(".hide").forEach(el => {
+        if (el.hasAttribute("data-html2canvas-ignore")) {
+            el.removeAttribute("data-html2canvas-ignore")
+        }
+    })
+    html2pdf(document.querySelector(".orderSummary"), {
+        margin: [10, 3],
+        filename: "SeasonsGE.pdf",
+        enableLinks: false,
+        pagebreak: { mode: 'avoid-all', after: '#page2el' },
+        html2canvas: {
+            scale: 1,
+            useCORS: true,
+            allowTaint: true,
+            dpi: 192,
+            letterRendering: true,
+        },
+
+        jsPDF: {
+            format: 'a4',
+            orientation: 'portrait',
+        }
+    });
+}
+
+const exportToPDFWithout = () => {
+    document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
+    html2pdf(document.querySelector(".orderSummary"), {
+
+        margin: [10, 3],
+        filename: "SeasonsGE.pdf",
+        enableLinks: false,
+        pagebreak: { mode: 'avoid-all', after: '#page2el' },
+        html2canvas: {
+            scale: 1,
+            useCORS: true,
+            allowTaint: true,
+            dpi: 192,
+            letterRendering: true,
+        },
+
+        jsPDF: {
+            format: 'a4',
+            orientation: 'portrait',
+        }
+    });
+}
+
+
+
 const departureTime = ref();
 const departureTimeReturn = ref();
 const arrivalTime = ref();
@@ -584,6 +650,14 @@ newUrl.value = url.id;
                     el.child_room = el.child_room.split(',')[0]
                 })
             })
+
+            if (route.params.with === '1') {
+            document.querySelectorAll(".hide").forEach(el => el.removeAttribute('data-html2canvas-ignore'))
+        } else if (route.params.with === '2') {
+            document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
+        } else {
+            withAdnWithout.value = true
+        }
         url.value = window.location.href
         url.value = url.value.replace(/\/\d+$/ig, `/${bookInfo.value.booking_id}`)
     } else {
@@ -705,6 +779,14 @@ newUrl.value = url.id;
                         userInfo.value = data.data
                     })
             })
+
+            if (route.params.with === '1') {
+            document.querySelectorAll(".hide").forEach(el => el.removeAttribute('data-html2canvas-ignore'))
+        } else if (route.params.with === '2') {
+            document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
+        } else {
+            withAdnWithout.value = true
+        }
     }
 })
 

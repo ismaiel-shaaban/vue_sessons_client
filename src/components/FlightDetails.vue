@@ -503,7 +503,7 @@ const submission = async () => {
             loading.value = true
             const formData = new FormData()
             formData.append("flight_number", props.flightId.toString())
-            formData.append("firstName",`${bookingInfo.value.first_name}` )
+            formData.append("firstName",`${bookingInfo.value.type} ${bookingInfo.value.first_name}` )
             formData.append("lastName", bookingInfo.value.last_name)
             formData.append("email", bookingInfo.value.email)
             formData.append("phoneNumber", bookingInfo.value.phone)

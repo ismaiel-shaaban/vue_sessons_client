@@ -311,9 +311,11 @@ const search = async () => {
                     loading.value = false
                 }
             } else {
-                const dateDifference = searchInfo.value.toDate.getDate() - searchInfo.value.departureDate.getDate()
+             
+                const timeDifferenceInMilliseconds = searchInfo.value.toDate - searchInfo.value.departureDate;
+                const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
                 if (el.return_airline == searchInfo.value.city && // <-- program destination
-                    el.num_of_days%dateDifference == 1 &&
+                    el.num_of_days%timeDifferenceInDays == 1 &&
                     el.includes_flight == searchInfo.value.includeFlight
                 ) {
                     searchResults.value.push(el)

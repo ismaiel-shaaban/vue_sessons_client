@@ -365,6 +365,7 @@ const submission = async () => {
     if (!validation.value.$error) {
         loading.value = true
         if (userInfo.value.balance > bookInfo.value.net_amount) {
+            bookInfo.value.first_name = `${ bookInfo.value.type}  ${ bookInfo.value.first_name}`
             await axios.post("https://seasonreal.seasonsge.com/car-order", bookInfo.value)
                 .then((response) => {
                     if (response.data.status) {
