@@ -157,11 +157,12 @@
                             <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.net') }}:</span>
                             <span class="myTotal d-block p-2 px-3 rounded-1 bg-secondary bg-opacity-25">
                                 <!-- {{ (bookInfo.net_amount || 0).toFixed(2) }}$ -->
+                                
                                 {{ 
                                       
                                     
         
-                                     USDollar.format(((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))  - ( +(`0.${bookInfo.agent_discount}`) * ((myPrice * bookInfo.total_days) + (tax * (myPrice * bookInfo.total_days)))))  
+                                     USDollar.format(((myPrice * bookInfo.total_days) - (viewCarId[0].tax/100 * (myPrice * bookInfo.total_days)))  - ( (bookInfo.agent_discount/100) * ((myPrice * bookInfo.total_days) )))  
                                     
                                     
                                        

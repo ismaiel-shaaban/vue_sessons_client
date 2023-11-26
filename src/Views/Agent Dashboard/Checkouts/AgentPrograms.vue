@@ -76,6 +76,7 @@
                     <th>City</th>
                     <!-- <th>To Date</th> -->
                     <th>Car</th>
+                    <th>Number of Days & Nights</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,6 +85,7 @@
                     <td>{{ city }}</td>
                     <!-- <td>--------</td> -->
                     <td>{{ $i18n.locale === 'en' ? carInfo.name_en : carInfo.name}}</td>
+                    <td> {{ bookInfo.details.num_of_days }} & {{bookInfo.details.num_of_nights  }} </td>
                 </tr>
             </tbody>
         </table>
@@ -281,7 +283,7 @@
         </table>
 
 
-        <table>
+        <table class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr>
                     <th>Total</th>
@@ -490,6 +492,8 @@ newUrl.value = url.id;
                 bookInfo.value.destination = new Set(bookInfo.value.destination.split(","))
                 axios.get("https://seasonreal.seasonsge.com/all-program")
                     .then(data => {
+                        console.log(';;lllllllllllllllllll', data.data);
+                        console.log(';;lllllllllllllllllll', bookInfo.value);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
                     })
                 for (let i = 2; i <= 8; i++) {
@@ -578,10 +582,10 @@ newUrl.value = url.id;
                     });
             })
         await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
-            console.log('bookInfo' ,bookInfo.value.details);
+            console.log('bookInfo' ,bookInfo.value);
             console.log(' data.data' , data.data);
                 data.data.filter(el => {
-                    if (el.id === bookInfo.value.details.car_type) {
+                    if (el.id == bookInfo.value.details.car_type) {
                         carInfo.value = el
                     
                     }
@@ -700,7 +704,7 @@ newUrl.value = url.id;
                 console.log('bookInfo' ,bookInfo.value.details);
                 console.log(' data.data' , data.data);
                     data.data.filter(el => {
-                        if (el.id === bookInfo.value.details.car_type) {
+                        if (el.id == bookInfo.value.details.car_type) {
                             carInfo.value = el
                         
                         }

@@ -147,7 +147,7 @@
                         <div class="w-100 mt-2">
                             <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.net') }}: </span>
                             <span class="myTotal pure-total p-2 fw-semibold d-block px-3 rounded-1 bg-secondary bg-opacity-25">
-                                {{ USDollar.format((tax * (myPrice * userInfo.total_days)) + (myPrice * userInfo.total_days)) }}
+                                {{ USDollar.format((viewCarId[0].tax/100 * (myPrice * userInfo.total_days)) + (myPrice * userInfo.total_days)) }}
                             </span>
                         </div>
                         <div class="w-100 mt-2 position-relative">
