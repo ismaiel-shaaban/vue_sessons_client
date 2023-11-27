@@ -742,10 +742,11 @@ newUrl.value = url.id;
                                 .then(data => {
                                     let startDateObject1 =bookInfo.value.details.from_date
                                     let endDateObject ;
-                           console.log(bookInfo.value,'jjjjjjjjjjj');
+                                    console.log(bookInfo.value,'jjjjjjjjjjj');
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
+                                        console.log('kkkkkkkk' ,startDateObject);
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         el.startDate =startDateObject1
                                         console.log('kkkkkkkk' ,endDateObject);
