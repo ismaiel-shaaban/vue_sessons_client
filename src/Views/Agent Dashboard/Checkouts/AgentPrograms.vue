@@ -646,6 +646,7 @@ newUrl.value = url.id;
 
                     });
             })
+            
         await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
             console.log('bookInfo' ,bookInfo.value);
             console.log(' data.data' , data.data);
@@ -757,7 +758,7 @@ newUrl.value = url.id;
 
                             axios.get("https://seasonreal.seasonsge.com/cities-view")
                                 .then(data => {
-                                    let startDateObject1 =newcheckIn.value 
+                                    let startDateObject1 =bookInfo.value.details.from_date
                                     let endDateObject ;
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];

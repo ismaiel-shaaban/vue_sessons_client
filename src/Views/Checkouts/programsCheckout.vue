@@ -576,6 +576,7 @@ newUrl.value = url.id;
                         if (flightTrip.value !== undefined) {
                             axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
                                 if (data.data.success) {
+                                    console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                     flightTrip.value["flightAirLine"] = data.data.airlines.filter(
                                         (airLine) => airLine.id == flightTrip.value.flightLine
                                     )[0];
@@ -705,6 +706,7 @@ newUrl.value = url.id;
                         })[0];
                         axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
                             if (data.data.success) {
+                                console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                 flightTrip.value["flightAirLine"] = data.data.airlines.filter(
                                     (airLine) => airLine.id == flightTrip.value.flightLine
                                 )[0];
@@ -738,8 +740,9 @@ newUrl.value = url.id;
 
                             axios.get("https://seasonreal.seasonsge.com/cities-view")
                                 .then(data => {
-                                    let startDateObject1 =newcheckIn.value 
+                                    let startDateObject1 =bookInfo.value.details.from_date
                                     let endDateObject ;
+                           console.log(bookInfo.value,'jjjjjjjjjjj');
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
