@@ -9,7 +9,7 @@
             <h3 class="position-relative mb-5">{{ $t('carBook.heading') }}</h3>
             <div class="inner d-flex py-5 gap-4">
                 <div class="img-cont w-50">
-                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].image_path}`" alt="" />
+                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${carInfo.car_image}`" alt="" />
                 </div>
                 <div class="car-info flex-fill">
 
@@ -285,10 +285,12 @@ onMounted(async () => {
     });
     await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
         data.data.filter(el => {
+            console.log('llllllllllll', data.data ,props.carId);
             if (el.id == props.carId) {
                 carInfo.value['car_name_en'] = el.name_en
                 carInfo.value['car_name'] = el.name
                 carInfo.value['car_image'] = el.img
+                console.log('carInfo.value' ,carInfo.value);
             }
         })
     });

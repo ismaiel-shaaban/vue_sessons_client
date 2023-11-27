@@ -13,7 +13,7 @@
 
             <div class="inner d-flex py-5 gap-4">
                 <div class="img-cont w-50">
-                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${viewCarId[0].image_path}`" alt="" />
+                    <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${carInfo.car_image}`" alt="" />
                 </div>
                 <div class="car-info flex-fill">
                     <div class="d-flex gap-3">

@@ -146,7 +146,7 @@
 
         <h3>Rooms Inforamtion</h3>
 
-        <table>
+        <table class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr v-if="bookInfo.details">
                     <th v-if="bookInfo.destination.has('1')">Single Room Price</th>
@@ -165,7 +165,7 @@
                 </tr>
             </tbody>
         </table>
-        <table>
+        <table  class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr v-if="bookInfo.details">
                     <th v-if="bookInfo.destination.has('4')">Child Without Bed Price</th>

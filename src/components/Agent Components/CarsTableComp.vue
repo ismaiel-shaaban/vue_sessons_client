@@ -12,11 +12,11 @@
                     <div class="col-lg-4 col-md-6 mb-4" v-for="(item, index) in Array.from(new Set( viewCars))" :key="index">
                         <div class="box rounded-1 overflow-hidden d-flex flex-column h-100">
                             <div class="img-cont">
-                                <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${item.image_path}`" alt="">
+                                <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/images/Agents/${carType[index].img}`" alt="">
                             </div>
                             <div class="info p-3 flex-fill d-flex flex-column justify-content-between">
                                 <h2 class="text-capitalize">{{ $i18n.locale === 'en' ? item.type_english_name : item.type_arabic_name }}</h2>
-                                <button class="bg-transparent border-0 fw-bold" @click="$emit('getIdAndForward', item.id),
+                                <button class="bg-transparent border-0 fw-bold" @click="$emit('getIdAndForward', item.type_id),
                                 uploadCarId(item);
                                 ">
                                     {{ $t('buttons.bookNow') }}
