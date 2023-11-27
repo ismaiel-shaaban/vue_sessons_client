@@ -263,7 +263,7 @@ onMounted(async () => {
         // debugger
         // carInfo.value =data.data.find((el)=>+el.type_id === props.carId)
         data.data.filter(el => {
-            if (+el.type_id === props.carId) {
+            if (el.type_id == props.carId) {
                 carInfo.value = el
                 userInfo.value.with_driver = el.price_with_driver;
             }
@@ -331,13 +331,7 @@ const userInfo = ref({
             return "1"
         } else return ((new Date(userInfo.value.end_date).getTime() - new Date(userInfo.value.start_date).getTime()) / (1000 * 60 * 60 * 24)).toString()
     }),
-    total_amount: computed(() => {
-        if (userInfo.value.with_driver === '0') {
-            return parseFloat(userInfo.value.total_days * carInfo.value.price_per_day).toFixed(2)
-        } else {
-            return parseFloat(userInfo.value.total_days * carInfo.value.price_with_driver).toFixed(2)
-        }
-    }),
+    total_amount: computed(() => myNetTotal.value.replace(/\$/g, '')),
     tax: computed(() => parseFloat(carInfo.value.tax)),
     net_amount: computed(() => (parseFloat(userInfo.value.total_amount) + ((parseFloat(userInfo.value.tax)).toFixed(2) / 100) * parseFloat(userInfo.value.total_amount))),
     notes: "",

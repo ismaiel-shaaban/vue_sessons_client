@@ -276,9 +276,11 @@ onMounted(async () => {
     bookInfo.total_days = USDollar.format(parseInt(bookInfo.total_days) * parseInt(myPrice))
     loading.value = true
     await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-view").then((data) => {
+        console.log('kkkkkkk',props.carId);
         data.data.filter(el => {
-            if (+el.type_id === props.carId) {
+            if (el.type_id == props.carId) {
                 carInfo.value = el
+                console.log('ssssssssss' ,carInfo);
                 loading.value = false
             }
         })
@@ -326,21 +328,12 @@ const bookInfo = ref({
             return 1;
         } else return (new Date(bookInfo.value.end_date).getTime() - new Date(bookInfo.value.start_date).getTime()) / (1000 * 60 * 60 * 24).toString()
     }),
-    total_amount: computed(() => {
-        if (bookInfo.value.width_driver === "1") {
-            return (
-                parseFloat(bookInfo.value.total_days * carInfo.value.price_with_driver)
-            ) || 0;
-        } else
-            return (
-                parseFloat(bookInfo.value.total_days * carInfo.value.price_per_day)
-            ) || 0;
-    }),
+    total_amount: computed(() => myNetTotal.value.replace(/\$/g, '')),
     tax: computed(() => parseFloat(carInfo.value.tax) || 0),
     agent_discount: computed(() => {
         return ( userInfo.value.discount) 
     }),
-    net_amount: computed(() => (bookInfo.value.total_amount + ((bookInfo.value.tax / 100) * bookInfo.value.total_amount)) - bookInfo.value.agent_discount) || 0,
+    net_amount: computed(() => ((myPrice.value * bookInfo.value.total_days) - (viewCarId.value[0].tax/100 * (myPrice.value * bookInfo.value.total_days)))  - ( (bookInfo.value.agent_discount/100) * ((myPrice.value * bookInfo.value.total_days) )) || 0),
     notes: "",
     account_owner: computed(() => userInfo.value.id),
 });
