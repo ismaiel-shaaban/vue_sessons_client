@@ -748,7 +748,9 @@ newUrl.value = url.id;
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         el.startDate =startDateObject1
+                                        console.log('kkkkkkkk' ,endDateObject);
                                         el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
+                                        console.log('kkkkkkkk' ,el.endDate);
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
                                         endDateObject =''
                                     });
