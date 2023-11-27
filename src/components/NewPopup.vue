@@ -31,7 +31,7 @@ onMounted(async () => {
     if (sessionStorage.getItem("clientLogin") || sessionStorage.getItem("login")) {
         isLoggedin.value = true
     }
-    await axios.get("https://seasonreal.seasonsge.com/popup").then(data => {
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/popup").then(data => {
         newPopup.value = data.data[0]
         console.log(newPopup.value.image );
     })

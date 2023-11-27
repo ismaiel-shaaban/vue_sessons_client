@@ -171,11 +171,11 @@ const exportToPDF = () => {
 
 onMounted(async () => {
     const login = JSON.parse(sessionStorage.getItem("clientLogin"))
-    await axios.get("https://seasonreal.seasonsge.com/usersview")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
         .then(data => {
             userInfo.value = data.data.filter(el => el.id === login.id)[0]
         })
-    await axios.get("https://seasonreal.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
         .then(data => {
             social.value = data.data[0]
         })

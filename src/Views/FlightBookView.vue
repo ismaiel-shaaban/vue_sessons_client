@@ -293,7 +293,7 @@ const searching = async () => {
                 }
             }
         })
-        await axios.get("https://seasonreal.seasonsge.com/airlines-view")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view")
             .then(data => {
                 if (data.data.success) {
                     searchResults.value.forEach(el => {
@@ -306,7 +306,7 @@ const searching = async () => {
                 }
                 // console.log(data)
             })
-        await axios.get('https://seasonreal.seasonsge.com/viewAirports').then(data => {
+        await axios.get('https://seasonreal.seasonsge.com/appv1real/viewAirports').then(data => {
             if (data.data.success) {
                 searchResults.value.forEach(el => {
                     el.from = data.data.data.filter(ele => el.fromAirport === ele.id)[0]
@@ -327,13 +327,13 @@ const searching = async () => {
 onMounted(async () => {
 
     loading.value = true
-    await axios.get('https://seasonreal.seasonsge.com/viewAirports').then(data => {
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/viewAirports').then(data => {
         if (data.data.success) {
             airPorts.value = data.data.data
             loading.value = false
         }
     })
-    await axios.get("https://seasonreal.seasonsge.com/flights?all")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all")
         .then(data => {
             // console.log(data)
             allFlights.value = data.data

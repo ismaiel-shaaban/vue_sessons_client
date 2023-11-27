@@ -525,7 +525,7 @@ const submission = () => {
                 }
             }
 
-            axios.post("https://seasonreal.seasonsge.com/new-hotel-booking", formData)
+            axios.post("https://seasonreal.seasonsge.com/appv1real/new-hotel-booking", formData)
                 .then(response => {
                     if (response.data.success) {
                         document.querySelector(".alert").classList.add("active")
@@ -536,12 +536,12 @@ const submission = () => {
                             allRooms.append("id_hotel", randomCode.value)
                             allRooms.append("room_type", el.roomType)
                             allRooms.append("chile_room", `${el.childReservation},${el.childCount}`)
-                            axios.post("https://seasonreal.seasonsge.com/add_hotel_room", allRooms)
+                            axios.post("https://seasonreal.seasonsge.com/appv1real/add_hotel_room", allRooms)
                                 .then(data => {
                                     console.log(data);
                                 })
                         })
-                        axios.get(`https://seasonreal.seasonsge.com/hotel--rr?id=${userId.id}`)
+                        axios.get(`https://seasonreal.seasonsge.com/appv1real/hotel--rr?id=${userId.id}`)
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
@@ -573,7 +573,7 @@ onMounted(async () => {
     CheckIn.value = localStorage.getItem('lang') == 'ar' ? "تاريخ الدخول" : 'checkIn';
     Checkout.value = localStorage.getItem('lang') == 'ar' ? "تاريخ الخروج" : 'checkOut';
     console.log('id is =>' +' ' + props.hotelId);
-    await axios.get("https://seasonreal.seasonsge.com/all-hotel")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/all-hotel")
         .then(data => {
             console.log('iam all data');
             imageData.value = data.data.data;
@@ -643,7 +643,7 @@ onMounted(async () => {
     //     prices.value.add("6")
     // }
     // hotelBooking.value.total += +hotelDetails.value.price_per_infant * props.searchInfo.no_infants;
-    await axios.get("https://seasonreal.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
         .then(data => {
             social.value = data.data[0]
         })

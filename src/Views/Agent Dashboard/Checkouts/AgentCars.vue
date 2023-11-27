@@ -349,9 +349,9 @@ const exportToPDFWithout = () => {
 
 onMounted(async () => {
     console.log(route.params ,'route.params.id');
-    if ((route.params.id) != 'NaN') {
+    if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
-        await axios.get("https://seasonreal.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
             .then(data => {
                 userInfo.value = data.data.filter(el => el.id == login.id)[0]
             })
@@ -377,18 +377,18 @@ onMounted(async () => {
 
             
 
-        await axios.get("https://seasonreal.seasonsge.com/info")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
             .then(data => {
                 social.value = data.data[0]
             })
         const userId = JSON.parse(localStorage.getItem("login"))
         
-        await axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
             .then(data => {
                 console.log(data ,'data');
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
                 console.log(data.data);
-                axios.get("https://seasonreal.seasonsge.com/cars-type-view")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view")
                     .then(data => bookInfo.value.carType = data.data.filter(el => el.id ==bookInfo.value.type_id)[0])
                     .catch(error => {
                         router.push({
@@ -406,16 +406,17 @@ onMounted(async () => {
         }
         url.value = window.location.href
         url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.random_code}/`)
+        console.log('uuuuuuu', url.value);
       
     } else {
         console.log('jjjjjjjjjjjjjjjj');
         url.value = window.location.href
-        await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/boking-search?booking_code=${route.params.id}`)
             .then(data => {
                 bookInfo.value = data.data.bookings[0]
-                axios.get("https://seasonreal.seasonsge.com/cars-type-view")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view")
                     .then(data => bookInfo.value.carType = data.data.filter(el => el.id == +bookInfo.value.type_id)[0])
-                axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${bookInfo.value.account_owner}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${bookInfo.value.account_owner}`)
                     .then(data => {
                         userInfo.value = data.data
                     })

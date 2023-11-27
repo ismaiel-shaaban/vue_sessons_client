@@ -209,7 +209,7 @@ onMounted(async () => {
             name: 'Agent Dashboard',
             params: { lang: i18n.global.locale.value, userId: login.id }
         })
-        await axios.get("https://seasonreal.seasonsge.com/usersview").then(data => {
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then(data => {
             data.data.forEach(el => {
                 if (el.id == route.params.userId) {
                     userData.value = el

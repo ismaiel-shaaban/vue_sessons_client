@@ -191,7 +191,7 @@ const searchInfo = ref({
 
 
 const getCitites = async (e) => {
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             cities.value = data.data.filter(el => el.country_id == e.target.value && !el.name.includes("&") && !el.name_en.includes("&"))
         })
@@ -286,12 +286,12 @@ const search = () => {
 const imagData = ref([]);
 onMounted(async () => {
     loading.value = true
-    await axios.get("https://seasonreal.seasonsge.com/country-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/country-view")
         .then(data => {
             loading.value = false
             countries.value = data.data.filter(el => !el.name_en.includes("&") && !el.name.includes("&"))
         })
-        await axios.get("https://seasonreal.seasonsge.com/all-hotel")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/all-hotel")
         .then(data => {
             if (data.data.success) {
                 allHotels.value = data.data.data

@@ -224,11 +224,11 @@ const flightTrip = ref({})
 
 
 onMounted(async () => {
-    await axios.get("https://seasonreal.seasonsge.com/all-program")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
         .then(data => {
             programDetails.value = data.data.filter(el => el.id == route.params.programId)[0]
             if (programDetails.value.includes_flight == '1') {
-                axios.get("https://seasonreal.seasonsge.com/flights?all").then(data => {
+                axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then(data => {
                     console.log(data.data);
                     flightTrip.value = data.data.filter(ele => {
                         if (ele.flightNumber === programDetails.value.flight_number &&
@@ -236,13 +236,13 @@ onMounted(async () => {
                             return ele
                         }
                     })[0]
-                    axios.get("https://seasonreal.seasonsge.com/airlines-view")
+                    axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view")
                         .then(data => {
                             if (data.data.success) {
                                 flightTrip.value['flightAirLine'] = data.data.airlines.filter(airLine => airLine.id == flightTrip.value.flightLine)[0]
                             }
                         })
-                    axios.get("https://seasonreal.seasonsge.com/viewAirports")
+                    axios.get("https://seasonreal.seasonsge.com/appv1real/viewAirports")
                         .then(data => {
                             if (data.data.success) {
                                 flightTrip.value['from'] = data.data.data.filter(element => element.id == flightTrip.value.fromAirport)[0]
@@ -254,7 +254,7 @@ onMounted(async () => {
                 })
             }
         })
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             programDetails.value.destination = data.data.filter(el => el.id == programDetails.value.return_airline)[0]
         })

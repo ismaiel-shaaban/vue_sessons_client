@@ -58,7 +58,7 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("clientLogin")) {
         const userId = JSON.parse(localStorage.getItem("clientLogin"))
-        await axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
         .then(data => {
                 if (typeof data.data !== 'string') {
                     programsHistory.value = data.data

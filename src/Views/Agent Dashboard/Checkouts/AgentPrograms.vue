@@ -84,7 +84,7 @@
                     <td>{{ country }}</td>
                     <td>{{ city }}</td>
                     <!-- <td>--------</td> -->
-                    <td>{{ $i18n.locale === 'en' ? carInfo.name_en : carInfo.name}}</td>
+                    <td>{{ $i18n.locale === 'en' ? carInfo?.name_en : carInfo?.name}}</td>
                     <td> {{ bookInfo.details?.num_of_days }} & {{bookInfo.details?.num_of_nights  }} </td>
                 </tr>
             </tbody>
@@ -295,7 +295,7 @@
                 <tr>
                     <td>{{ USDollar.format(bookInfo.total) }}</td>
                     <td>{{ bookInfo.tax }}%</td>
-                    <td>{{ USDollar.format(bookInfo.net) }}</td>
+                    <td>{{ USDollar.format(bookInfo.net) }} </td>
                 </tr>
             </tbody>
         </table>
@@ -319,8 +319,9 @@
             src="https://ci4.googleusercontent.com/proxy/3nyBbG6GlI0QOhiDqPBwjAPv_D6a_9UdWFZGWZqc_F774ZtgLhcOyAZ_FkufbVP5wfZlWJogtg-Y4GbVPgQipHy0uGeQcejnBWXoKKmVXbMUhybO534z3JyFaVZTV3wPjuQzfQ51QhYNpBjenZ2VWjmMc_Y1UONT9UNIJOdw3Wp4YuWwTY0J=s0-d-e1-ft#https://api.qrserver.com/v1/create-qr-code/?data=https://seasonsge.com/showbookInfoing/tjpuuvlst3kck0so8cw4&amp;size=100x100"
             alt="" title="hello" style="width:100px;height:auto;float:right;margin:30px" class="CToWUd" data-bit="iit"
             width="100" height="100"> -->
-            <img :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`"
+            <img  :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`"
             style="width:100px;height:auto;float:right;margin:30px" width="100" height="100" alt="">
+            
         <span>Regards,</span>
         <br>
         <a href="https://seasonsge.com/" target="_blank">https://seasonsge.com/</a>
@@ -522,12 +523,12 @@ checkIn.value = data1.from_date;
 });
 
 onMounted(async () => {
-    let url = JSON.parse(localStorage.getItem('login'));
+   
 newUrl.value = url.id;
     if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
      
-        await axios.get("https://seasonreal.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
             .then(data => {
                 userInfo.value = data.data.filter(el => el.id == login.id)[0]
             })
@@ -543,16 +544,16 @@ newUrl.value = url.id;
         }catch (e) {
 
         }
-        await axios.get("https://seasonreal.seasonsge.com/info")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
             .then(data => {
                 social.value = data.data[0]
             })
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://seasonreal.seasonsge.com/br-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
             .then(data => {
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
                 bookInfo.value.destination = new Set(bookInfo.value.destination.split(","))
-                axios.get("https://seasonreal.seasonsge.com/all-program")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
                         console.log(';;lllllllllllllllllll', data.data);
                         console.log(';;lllllllllllllllllll', bookInfo.value);
@@ -570,16 +571,16 @@ newUrl.value = url.id;
                 }
                 const country = new FormData()
                 country.append("country_id", bookInfo.value.country)
-                axios.post(`https://seasonreal.seasonsge.com/country-by-id`, country)
+                axios.post(`https://seasonreal.seasonsge.com/appv1real/country-by-id`, country)
                     .then(data => {
                         bookInfo.value.countryName = data.data.country.name_en
                     })
-                axios.get("https://seasonreal.seasonsge.com/cities-view")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                     .then(data => {
                         bookInfo.value.cityName = data.data.filter(el => el.id == bookInfo.value.City)[0].name_en
                     })
                 if (bookInfo.value.Include_flight == "1") {
-                    axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
+                    axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then((data) => {
                         flightTrip.value = data.data.filter((ele) => {
                         console.log('flightTrip.value',flightTrip.value);
 
@@ -592,7 +593,7 @@ newUrl.value = url.id;
                             })[0];
                             console.log('hhhhhh',flightTrip.value);
                         if (flightTrip.value !== undefined) {
-                            axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
+                            axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view").then((data) => {
                                 if (data.data.success) {
                                     console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                     flightTrip.value["flightAirLine"] = data.data.airlines.filter(
@@ -600,7 +601,7 @@ newUrl.value = url.id;
                                     )[0];
                                 }
                             });
-                            axios.get("https://seasonreal.seasonsge.com/viewAirports").then((data) => {
+                            axios.get("https://seasonreal.seasonsge.com/appv1real/viewAirports").then((data) => {
                                 if (data.data.success) {
                                     flightTrip.value["from"] = data.data.data.filter(
                                         (element) => element.id == flightTrip.value.fromAirport
@@ -619,7 +620,7 @@ newUrl.value = url.id;
                         }
                     });
                 }
-                axios.get(`https://seasonreal.seasonsge.com/pr-data?id=${bookInfo.value.brogram_id}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/pr-data?id=${bookInfo.value.brogram_id}`)
                     .then((data) => {
                         if (typeof data.data === "object") {
                             allCities.value = data.data
@@ -627,7 +628,7 @@ newUrl.value = url.id;
                                 return ele.city_name
                             }); 
 
-                            axios.get("https://seasonreal.seasonsge.com/cities-view")
+                            axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
                                     let startDateObject1 =newcheckIn.value 
                                     let endDateObject ;
@@ -647,7 +648,7 @@ newUrl.value = url.id;
                     });
             })
             
-        await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view").then((data) => {
             console.log('bookInfo' ,bookInfo.value);
             console.log(' data.data' , data.data);
                 data.data.filter(el => {
@@ -660,7 +661,7 @@ newUrl.value = url.id;
                 console.log('carInfo' ,carInfo);
             });
             
-        await axios.get(`https://seasonreal.seasonsge.com/get-room?id_hotel=${bookInfo.value.booking_id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.booking_id}`)
             .then(data => {
                 console.log(data);
                 rooms.value = data.data
@@ -677,15 +678,16 @@ newUrl.value = url.id;
             withAdnWithout.value = true
         }
         url.value = window.location.href
-        url.value = url.value.replace(/\/\d+$/ig, `/${bookInfo.value.booking_id}`)
+        url.value = url.value.replace(/\/\d+\//ig, `/${bookInfo.value.booking_id}/`)
+        console.log('uuuuuuu', bookInfo.value);
     } else {
         url.value = window.location.href
-        await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/boking-search?booking_code=${route.params.id}`)
             .then(data => {
                 bookInfo.value = data.data.reservations[0]
                 bookInfo.value.destination = new Set(bookInfo.value.destination.split(","))
 
-                axios.get("https://seasonreal.seasonsge.com/all-program")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
                         console.log(data.data);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
@@ -703,16 +705,16 @@ newUrl.value = url.id;
                 }
                 const country = new FormData()
                 country.append("country_id", bookInfo.value.country)
-                axios.post(`https://seasonreal.seasonsge.com/country-by-id`, country)
+                axios.post(`https://seasonreal.seasonsge.com/appv1real/country-by-id`, country)
                     .then(data => {
                         bookInfo.value.countryName = data.data.country.name_en
                     })
-                axios.get("https://seasonreal.seasonsge.com/cities-view")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                     .then(data => {
                         bookInfo.value.cityName = data.data.filter(el => el.id == bookInfo.value.City)[0].name_en
                     })
                 if (bookInfo.value.Include_flight == "1") {
-                    axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
+                    axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then((data) => {
                         console.log('flightTrip.value',flightTrip.value);
                         flightTrip.value = data.data.filter((ele) => {
                             if (
@@ -722,7 +724,7 @@ newUrl.value = url.id;
                                 return ele;
                             }
                         })[0];
-                        axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view").then((data) => {
                             if (data.data.success) {
                                 console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                 flightTrip.value["flightAirLine"] = data.data.airlines.filter(
@@ -730,7 +732,7 @@ newUrl.value = url.id;
                                 )[0];
                             }
                         });
-                        axios.get("https://seasonreal.seasonsge.com/viewAirports").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/viewAirports").then((data) => {
                             if (data.data.success) {
                                 flightTrip.value["from"] = data.data.data.filter(
                                     (element) => element.id == flightTrip.value.fromAirport
@@ -748,7 +750,7 @@ newUrl.value = url.id;
                         });
                     });
                 }
-                axios.get(`https://seasonreal.seasonsge.com/pr-data?id=${bookInfo.value.brogram_id}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/pr-data?id=${bookInfo.value.brogram_id}`)
                     .then((data) => {
                         if (typeof data.data === "object") {
                             allCities.value = data.data
@@ -756,17 +758,17 @@ newUrl.value = url.id;
                                 return ele.city_name
                             }); 
 
-                            axios.get("https://seasonreal.seasonsge.com/cities-view")
+                            axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
                                     let startDateObject1 =bookInfo.value.details.from_date
                                     let endDateObject ;
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
-                                        const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
+                                        const startDateObject = parse(startDateObject1, 'yyyy-MM-dd', new Date());
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         el.startDate =startDateObject1
-                                        el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
-                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
+                                        el.endDate = ref(format(endDateObject, 'yyyy-MM-dd')).value;
+                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'yyyy-MM-dd', new Date()) , 0), 'yyyy-MM-dd')).value  
                                         endDateObject =''
                                     });
                                 })
@@ -775,7 +777,7 @@ newUrl.value = url.id;
 
                     });
 
-                axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
+                axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view").then((data) => {
                 console.log('bookInfo' ,bookInfo.value.details);
                 console.log(' data.data' , data.data);
                     data.data.filter(el => {
@@ -788,7 +790,7 @@ newUrl.value = url.id;
                     console.log('carInfo' ,carInfo);
                 });
             
-                axios.get(`https://seasonreal.seasonsge.com/get-room?id_hotel=${bookInfo.value.booking_id}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.booking_id}`)
                     .then(data => {
                         rooms.value = data.data
                         rooms.value.map(el => {
@@ -796,7 +798,7 @@ newUrl.value = url.id;
                             el.child_room = el.child_room.split(',')[0]
                         })
                     })
-                axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${bookInfo.value.email}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${bookInfo.value.email}`)
                     .then(data => {
                         userInfo.value = data.data
                     })

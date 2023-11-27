@@ -84,11 +84,11 @@ const showConent = (item) => {
     forward.value = true
 }
 onMounted(async () => {
-    await axios.get('https://seasonreal.seasonsge.com/about')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/about')
         .then(data => {
             aboutTxt.value = data.data[0]
         })
-    await axios.get('https://seasonreal.seasonsge.com/about-section')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/about-section')
         .then(data => {
             sectionLinks.value = data.data
         })

@@ -47,18 +47,18 @@ localStorage.setItem('carId' , item.id)
 }
 onMounted(async () => {
     loading.value = true
-    await axios.get('https://seasonreal.seasonsge.com/carview').then((data)=>{
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/carview').then((data)=>{
     viewCars.value = data.data;
     console.log('cars data are');
     console.log(viewCars.value);
     localStorage.setItem('carsData' , JSON.stringify(viewCars.value))
     })
-    await axios.get('https://seasonreal.seasonsge.com/cars-type-view')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/cars-type-view')
         .then(data => {
             carType.value = data.data
             loading.value = false
         })
-    await axios.get('https://seasonreal.seasonsge.com/cars-view')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/cars-view')
         .then(data => {
             // console.log(data.data)
             carInfo.value = data.data

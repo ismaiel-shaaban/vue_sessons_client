@@ -41,7 +41,7 @@ const allResults = ref([])
 
 onMounted(async () => {
     allResults.value = [...props.searchResults]
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             allResults.value.forEach(el => {
                 el.cityObj = data.data.filter(ele => ele.id == el.city)[0]

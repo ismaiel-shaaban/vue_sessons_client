@@ -217,7 +217,7 @@ const searchInfo = ref({
 
 
 const getCitites = async (e) => {
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             cities.value = data.data.filter(el => el.country_id == e.target.value)
         })
@@ -336,12 +336,12 @@ const search = async () => {
 let programmsImages = ref([]);
 onMounted(async () => {
     loading.value = true
-    await axios.get("https://seasonreal.seasonsge.com/country-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/country-view")
         .then(data => {
             loading.value = false
             countries.value = data.data
         })
-        await axios.get("https://seasonreal.seasonsge.com/all-program")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
         .then(data => {
             allPrograms.value = data.data
             localStorage.setItem('allprogramms' , JSON.stringify(allPrograms.value))

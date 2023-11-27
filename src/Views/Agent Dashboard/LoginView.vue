@@ -68,7 +68,7 @@ const submission = () => {
         formData.append("password", user.value.password)
         loadding.value = true
         localStorage.setItem("activeTab", '1')
-        axios.post("https://seasonreal.seasonsge.com/login", formData).then(response => {
+        axios.post("https://seasonreal.seasonsge.com/appv1real/login", formData).then(response => {
             if (response.data.success && response.data.data.type == 1) {
                 localStorage.setItem("login", JSON.stringify({ success: response.data.success, id: response.data.data.id }))
                 router.push({
@@ -86,7 +86,7 @@ const submission = () => {
 
 onMounted(async () => {
     loadding.value = true
-    await axios.get('https://seasonreal.seasonsge.com/usersview')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/usersview')
         .then(data => {
             allUsers.value = data.data
         })

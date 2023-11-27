@@ -85,7 +85,7 @@ const filteration = computed(() => {
 
 onMounted(async () => {
     loading.value = true
-    await axios.get("https://seasonreal.seasonsge.com/all-program")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
         .then(data => {
             data.data.filter(el => {
                 if (el.includes_flight == '0' || (el.includes_flight == '1' && el.from_date >= new Date().toLocaleDateString('en-CA'))) {
@@ -94,7 +94,7 @@ onMounted(async () => {
             })
             loading.value = false
         })
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             allPrograms.value.forEach(el => {
                 el.destination = data.data.filter(ele => ele.id === el.return_airline)[0]

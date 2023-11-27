@@ -275,7 +275,7 @@ onMounted(async () => {
     price();
     bookInfo.total_days = USDollar.format(parseInt(bookInfo.total_days) * parseInt(myPrice))
     loading.value = true
-    await axios.get("https://seasonreal.seasonsge.com/cars-view").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-view").then((data) => {
         data.data.filter(el => {
             if (+el.type_id === props.carId) {
                 carInfo.value = el
@@ -283,7 +283,7 @@ onMounted(async () => {
             }
         })
     });
-    await axios.get("https://seasonreal.seasonsge.com/cars-type-view").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view").then((data) => {
         data.data.filter(el => {
             console.log('llllllllllll', data.data ,props.carId);
             if (el.id == props.carId) {
@@ -294,12 +294,12 @@ onMounted(async () => {
             }
         })
     });
-    await axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then((data) => {
         userInfo.value = data.data.filter((el) => el.id == route.params.userId)[0];
         console.log('userInfo' ,userInfo);
         loading.value = false
     });
-    await axios.get("https://seasonreal.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
         .then(data => {
             social.value = data.data[0]
         })
@@ -368,7 +368,7 @@ const submission = async () => {
         loading.value = true
         if (userInfo.value.balance > bookInfo.value.net_amount) {
             bookInfo.value.first_name = `${ bookInfo.value.type}  ${ bookInfo.value.first_name}`
-            await axios.post("https://seasonreal.seasonsge.com/car-order", bookInfo.value)
+            await axios.post("https://seasonreal.seasonsge.com/appv1real/car-order", bookInfo.value)
                 .then((response) => {
                     if (response.data.status) {
                         updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookInfo.value.net_amount)
@@ -382,14 +382,14 @@ const submission = async () => {
                         balance.append("discount", userInfo.value.discount)
                         balance.append("balance", updatedBalance.value)
                         visibleButton.value = false;
-                        axios.post("https://seasonreal.seasonsge.com/user-edit", balance)
+                        axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", balance)
                             .then(userResponse => {
                                 if (userResponse.data.success) {
                                     randomCode.value = response.data.random_code
                                     document.querySelector(".alert-success").classList.add("active")
                                     loading.value = false
 
-                                    axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userInfo.value.id}`)
+                                    axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userInfo.value.id}`)
                                         .then(data => {
                                             const bookId = data.data.pop()
                                             setTimeout(() => {

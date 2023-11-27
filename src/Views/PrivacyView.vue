@@ -27,7 +27,7 @@ const privacy = ref([])
 const privacyPolicy = ref([])
 
 onMounted(async () => {
-    await axios.get('https://seasonreal.seasonsge.com/privacypolicy')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/privacypolicy')
         .then(data => {
             privacyPolicy.value = data.data[0]
         })

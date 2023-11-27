@@ -527,16 +527,16 @@ const submission = async () => {
                 const tickets = new FormData()
                 tickets.append("ticket_id", flightDetails.value.id)
                 tickets.append("new_number_of_tickets", flightDetails.value.numTickets - bookingInfo.value.adults_count)
-                axios.post("https://seasonreal.seasonsge.com/ticket-out", tickets)
+                axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                     .then(data => {
                         debugger
                         console.log(data);
                     })
-                await axios.post('https://seasonreal.seasonsge.com/flight-booking', formData).then(data => {
+                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
                     randomCode.value = data.data.bookingId
                     document.querySelector(".alert-success").classList.add("active")
                     loading.value = false
-                    axios.get(`https://seasonreal.seasonsge.com/fli-rr?id=${userId.id}`)
+                    axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
                         .then(data => {
                             const bookId = data.data.pop()
                             setTimeout(() => {
@@ -553,23 +553,23 @@ const submission = async () => {
                 const tickets = new FormData()
                 tickets.append("ticket_id", flightDetails.value.id)
                 tickets.append("new_number_of_tickets", flightDetails.value.numTickets - bookingInfo.value.adults_count)
-                axios.post("https://seasonreal.seasonsge.com/ticket-out", tickets)
+                axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                     .then(data => {
                         console.log(data);
                     })
                 const returnTickets = new FormData()
                 returnTickets.append("ticket_id", flightDetails.value.id)
                 returnTickets.append("new_number_of_tickets", flightDetails.value.numReturnTickets - bookingInfo.value.adults_count)
-                axios.post("https://seasonreal.seasonsge.com/return_ticket", returnTickets)
+                axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
                     .then(data => {
                         console.log(data);
                     })
 
-                await axios.post('https://seasonreal.seasonsge.com/flight-booking', formData).then(data => {
+                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
                     randomCode.value = data.data.bookingId
                     document.querySelector(".alert-success").classList.add("active")
                     loading.value = false
-                    axios.get(`https://seasonreal.seasonsge.com/fli-rr?id=${userId.id}`)
+                    axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
                         .then(data => {
                             const bookId = data.data.pop()
                             setTimeout(() => {
@@ -618,7 +618,7 @@ onMounted(async () => {
             })
         }
     }
-    await axios.get("https://seasonreal.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
         .then(data => {
             social.value = data.data[0]
         })

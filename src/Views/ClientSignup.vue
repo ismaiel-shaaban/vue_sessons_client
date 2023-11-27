@@ -135,7 +135,7 @@ const submission = async () => {
         formData.append("img", user.value.img)
         formData.append("token", 'lll')
 
-        await axios.post("https://seasonreal.seasonsge.com/add-user", formData)
+        await axios.post("https://seasonreal.seasonsge.com/appv1real/add-user", formData)
             .then(data => {
                 console.log(data);
                 if (data.data.success) {

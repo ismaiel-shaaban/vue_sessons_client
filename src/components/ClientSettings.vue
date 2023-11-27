@@ -109,7 +109,7 @@ const submitUpdate = () => {
         formData.append("balance", userData.value.balance)
 
         loader.value = true
-        axios.post("https://seasonreal.seasonsge.com/user-edit", formData).then((response) => {
+        axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", formData).then((response) => {
             if (response.data.success) {
                 loader.value = false
                 document.querySelector(".alert").classList.add("active")
@@ -125,7 +125,7 @@ onMounted(async () => {
     loader.value = true
     if (localStorage.getItem("clientLogin")) {
         const login = JSON.parse(localStorage.getItem("clientLogin"))
-        await axios.get("https://seasonreal.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
             .then(data => {
                 userData.value = data.data.filter(el => el.id == login.id)[0]
                 loader.value = false

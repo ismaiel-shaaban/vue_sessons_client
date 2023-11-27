@@ -217,7 +217,7 @@
             src="https://ci4.googleusercontent.com/proxy/3nyBbG6GlI0QOhiDqPBwjAPv_D6a_9UdWFZGWZqc_F774ZtgLhcOyAZ_FkufbVP5wfZlWJogtg-Y4GbVPgQipHy0uGeQcejnBWXoKKmVXbMUhybO534z3JyFaVZTV3wPjuQzfQ51QhYNpBjenZ2VWjmMc_Y1UONT9UNIJOdw3Wp4YuWwTY0J=s0-d-e1-ft#https://api.qrserver.com/v1/create-qr-code/?data=https://seasonsge.com/showbookInfoing/tjpuuvlst3kck0so8cw4&amp;size=100x100"
             alt="" title="hello" style="width:100px;height:auto;float:right;margin:30px" class="CToWUd" data-bit="iit"
             width="100" height="100"> -->
-        <img :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`"
+            <img :src="`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`"
             style="width:100px;height:auto;float:right;margin:30px" width="100" height="100" alt="">
         <span>Regards,</span>
         <br>
@@ -374,7 +374,7 @@ onMounted(async () => {
 
     if ((+route.params.id).toString() !== 'NaN') {
         const login = JSON.parse(localStorage.getItem("login"))
-        await axios.get("https://seasonreal.seasonsge.com/usersview")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
             .then(data => {
                 userInfo.value = data.data.filter(el => el.id == login.id)[0]
             })
@@ -390,12 +390,12 @@ onMounted(async () => {
         }catch (e) {
 
         }
-        await axios.get("https://seasonreal.seasonsge.com/info")
+        await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
             .then(data => {
                 social.value = data.data[0]
             })
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://seasonreal.seasonsge.com/hotel--rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/hotel--rr?id=${userId.id}`)
             .then(data => {
                 // console.log(data);
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
@@ -410,12 +410,12 @@ onMounted(async () => {
                         type: bookInfo.value[`person${i}`].split('-')[1],
                     })
                 }
-                axios.get("https://seasonreal.seasonsge.com/all-hotel")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/all-hotel")
                     .then(data => {
                         bookInfo.value.details = data.data.data.filter(el => el.id == bookInfo.value.hotel_id)[0]
                     })
             })
-        await axios.get(`https://seasonreal.seasonsge.com/room_only?id=${bookInfo.value.code}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/room_only?id=${bookInfo.value.code}`)
             .then(data => {
                 rooms.value = data.data
                 rooms.value.map(el => {
@@ -432,9 +432,10 @@ onMounted(async () => {
         }
         url.value = window.location.href
         url.value = url.value.replace(/\/\d+$\//ig, `/${bookInfo.value.code}/`)
+        console.log('uuuuuuu', url.value);
     } else {
         url.value = window.location.href
-        await axios.get(`https://seasonreal.seasonsge.com/boking-search?booking_code=${route.params.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/boking-search?booking_code=${route.params.id}`)
             .then(data => {
                 bookInfo.value = data.data.hotel_reservations[0]
                 bookInfo.value.child_room_type = new Set(bookInfo.value.child_room_type.split(","))
@@ -448,11 +449,11 @@ onMounted(async () => {
                         type: bookInfo.value[`person${i}`].split('-')[1],
                     })
                 }
-                axios.get("https://seasonreal.seasonsge.com/all-hotel")
+                axios.get("https://seasonreal.seasonsge.com/appv1real/all-hotel")
                     .then(data => {
                         bookInfo.value.details = data.data.data.filter(el => el.id == bookInfo.value.hotel_id)[0]
                     })
-                axios.get(`https://seasonreal.seasonsge.com/room_only?id=${bookInfo.value.code}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/room_only?id=${bookInfo.value.code}`)
                     .then(data => {
                         rooms.value = data.data
                         rooms.value.map(el => {
@@ -460,7 +461,7 @@ onMounted(async () => {
                             el.chile_room = el.chile_room.split(',')[0]
                         })
                     })
-                axios.get(`https://seasonreal.seasonsge.com/user-data?user_id=${bookInfo.value.account_name}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${bookInfo.value.account_name}`)
                     .then(data => {
                         userInfo.value = data.data
                     })

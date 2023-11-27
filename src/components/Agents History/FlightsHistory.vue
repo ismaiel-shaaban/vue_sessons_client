@@ -158,29 +158,29 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("login")) {
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://seasonreal.seasonsge.com/fli-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     flightsHistory.value = data.data
                     flightsHistory.value.forEach(el => {
-                        axios.get(`https://seasonreal.seasonsge.com/flights?flight_id=${el.flight_number}`)
+                        axios.get(`https://seasonreal.seasonsge.com/appv1real/flights?flight_id=${el.flight_number}`)
                             .then(data => {
                                 el.flight = data.data
                                 const from = new FormData()
                                 const to = new FormData()
                                 from.append("id", el.flight.fromAirport)
-                                axios.post("https://seasonreal.seasonsge.com/viewAirportById", from)
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/viewAirportById", from)
                                     .then(data => {
                                         el.flight.from = data.data.data
                                     })
                                 to.append("id", el.flight.toAirport)
-                                axios.post("https://seasonreal.seasonsge.com/viewAirportById", to)
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/viewAirportById", to)
                                     .then(data => {
                                         el.flight.to = data.data.data
                                     })
                                 loading.value = false
                             })
-                        axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then((data) => {
                             el.user = data.data.filter((el) => el.id == userId.id)[0];
                         });
                     })

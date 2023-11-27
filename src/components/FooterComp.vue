@@ -80,7 +80,7 @@ const router = useRouter()
 const info = ref([])
 
 onMounted(async () => {
-    await axios.get("https://seasonreal.seasonsge.com/info")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/info")
         .then(data => {
             info.value = data.data[0]
         }).catch(error => {

@@ -133,12 +133,12 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("login")) {
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://seasonreal.seasonsge.com/hotel--rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/hotel--rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     hotelHistory.value = data.data
                     hotelHistory.value.forEach(el => {
-                        axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then((data) => {
                             el.user = data.data.filter((el) => el.id == userId.id)[0];
                         });
                     })

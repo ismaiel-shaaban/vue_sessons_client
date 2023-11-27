@@ -105,14 +105,14 @@ const logOut = () => {
 }
 
 onMounted(async () => {
-    await axios.get('https://seasonreal.seasonsge.com/info')
+    await axios.get('https://seasonreal.seasonsge.com/appv1real/info')
         .then(data => {
             info.value = data.data[0]
         })
     if (localStorage.getItem("clientLogin")) {
         const login = JSON.parse(localStorage.getItem("clientLogin"))
         if (login.success) {
-            axios.get("https://seasonreal.seasonsge.com/usersview")
+            axios.get("https://seasonreal.seasonsge.com/appv1real/usersview")
                 .then(data => {
                     userInfo.value = data.data.filter(el => el.id == login.id)[0]
                 })

@@ -48,7 +48,7 @@ const USDollar = Intl.NumberFormat("en-US", {
 
 onMounted(async () => {
     loading.value = true
-    await axios.get("https://seasonreal.seasonsge.com/usersview").then(data => {
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then(data => {
         userData.value = data.data.filter(el => el.id == route.params.userId)[0]
         loading.value = false
     })

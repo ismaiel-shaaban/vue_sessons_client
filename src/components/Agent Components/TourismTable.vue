@@ -51,7 +51,7 @@ const storeIdOfProgramm = (item)=>{
 
 onMounted(async () => {
     allResults.value = [...props.searchResults]
-    await axios.get("https://seasonreal.seasonsge.com/cities-view")
+    await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
         .then(data => {
             allResults.value.forEach(el => {
                 el.destination = data.data.filter(ele => ele.id === el.return_airline)[0]

@@ -148,17 +148,17 @@ onMounted(async () => {
     loading.value = true
     if (localStorage.getItem("login")) {
         const userId = JSON.parse(localStorage.getItem("login"))
-        await axios.get(`https://seasonreal.seasonsge.com/car-rr?id=${userId.id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
             .then(data => {
                 if (typeof data.data !== 'string') {
                     carsHistory.value = data.data
                     carsHistory.value.forEach(ele => {
-                        axios.get("https://seasonreal.seasonsge.com/cars-type-view")
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view")
                             .then(data => {
                                 ele.carType = data.data.filter(el => el.id == +ele.type_id)[0]
                                 loading.value = false
                             })
-                        axios.get("https://seasonreal.seasonsge.com/usersview").then((data) => {
+                        axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then((data) => {
                             ele.user = data.data.filter((el) => el.id == userId.id)[0];
                         });
                     })
