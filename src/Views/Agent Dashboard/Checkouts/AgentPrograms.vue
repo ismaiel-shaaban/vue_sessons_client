@@ -581,6 +581,8 @@ newUrl.value = url.id;
                 if (bookInfo.value.Include_flight == "1") {
                     axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
                         flightTrip.value = data.data.filter((ele) => {
+                        console.log('flightTrip.value',flightTrip.value);
+
                             if (
                                 ele.flightNumber == bookInfo.value.flight_number &&
                                 ele.departureDate >= new Date().toLocaleDateString("en-CA")
@@ -592,6 +594,7 @@ newUrl.value = url.id;
                         if (flightTrip.value !== undefined) {
                             axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
                                 if (data.data.success) {
+                                    console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                     flightTrip.value["flightAirLine"] = data.data.airlines.filter(
                                         (airLine) => airLine.id == flightTrip.value.flightLine
                                     )[0];
@@ -709,6 +712,7 @@ newUrl.value = url.id;
                     })
                 if (bookInfo.value.Include_flight == "1") {
                     axios.get("https://seasonreal.seasonsge.com/flights?all").then((data) => {
+                        console.log('flightTrip.value',flightTrip.value);
                         flightTrip.value = data.data.filter((ele) => {
                             if (
                                 ele.id == bookInfo.value.flight_number &&
@@ -719,6 +723,7 @@ newUrl.value = url.id;
                         })[0];
                         axios.get("https://seasonreal.seasonsge.com/airlines-view").then((data) => {
                             if (data.data.success) {
+                                console.log('flightTrip.value.flightLine',flightTrip.value.flightLine);
                                 flightTrip.value["flightAirLine"] = data.data.airlines.filter(
                                     (airLine) => airLine.id == flightTrip.value.flightLine
                                 )[0];
