@@ -12,8 +12,7 @@
                     {{ info.email }}
                 </a>
                 <div v-else class="butn h-25 text-uppercase text-decoration-none p-2 px-3 rounded-1" >
-                    للاستفاده من تجربه افضل علي الموبايل برجاء تحميل التطبيق الخاص بنا
-            </div>
+                    حمل التطبيق للحصول على أداء أفضل            </div>
             </div>
         </div>
     </div>
