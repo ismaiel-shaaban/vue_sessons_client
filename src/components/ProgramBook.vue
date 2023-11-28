@@ -1220,7 +1220,12 @@ onMounted(async () => {
         .then((data) => {
             // console.log(data);
             if (typeof data.data === "object") {
-                allCities.value = data.data
+                // allCities.value = data.data
+                data.data.forEach((el,i)=>{
+                    if(i!=0) allCities.value.push(el)
+
+                })
+                allCities.value.push(data.data[0])
                 allCitiesIds = allCities.value.map((ele)=>{
                     return ele.city_name
                 }); 
@@ -1232,10 +1237,10 @@ onMounted(async () => {
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                             const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
-                            endDateObject = addDays(startDateObject, el.num_of_nights-1);
+                            endDateObject = addDays(startDateObject, el.num_of_nights);
                             el.startDate =startDateObject1
                             el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
-                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 1), 'MM/dd/yyyy')).value  
+                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
                             endDateObject =''
                         });
                     })

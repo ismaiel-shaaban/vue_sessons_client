@@ -1239,7 +1239,11 @@ onMounted(async () => {
         .then((data) => {
             // console.log(data);
             if (typeof data.data === "object") {
-                allCities.value = data.data
+                data.data.forEach((el,i)=>{
+                    if(i!=0) allCities.value.push(el)
+
+                })
+                allCities.value.push(data.data[0])
                 allCitiesIds = allCities.value.map((ele)=>{
                     return ele.city_name
                 }); 

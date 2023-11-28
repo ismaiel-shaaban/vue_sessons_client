@@ -256,7 +256,7 @@
             </tbody>
         </table>
 
-        <table v-if="bookInfo.Include_flight == '1' && flightTrip !== undefined">
+        <table class="mt-5" v-if="bookInfo.Include_flight == '1' && flightTrip !== undefined">
             <thead>
                 <tr >
                     <th>Departure Time</th>
@@ -277,6 +277,8 @@
 
         <h3 class="hide" v-if="$route.params.with != 2">Checkout</h3>
 
+    
+    
         <table class="hide" v-if="$route.params.with != 2">
             <table>
             <thead>
@@ -605,7 +607,11 @@ newUrl.value = url.id;
                 axios.get(`https://seasonreal.seasonsge.com/appv1real/pr-data?id=${bookInfo.value.brogram_id}`)
                     .then((data) => {
                         if (typeof data.data === "object") {
-                            allCities.value = data.data
+                            data.data.forEach((el,i)=>{
+                                if(i!=0) allCities.value.push(el)
+
+                            })
+                            allCities.value.push(data.data[0])
                             allCitiesIds = allCities.value.map((ele)=>{
                                 return ele.city_name
                             }); 
@@ -737,7 +743,11 @@ newUrl.value = url.id;
                 axios.get(`https://seasonreal.seasonsge.com/appv1real/pr-data?id=${bookInfo.value.brogram_id}`)
                     .then((data) => {
                         if (typeof data.data === "object") {
-                            allCities.value = data.data
+                            data.data.forEach((el,i)=>{
+                                    if(i!=0) allCities.value.push(el)
+
+                                })
+                                allCities.value.push(data.data[0])
                             allCitiesIds = allCities.value.map((ele)=>{
                                 return ele.city_name
                             }); 
@@ -747,7 +757,7 @@ newUrl.value = url.id;
                                     let startDateObject1 =bookInfo.value.details.from_date
 
                                     let endDateObject ;
-                           console.log(bookInfo.value.details.from_date,'jjjjjjjjjjj');
+                         
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                                         const startDateObject = parse(startDateObject1, 'yyyy-MM-dd', new Date());
