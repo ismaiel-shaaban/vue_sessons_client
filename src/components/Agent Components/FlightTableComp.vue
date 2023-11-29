@@ -152,7 +152,7 @@
                             <!--عدد ساعات التوقف فى الرجوع-->
                             <span v-if="item.num_stops_return > 0" class="d-block">Return Stop Time:{{ item.hours_stops_return  }} hours</span>
                             <span class="duration d-block mt-2 pt-2 text-muted position-relative">
-                                Trip Duration: {{ item.durationHours }} {{ item.durationHours >= 1.00  ? "hours" : 'Minutes' }}
+                                Trip Duration: {{ calculateDuration(item.returnEndDate2, item.returnEndDate1) }}
                             </span>
                             <!--وزن الحمولة-->
                             <div v-if="item.allowedWeight < '10'">
@@ -205,10 +205,29 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted , onUpdated} from 'vue'
+import { ref, onMounted , onUpdated,computed } from 'vue'
 const props = defineProps(['searchResults', 'searchInfo', 'suggestions'])
 defineEmits(['back-ward', 'getIdAndForward'])
+const calculateDuration = (endDate2, endDate1) => {
+  const durationInSeconds = calculateDifference(endDate2, endDate1);
+  const hours = Math.floor(durationInSeconds / 3600);
+  const minutes = Math.floor((durationInSeconds % 3600) / 60);
+  const seconds = durationInSeconds % 60;
 
+  return `${hours > 0 ? `${hours} hours` : ''} ${minutes > 0 ? `${minutes} minutes` : ''} ${seconds > 0 ? `${seconds} seconds` : ''}`;
+};
+
+const calculateDifference = (time1, time2) => {
+  const seconds1 = convertToSeconds(time1);
+  const seconds2 = convertToSeconds(time2);
+
+  return seconds1 - seconds2;
+};
+
+const convertToSeconds = (time) => {
+  const [hours, minutes, seconds] = time.split(':').map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+};
 const disappearStops = (item)=>{
 localStorage.setItem('item-numStops' , item.numStops)
 localStorage.setItem('itemStopPlaces' , `${item.locStops} | ${item.loc_stops_return}`);
