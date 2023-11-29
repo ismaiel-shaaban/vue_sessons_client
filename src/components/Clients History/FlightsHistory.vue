@@ -90,12 +90,12 @@ onMounted(async () => {
                                 from.append("id", el.flight.fromAirport)
                                 axios.post("https://seasonreal.seasonsge.com/appv1real/viewAirportById", from)
                                     .then(data => {
-                                        el.flight.from = data.data.data
+                                        data.data.data ?el.flight.from = data.data.data:''
                                     })
                                 to.append("id", el.flight.toAirport)
                                 axios.post("https://seasonreal.seasonsge.com/appv1real/viewAirportById", to)
                                     .then(data => {
-                                        el.flight.to = data.data.data
+                                        data.data.data? el.flight.to = data.data.data:''
                                     })
                                 loading.value = false
                             })

@@ -139,6 +139,14 @@
                     </span>
                     <button class="butn p-2 px-3 rounded-1 mt-3" @click.prevent="search">{{ $t('buttons.search') }}</button>
                 </form>
+                <div class="alert alert-success alert-dismissible text-center position-fixed" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-circle-check fs-5"></i>
+                        لا يوجد برامج حاليا 
+                    </div>
+                    
+                    <button @click="removeAlert()" type="button" class="btn-close"></button>
+                </div>
             </div>
         </div>
         <TourismTable v-else-if="forward === '2'" :searchResults="searchResults" :searchInfo="searchInfo"
@@ -297,6 +305,14 @@ const search = async () => {
     validation.value.$validate()
     if (!validation.value.$error && !numValidation.value) {
         loading.value = true
+        if(allPrograms.value.length == 0) {
+            setTimeout(()=>{
+                document.querySelector(".alert").classList.add("active")
+                loading.value = false
+
+            },2000)
+           
+        }
         allPrograms.value.forEach(el => {
             if (searchInfo.value.includeFlight == '1') {
                 if (el.return_airline == searchInfo.value.city && // <-- program destination
@@ -330,6 +346,11 @@ const search = async () => {
             }
         })
     }
+    
+}
+
+const removeAlert = () => {
+    document.querySelector(`.alert`).classList.remove("active")
 }
 
 
@@ -379,6 +400,33 @@ localStorage.setItem('programmsImgs' , JSON.stringify(programmsImages.value));
 </script>
 
 <style lang="scss" scoped>
+
+.alert {
+        top: -25%;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: 0.3s;
+        z-index: 555555555;
+        padding: 10PX;
+        font-size: 20PX;
+        width: 60%;
+
+        &.active {
+            top: 5%;
+        }
+
+        button {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .alert {
+            width: 90%;
+            font-size: 12px;
+        }
+    }
 .tourism-search {
 
     input,

@@ -844,8 +844,8 @@ const submission = async () => {
    })*/
     let img = document.getElementById('img');
 //   console.log(img.files[0]);
-const data = new FileReader();
-console.log(data);
+    const data = new FileReader();
+    console.log(data);
    validation.value.$validate();
     if (!validation.value.$error) {
         if (localStorage.getItem("login")) {

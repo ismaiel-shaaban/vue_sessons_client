@@ -301,6 +301,7 @@ onMounted(async () => {
         .get("https://seasonreal.seasonsge.com/appv1real/info")
         .then((data) => {
             info.value = data.data[0]
+            localStorage.setItem('websiteInfo', JSON.stringify( info.value))
             document.getElementById("favicon").href = `https://seasonreal.seasonsge.com/${data.data[0].favicon}`;
         })
     setTimeout(() => {

@@ -130,9 +130,9 @@
             </tbody>
         </table>
 
-        <h3 v-if="passengers.length > 0">Passengers Information</h3>
+        <h3 class="mt-4" v-if="passengers.length > 0">Passengers Information</h3>
 
-        <table v-if="passengers.length > 0">
+        <table class="mt-4" v-if="passengers.length > 0">
             <tr>
                 <th>Type</th>
                 <th>First Name</th>

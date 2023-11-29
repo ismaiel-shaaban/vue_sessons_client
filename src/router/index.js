@@ -4,7 +4,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import i18n from "../i18n";
-
+const websiteInfo = JSON.parse( localStorage.getItem('websiteInfo'))
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   // history: createWebHashHistory(),
@@ -12,7 +12,12 @@ const router = createRouter({
     {
       path: "/:lang",
       name: "Home",
-      component: () => import("../Views/HomeView.vue"),
+      component: async () => {
+        const { default: component } = websiteInfo.status
+          ? await import("../Views/TechnicalUpdates.vue")
+          : await import("../Views/HomeView.vue");
+        return component;
+      },
     },
     {
       path: "/:lang/contact",
