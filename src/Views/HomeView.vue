@@ -67,11 +67,11 @@
                         <img class="img-fluid" src="/images/appstore.png" alt="" />
                     </a>
                 </div>
-                <div class="text-center mt-5">
+                <!-- <div class="text-center mt-5">
                     <button class="butn p-2 px-4 rounded-1 text-decoration-none fs-5" @click="aboutPopup = true">
                         {{ $t('buttons.readMore') }}
                     </button>
-                </div>
+                </div> -->
                 <AboutPopUp :openPopup="aboutPopup" @close-aboutPopup="() => (aboutPopup = false)"></AboutPopUp>
             </div>
         </div>

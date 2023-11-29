@@ -416,7 +416,7 @@ const USDollar = Intl.NumberFormat('en-US', {
 const exportToPDF = () => {
     html2pdf(document.querySelector(".orderSummary"), {
 
-        margin: [15, 5],
+        margin: [15, 3],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', before: '#page2el' },
@@ -442,7 +442,7 @@ const exportToPDFWith = () => {
         }
     })
     html2pdf(document.querySelector(".orderSummary"), {
-        margin: [15, 5],
+        margin: [15, 3],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', after: '#page2el' },
@@ -461,11 +461,12 @@ const exportToPDFWith = () => {
     });
 }
 
+
 const exportToPDFWithout = () => {
     document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
     html2pdf(document.querySelector(".orderSummary"), {
 
-        margin: [15, 5],
+        margin: [15, 3],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', after: '#page2el' },
@@ -608,10 +609,10 @@ newUrl.value = url.id;
                     .then((data) => {
                         if (typeof data.data === "object") {
                             data.data.forEach((el,i)=>{
-                                if(i!=0) allCities.value.push(el)
+                             allCities.value.push(el)
 
                             })
-                            allCities.value.push(data.data[0])
+                           
                             allCitiesIds = allCities.value.map((ele)=>{
                                 return ele.city_name
                             }); 
@@ -744,10 +745,10 @@ newUrl.value = url.id;
                     .then((data) => {
                         if (typeof data.data === "object") {
                             data.data.forEach((el,i)=>{
-                                    if(i!=0) allCities.value.push(el)
+                                    allCities.value.push(el)
 
                                 })
-                                allCities.value.push(data.data[0])
+                                
                             allCitiesIds = allCities.value.map((ele)=>{
                                 return ele.city_name
                             }); 
