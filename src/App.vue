@@ -5,6 +5,15 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+
+      axios
+        .get("https://seasonreal.seasonsge.com/appv1real/info")
+        .then((data) => {
+            
+            localStorage.setItem('websiteInfo', JSON.stringify( data.data[0]))
+          
+        })
     // import { onMounted, onBeforeUnmount } from 'vue';
     // const preventContextMenu = (e) => {
     //   e.preventDefault();

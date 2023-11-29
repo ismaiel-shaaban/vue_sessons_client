@@ -4,6 +4,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import i18n from "../i18n";
+
 const websiteInfo = JSON.parse( localStorage.getItem('websiteInfo'))
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
