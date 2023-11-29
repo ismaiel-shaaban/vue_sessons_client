@@ -299,7 +299,7 @@ const USDollar = Intl.NumberFormat('en-US', {
 const exportToPDF = () => {
     html2pdf(document.querySelector(".orderSummary"), {
 
-        margin: [10, 3],
+        margin: [15, 5],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', before: '#page2el' },
@@ -326,7 +326,7 @@ const exportToPDFWith = () => {
         }
     })
     html2pdf(document.querySelector(".orderSummary"), {
-        margin: [10, 3],
+        margin: [15, 5],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', after: '#page2el' },
@@ -349,7 +349,7 @@ const exportToPDFWithout = () => {
     document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
     html2pdf(document.querySelector(".orderSummary"), {
 
-        margin: [10, 3],
+        margin: [15, 5],
         filename: "SeasonsGE.pdf",
         enableLinks: false,
         pagebreak: { mode: 'avoid-all', after: '#page2el' },
