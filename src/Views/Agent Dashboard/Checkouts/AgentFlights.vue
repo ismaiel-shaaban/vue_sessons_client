@@ -6,7 +6,7 @@
             <div class="d-flex flex-column gap-2">
                 <span>
                     From:
-                    <span class="ms-2">SeasonsTour</span>
+                    <span class="ms-2">operations@seasonsge.com</span>
                 </span>
                 <span>
                     To:
