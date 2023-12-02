@@ -314,34 +314,51 @@ const search = async () => {
            
         }
         allPrograms.value.forEach(el => {
-            if (searchInfo.value.includeFlight == '1') {
-                if (el.return_airline == searchInfo.value.city && // <-- program destination
-                    el.from_date >= searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
-                    el.includes_flight == searchInfo.value.includeFlight
-                ) {
-                    searchResults.value.push(el)
-                    forward.value = '2'
-                    loading.value = false
+            if(el.status == 1){
+                console.log('lllllllllllll' ,searchInfo.value);
+                console.log('nnnnnnnnnnnn' ,el);
+
+                if (searchInfo.value.includeFlight == '1') {
+                    if (el.return_airline == searchInfo.value.city && // <-- program destination
+                        el.from_date >= searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
+                        el.includes_flight == searchInfo.value.includeFlight
+                    ) {
+                        searchResults.value.push(el)
+                        forward.value = '2'
+                        loading.value = false
+                    } else {
+                        forward.value = '2'
+                        loading.value = false
+                    }
                 } else {
-                    forward.value = '2'
-                    loading.value = false
-                }
-            } else {
-             
-                const timeDifferenceInMilliseconds = searchInfo.value.toDate - searchInfo.value.departureDate;
-                const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-           
-              
-                if (el.return_airline == searchInfo.value.city && // <-- program destination
-                el.num_of_days%timeDifferenceInDays == 1 &&
-                    el.includes_flight == searchInfo.value.includeFlight
-                ) {
-                    searchResults.value.push(el)
-                    forward.value = '2'
-                    loading.value = false
-                } else {
-                    forward.value = '2'
-                    loading.value = false
+                    const departureDateUTC = new Date(Date.UTC(
+                        searchInfo.value.departureDate.getFullYear(),
+                        searchInfo.value.departureDate.getMonth(),
+                        searchInfo.value.departureDate.getDate()
+                    ));
+
+                    const toDateUTC = new Date(Date.UTC(
+                        searchInfo.value.toDate.getFullYear(),
+                        searchInfo.value.toDate.getMonth(),
+                        searchInfo.value.toDate.getDate()
+                    ));
+
+                    const timeDifferenceInMilliseconds = toDateUTC - departureDateUTC;
+                    const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+                    console.log('jjj' ,el.num_of_days%timeDifferenceInDays);
+                    if (el.return_airline == searchInfo.value.city && // <-- program destination
+                    el.num_of_days%timeDifferenceInDays == 1 &&
+                        el.includes_flight == searchInfo.value.includeFlight
+                    ) {
+                        console.log('xxxxxx');
+                        searchResults.value.push(el)
+                        forward.value = '2'
+                        loading.value = false
+                    } else {
+                        forward.value = '2'
+                        loading.value = false
+                    }
                 }
             }
         })

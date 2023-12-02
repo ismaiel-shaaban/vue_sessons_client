@@ -149,7 +149,7 @@
         <table class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr v-if="bookInfo.details">
-                    <th v-if="bookInfo.destination.has('1')">Single Room Price</th>
+                    <th v-if="bookInfo.destination.has('1')"> Single Room Price</th>
                     <th v-if="bookInfo.destination.has('2')">Double Room Price</th>
                     <th v-if="bookInfo.destination.has('3')">Triple Room Price</th>
                 </tr>
@@ -178,6 +178,21 @@
                     </td>
                     <td v-if="bookInfo.destination.has('5')">{{ USDollar.format(bookInfo.details.price_per_child_with_bed)
                     }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table  class="hide" v-if="$route.params.with != 2">
+            <thead>
+                <tr v-if="bookInfo.details">
+                    <th v-if="bookInfo.destination.has('6')">  Infant Price</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="bookInfo.details">
+                    <td v-if="bookInfo.destination.has('6')">{{ USDollar.format(bookInfo.details.price_per_infant) }}
+                    </td>
+                  
                 </tr>
             </tbody>
         </table>
@@ -572,8 +587,8 @@ newUrl.value = url.id;
                 axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
                         console.log(';;lllllllllllllllllll', data.data);
-                        console.log(';;lllllllllllllllllll', bookInfo.value);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
+                        console.log(';;lllllllllllllllllll', bookInfo.value.details);
                     })
                 for (let i = 2; i <= 8; i++) {
                     if (bookInfo.value[`person${i}`] == null) {
@@ -683,7 +698,7 @@ newUrl.value = url.id;
             
         await axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.booking_id}`)
             .then(data => {
-                console.log(data);
+                console.log(data, "وطمممممممممممممممممممممم");
                 rooms.value = data.data
                 rooms.value.map(el => {
                     el.child_count = el.child_room.split(',')[1]

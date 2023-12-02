@@ -182,6 +182,21 @@
                 </tr>
             </tbody>
         </table>
+        <table  class="hide" v-if="$route.params.with != 2">
+            <thead>
+                <tr v-if="bookInfo.details">
+                    <th v-if="bookInfo.destination.has('6')">  Infant Price</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-if="bookInfo.details">
+                    <td v-if="bookInfo.destination.has('6')">{{ USDollar.format(bookInfo.details.price_per_infant) }}
+                    </td>
+                  
+                </tr>
+            </tbody>
+        </table>
 
         <table>
             <thead>

@@ -186,52 +186,55 @@ const searching = async () => {
         }
 
         allFlights.value.forEach(el => {
-            if (searchInfo.value.allow_return == '1') {
-                if (el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
-                    el.numReturnTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
-                    el.departureDate >= new Date().toLocaleDateString("en-CA") &&
-                    el.returnStartDate >= new Date().toLocaleDateString("en-CA") &&
-                    el.fromAirport == searchInfo.value.departure_from &&
-                    el.toAirport == searchInfo.value.arrival_to &&
-                    el.allowReturn == searchInfo.value.allow_return) {
-                    suggestions.value.push(el);
-                }
+            if(el.numTickets >0){
 
-                if (el.departureDate == searchInfo.value.start_date.toLocaleDateString("en-CA") &&
-                    el.returnStartDate == returnDate.value &&
-                    el.departureDate >= new Date().toLocaleDateString("en-CA") &&
-                    el.fromAirport == searchInfo.value.departure_from &&
-                    el.toAirport == searchInfo.value.arrival_to &&
-                    el.allowReturn == searchInfo.value.allow_return &&
-                    el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
-                    el.numReturnTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children)) {
-                    searchResults.value.push(el)
-                    forward.value = '2'
-                    loading.value = false
+                if (searchInfo.value.allow_return == '1') {
+                    if (el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
+                        el.numReturnTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
+                        el.departureDate >= new Date().toLocaleDateString("en-CA") &&
+                        el.returnStartDate >= new Date().toLocaleDateString("en-CA") &&
+                        el.fromAirport == searchInfo.value.departure_from &&
+                        el.toAirport == searchInfo.value.arrival_to &&
+                        el.allowReturn == searchInfo.value.allow_return) {
+                        suggestions.value.push(el);
+                    }
+    
+                    if (el.departureDate == searchInfo.value.start_date.toLocaleDateString("en-CA") &&
+                        el.returnStartDate == returnDate.value &&
+                        el.departureDate >= new Date().toLocaleDateString("en-CA") &&
+                        el.fromAirport == searchInfo.value.departure_from &&
+                        el.toAirport == searchInfo.value.arrival_to &&
+                        el.allowReturn == searchInfo.value.allow_return &&
+                        el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
+                        el.numReturnTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children)) {
+                        searchResults.value.push(el)
+                        forward.value = '2'
+                        loading.value = false
+                    } else {
+                        forward.value = '2'
+                        loading.value = false
+                    }
                 } else {
-                    forward.value = '2'
-                    loading.value = false
-                }
-            } else {
-                if (el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
-                    el.departureDate >= new Date().toLocaleDateString("en-CA") &&
-                    el.fromAirport == searchInfo.value.departure_from &&
-                    el.toAirport == searchInfo.value.arrival_to &&
-                    el.allowReturn == searchInfo.value.allow_return) {
-                    suggestions.value.push(el);
-                }
-                if (el.departureDate == searchInfo.value.start_date.toLocaleDateString("en-CA") &&
-                    el.departureDate >= new Date().toLocaleDateString("en-CA") &&
-                    el.fromAirport == searchInfo.value.departure_from &&
-                    el.toAirport == searchInfo.value.arrival_to &&
-                    el.allowReturn == searchInfo.value.allow_return &&
-                    el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children)) {
-                    searchResults.value.push(el)
-                    forward.value = '2'
-                    loading.value = false
-                } else {
-                    forward.value = '2'
-                    loading.value = false
+                    if (el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children) &&
+                        el.departureDate >= new Date().toLocaleDateString("en-CA") &&
+                        el.fromAirport == searchInfo.value.departure_from &&
+                        el.toAirport == searchInfo.value.arrival_to &&
+                        el.allowReturn == searchInfo.value.allow_return) {
+                        suggestions.value.push(el);
+                    }
+                    if (el.departureDate == searchInfo.value.start_date.toLocaleDateString("en-CA") &&
+                        el.departureDate >= new Date().toLocaleDateString("en-CA") &&
+                        el.fromAirport == searchInfo.value.departure_from &&
+                        el.toAirport == searchInfo.value.arrival_to &&
+                        el.allowReturn == searchInfo.value.allow_return &&
+                        el.numTickets >= (searchInfo.value.no_adults + searchInfo.value.no_children)) {
+                        searchResults.value.push(el)
+                        forward.value = '2'
+                        loading.value = false
+                    } else {
+                        forward.value = '2'
+                        loading.value = false
+                    }
                 }
             }
         })
