@@ -182,15 +182,17 @@
         </table>
 
 
-        <h3 class="hide" v-if="$route.params.with != 2">Checkout</h3>
+        <h3 class="hide" v-if="$route.params.with.split('&')[0] !== '2'">Checkout</h3>
 
-        <table class="hide" v-if="$route.params.with != 2">
+        <table class="hide" v-if="$route.params.with.split('&')[0] !== '2'">
             <thead>
                 <tr>
                     <th>Total</th>
                     <th>Tax</th>
                     <th>Agent Discount</th>
                     <th>Net Total</th>
+                 
+                   
                 </tr>
             </thead>
             <tbody>
