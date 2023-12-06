@@ -541,6 +541,7 @@ const submission = async () => {
         formData.append("numberOfAdults", persons.value.adults)
         formData.append("total", bookingInfo.value.total)
         formData.append("net_total", bookingInfo.value.net_total)
+      
         buttonVisible.value = false;
         if (bookingInfo.value.personsForm.length > 0) {
             for (let i = 0; i < bookingInfo.value.personsForm.length; i++) {

@@ -101,10 +101,10 @@
             <tbody>
                 <tr>
                     <td class="text-capitalize">
-                        {{ country }}
+                        {{ bookInfo.email?.split(',')[1] }}
                     </td>
                     <td>
-                        {{ city }}
+                        {{ bookInfo.email?.split(',')[2] }}
                     </td>
                     
                 </tr>

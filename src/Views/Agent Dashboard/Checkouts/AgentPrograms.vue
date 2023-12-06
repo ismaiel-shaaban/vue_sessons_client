@@ -314,22 +314,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="hide" v-if="$route.params.with != 2">
-            <thead>
-                <tr>
-                    <th>Total</th>
-                    <th>Tax</th>
-                    <th>Net Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ USDollar.format(bookInfo.total) }}</td>
-                    <td>{{ bookInfo.tax }}%</td>
-                    <td>{{ USDollar.format(bookInfo.net) }} </td>
-                </tr>
-            </tbody>
-        </table>
+       
 
         <table class="mb-3 mt-5">
             <tbody>

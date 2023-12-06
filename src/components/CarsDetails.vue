@@ -322,7 +322,7 @@ const userInfo = ref({
     first_name: '',
     last_name: '',
     type:"MR",
-    email: props.searchInfo.country,
+    email: ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`,
     phone_number: "",
     start_date: props.searchInfo.fromDate.toLocaleDateString('en-CA'),
     end_date: props.searchInfo.toDate.toLocaleDateString('en-CA'),
