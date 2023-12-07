@@ -90,6 +90,13 @@
                     <button class="butn p-2 px-3 rounded-1" @click.prevent="searching">
                         {{ $t('buttons.search') }}
                     </button>
+                    <div id="alert-2" class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-circle-xmark fs-5"></i>
+                            There Is No Tickets Enough
+                        </div>
+                        <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -149,7 +156,9 @@ const rules = {
     arrival_to: { required },
     departure_from: { required },
 }
-
+const removeAlert = (type) => {
+    document.querySelector(`.alert-${type}`).classList.remove("active")
+}
 
 const validation = useVuelidate(rules, searchInfo)
 
@@ -237,6 +246,9 @@ const searching = async () => {
                     }
                 }
             }
+            else{
+                document.querySelector("#alert-2").classList.add("active")
+            }
         })
         await axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view")
             .then(data => {
@@ -308,6 +320,23 @@ const exchangeSelectValues = () => {
 </script>
 
 <style lang="scss" scoped>
+.alert {
+    top: -25%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.3s;
+    z-index: 555555555;
+
+    &.active {
+        top: 5%;
+    }
+
+    button {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
 .flight-tab-two {
     .content {
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.090);
