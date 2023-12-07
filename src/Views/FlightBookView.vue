@@ -122,6 +122,13 @@
                             </span>
                             <button class="butn p-2 px-3 rounded-1" @click.prevent="searching">{{ $t('buttons.search')
                             }}</button>
+                            <div class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-circle-xmark fs-5"></i>
+                                    There Is No Tickets Enough
+                                </div>
+                                <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -188,7 +195,9 @@ const rules = {
     departure_from: { required },
 }
 const validation = useVuelidate(rules, searchInfo)
-
+const removeAlert = (type) => {
+    document.querySelector(`.alert-${type}`).classList.remove("active")
+}
 
 const numValidation = computed(() => {
     if ((searchInfo.value.no_infants + searchInfo.value.no_children + searchInfo.value.no_adults) > 10) {
@@ -294,6 +303,9 @@ const searching = async () => {
                     }
                 }
             }
+            else{
+                document.querySelector(".alert-danger").classList.add("active")
+            }
         })
         await axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view")
             .then(data => {
@@ -366,6 +378,22 @@ const roundWay = ()=>{
 </script>
 
 <style lang="scss" scoped>
+.alert {
+    top: -25%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.3s;
+    z-index: 555555555;
+
+    &.active {
+        top: 5%;
+    }
+
+    button {
+        box-shadow: none;
+        outline: none;
+    }
+}
 .flight-book-page {
     .container {
         max-width: 100%;
