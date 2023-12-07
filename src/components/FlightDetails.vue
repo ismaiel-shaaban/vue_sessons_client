@@ -523,7 +523,7 @@ const submission = async () => {
                 }
             }
 
-            if (flightDetails.value.allowReturn != 1 && flightDetails.value.numTickets > bookingInfo.value.adults_count) {
+            if (flightDetails.value.allowReturn != 1 && flightDetails.value.numTickets >= bookingInfo.value.adults_count) {
                 const tickets = new FormData()
                 tickets.append("ticket_id", flightDetails.value.id)
                 tickets.append("new_number_of_tickets", flightDetails.value.numTickets - bookingInfo.value.adults_count)
@@ -549,7 +549,7 @@ const submission = async () => {
                     console.log(data)
                 })
 
-            } else if (flightDetails.value.allowReturn == 1 && flightDetails.value.numReturnTickets > bookingInfo.value.adults_count && flightDetails.value.numTickets > bookingInfo.value.adults_count) {
+            } else if (flightDetails.value.allowReturn == 1 && flightDetails.value.numReturnTickets >= bookingInfo.value.adults_count && flightDetails.value.numTickets >= bookingInfo.value.adults_count) {
                 const tickets = new FormData()
                 tickets.append("ticket_id", flightDetails.value.id)
                 tickets.append("new_number_of_tickets", flightDetails.value.numTickets - bookingInfo.value.adults_count)
