@@ -22,7 +22,7 @@
         <h1>Seasonsge</h1>
         <!-- <img src="/images/cars.jpeg" style="display: block" alt="" height="250" width="768"> -->
         <div class="logo-cont text-start mt-4">
-            <img class="logo" :src="agentAvatar" width="200" alt="">
+            <img class="logo" :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" width="200" alt="">
         </div>
         <h3>Customer Information</h3>
         <div class="info pb-3">
@@ -362,13 +362,7 @@ onMounted(async () => {
 
 
             try {
-          await listAll(storageRef(storage, `avatar/`))
-              .then(res => {
-                const url = res.items.filter(el => el.name == login.id)[0]
-                getDownloadURL(url).then(data => {
-                  agentAvatar.value = data
-                })
-              })
+       
         }catch (e) {
 
         }
@@ -421,13 +415,7 @@ onMounted(async () => {
                         userInfo.value = data.data
                     })
             })
-        await listAll(storageRef(storage, `avatar/`))
-            .then(res => {
-                const url = res.items.filter(el => el.name == bookInfo.value.account_owner)[0]
-                getDownloadURL(url).then(data => {
-                    agentAvatar.value = data
-                })
-            })
+      
         if (route.params.with === '1') {
             document.querySelectorAll(".hide").forEach(el => el.removeAttribute('data-html2canvas-ignore'))
         } else if (route.params.with === '2') {

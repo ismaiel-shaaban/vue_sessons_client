@@ -22,7 +22,7 @@
         <!-- <img src="/images/flights.jpeg" style="display: block" alt=""  width="768"> -->
         <div class="logo-cont text-start mt-4 d-flex align-items-center justify-content-between">
             <!-- <img class="logo" src="/images/logo.png" width="200" alt=""> -->
-            <img class="logo" :src="agentAvatar" width="200" alt="">
+            <img class="logo" :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" width="200" alt="">
             <img class="fly-jordan-logo" src="/images/FJR_FlyJordan_Logo.png" width="200" alt="">
         </div>
         <h3>Customer Information</h3>
@@ -425,13 +425,7 @@ onMounted(async () => {
             })
      
             try {
-          await listAll(storageRef(storage, `avatar/`))
-              .then(res => {
-                const url = res.items.filter(el => el.name == login.id)[0]
-                getDownloadURL(url).then(data => {
-                  agentAvatar.value = data
-                })
-              })
+      
         }catch (e) {
 
         }
@@ -525,13 +519,7 @@ onMounted(async () => {
                         userInfo.value = data.data
                     })
             })
-        await listAll(storageRef(storage, `avatar/`))
-            .then(res => {
-                const url = res.items.filter(el => el.name == bookInfo.value.email)[0]
-                getDownloadURL(url).then(data => {
-                    agentAvatar.value = data
-                })
-            })
+      
         if (route.params.with === '1') {
             document.querySelectorAll(".hide").forEach(el => el.removeAttribute('data-html2canvas-ignore'))
         } else if (route.params.with === '2') {
