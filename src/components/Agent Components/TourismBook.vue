@@ -766,7 +766,7 @@ const bookingInfo = ref({
     total: 0,
     agent_discount: computed(() => ( userInfo.value.discount) ),
     net_total: computed(() => {
-        return bookingInfo.value.total - ((bookingInfo.value.tax / 100) * bookingInfo.value.total) - ((userInfo.value.discount/ 100) * (bookingInfo.value.total ))
+        return bookingInfo.value.total + ((bookingInfo.value.tax / 100) * bookingInfo.value.total) - ((userInfo.value.discount/ 100) * (bookingInfo.value.total ))
     }),
     // net_total: computed(() => {
 
