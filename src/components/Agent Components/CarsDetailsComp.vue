@@ -319,7 +319,7 @@ const bookInfo = ref({
     first_name: '',
     last_name: '',
     type:"MR",
-    email: ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`,
+    email:'',
     phone_number: "",
     start_date: props.searchInfo.fromDate.toLocaleDateString('en-CA'),
     end_date: props.searchInfo.toDate.toLocaleDateString('en-CA'),
@@ -362,8 +362,8 @@ const submission = async () => {
         loading.value = true
         if (userInfo.value.balance > bookInfo.value.net_amount) {
             bookInfo.value.first_name = `${ bookInfo.value.type}  ${ bookInfo.value.first_name}`
-            bookInfo.value.book_country = localStorage.getItem('country');
-            bookInfo.value.book_city = localStorage.getItem('city');
+          
+            bookInfo.value.email =  ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`
 
             await axios.post("https://seasonreal.seasonsge.com/appv1real/car-order", bookInfo.value)
                 .then((response) => {
