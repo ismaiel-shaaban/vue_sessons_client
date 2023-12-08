@@ -369,6 +369,14 @@ const exportToPDFWith = () => {
             el.removeAttribute("data-html2canvas-ignore")
         }
     })
+    const currentUrl = url.value;
+    const urlParts = currentUrl.split('/');
+    const lastPart = urlParts[urlParts.length - 1];
+    if (!isNaN(lastPart)) {
+        urlParts[urlParts.length - 1] = '1';
+        const updatedUrl = urlParts.join('/');
+        url.value = updatedUrl;
+    }
     html2pdf(document.querySelector(".orderSummary"), {
         margin: [15, 3],
         filename: "SeasonsGE.pdf",
@@ -391,6 +399,14 @@ const exportToPDFWith = () => {
 
 const exportToPDFWithout = () => {
     document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
+    const currentUrl = url.value;
+    const urlParts = currentUrl.split('/');
+    const lastPart = urlParts[urlParts.length - 1];
+    if (!isNaN(lastPart)) {
+        urlParts[urlParts.length - 1] = '3';
+        const updatedUrl = urlParts.join('/');
+        url.value = updatedUrl;
+    }
     html2pdf(document.querySelector(".orderSummary"), {
 
         margin: [15, 3],
