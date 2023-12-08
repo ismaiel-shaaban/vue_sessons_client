@@ -81,22 +81,22 @@ const router = createRouter({
       component: () => import("../Views/ClientAccount.vue"),
     },
     {
-      path: "/:lang/cars-checkout/:id",
+      path: "/:lang/cars-checkout/:id/:with",
       name: "Cars Checkout",
       component: () => import("../Views/Checkouts/CarsCheckout.vue"),
     },
     {
-      path: "/:lang/hotels-checkout/:id",
+      path: "/:lang/hotels-checkout/:id/:with",
       name: "Hotels Checkout",
       component: () => import("../Views/Checkouts/HotelsCheckout.vue"),
     },
     {
-      path: "/:lang/flights-checkout/:id",
+      path: "/:lang/flights-checkout/:id/:with",
       name: "Flights Checkout",
       component: () => import("../Views/Checkouts/FlightsCheckout.vue"),
     },
     {
-      path: "/:lang/programs-checkout/:id",
+      path: "/:lang/programs-checkout/:id/:with",
       name: "Programs Checkout",
       component: () => import("../Views/Checkouts/programsCheckout.vue"),
     },

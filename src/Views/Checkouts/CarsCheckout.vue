@@ -145,9 +145,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ total }}</td>
-                    <td>{{ tax }}</td>
-                    <td>{{ netTotal }}</td>
+                    <td>{{ bookInfo.total }}</td>
+                    <td>{{ bookInfo.tax }}</td>
+                    <td>{{ bookInfo.net_amount }}</td>
                 </tr>
             </tbody>
         </table>

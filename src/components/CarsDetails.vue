@@ -385,7 +385,8 @@ const submission = async () => {
                                 setTimeout(() => {
                                     router.push({
                                         name: "Cars Checkout",
-                                        params: { lang: i18n.global.locale.value, id: bookId.id }
+                                        params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                       
                                     })
                                 }, 1500)
                             })
