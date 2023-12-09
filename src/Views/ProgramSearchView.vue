@@ -357,6 +357,10 @@ const search = async () => {
                     }
                 }
             }
+            if(searchResults.value.length <= 0){
+                loading.value = false
+                document.querySelector(".alert").classList.add("active")
+            }
         })
     }
 }

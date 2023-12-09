@@ -322,7 +322,7 @@ const userInfo = ref({
     first_name: '',
     last_name: '',
     type:"MR",
-    email: ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`,
+    email: '',
     phone_number: "",
     start_date: props.searchInfo.fromDate.toLocaleDateString('en-CA'),
     end_date: props.searchInfo.toDate.toLocaleDateString('en-CA'),
@@ -373,6 +373,7 @@ const submission = async () => {
             userInfo.value.account_owner = userId.id
             loading.value = true
             userInfo.value.first_name = `${userInfo.value.type}  ${userInfo.value.first_name} `
+            userInfo.value.email = ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`
             await axios.post('https://seasonreal.seasonsge.com/appv1real/car-order', userInfo.value)
                 .then(response => {
                     if (response.data.status === 'success') {
