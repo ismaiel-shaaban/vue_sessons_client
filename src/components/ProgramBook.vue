@@ -544,10 +544,10 @@
                                             }}
                                         </td>
                                         <td>
-                                            {{item.startDate }}
+                                            {{$props.searchInfo.includeFlight ?item.registration_date  : item.startDate }}
                                         </td>
                                         <td>
-                                            {{ item.endDate }}
+                                            {{ $props.searchInfo.includeFlight ?item.departure_date  : item.endDate }}
                                         </td>
                                     </tr>
                                 </tbody>

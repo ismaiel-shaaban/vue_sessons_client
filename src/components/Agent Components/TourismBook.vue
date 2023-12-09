@@ -1,13 +1,14 @@
 <template>
     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog w-75" role="document">
-    <div class="modal-content mt-5">
-      <img class="w-100 modalImage" :src="`https://seasonsge.com/seasonreal/upload/${image}`" alt="" />
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog w-75" role="document">
+            <div class="modal-content mt-5">
+                <img class="w-100 modalImage" :src="`https://seasonsge.com/seasonreal/upload/${image}`" alt="" />
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-  
+
     <div class="program-book d-flex">
         <div class="inner-box bg-white w-100 rounded-1 px-3">
             <span
@@ -15,10 +16,10 @@
                 style="width: 40px; height: 40px; cursor: pointer" @click="$emit('back-ward')" title="Back">
                 <i :class="`fa-solid fa-chevron-${$i18n.locale === 'en' ? 'left' : 'right'}`"></i>
             </span>
-           
+
             <div class="program-info text-center row">
                 <div class="col-6">
-                    
+
                 </div>
                 <h2 class="mb-3 text-capitalize" v-if="programDetails.destination">
                     {{
@@ -39,130 +40,138 @@
                     {{ programDetails.num_of_nights }} {{ $t("programs.cardInfo.nights") }}
                 </span>
             </div>
-            <div class="flight-trip carousel row justify-content-between px-5 mt-5" v-if="programDetails.includes_flight == '1'">
+            <div class="flight-trip carousel row justify-content-between px-5 mt-5"
+                v-if="programDetails.includes_flight == '1'">
                 <!--بداية ريسبونزف السلايدر-->
-                  <!--الصور-->
-  <div  :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'" >
-                    <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100" style="border: none;margin-top: 150px;">
-    <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
-        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
-    </slide>
-    <template #addons>
-      <navigation />
-      <Pagination class="position-absolute" />
+                <!--الصور-->
+                <div
+                    :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'">
+                    <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100"
+                        style="border: none;margin-top: 150px;">
+                        <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
+                            <img v-if="img != ''" @click="uploadImageTomodal(img)" style="cursor: pointer;"
+                                data-toggle="modal" data-target="#exampleModal" class="w-100"
+                                :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
+                        </slide>
+                        <template #addons>
+                            <navigation />
+                            <Pagination class="position-absolute" />
 
-    </template>
-  </carousel>
-             
-</div>
-<div :class="programmsImages.length == 0 ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5 slider' : 'col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-5 slider'">
+                        </template>
+                    </carousel>
 
-    <h2 class="head text-center mb-5">
-                    {{ $t("programs.cardInfo.details") }}
-                </h2>
-                <div class="go-trip">
-                    <h3 class="mb-3">
-                        {{ $t("programs.cardInfo.trip.go") }}
-                    </h3>
-                    <div class="info">
-                        <div class="detail-label">
-                            <label class="position-relative mb-1">
-                                {{ $t("programs.cardInfo.trip.flightLine") }}
-                            </label>
-                            <span
-                                class="p-2 px-3 rounded-1 bg-secondary text-center fw-bold text-capitalize bg-opacity-25 text-muted d-block"
-                                v-if="flightTrip.flightAirLine">
-                                {{
-                                    $i18n.locale === "en"
-                                    ? flightTrip.flightAirLine.name_en
-                                    : flightTrip.flightAirLine.name_ar
-                                }}
-                            </span>
-                        </div>
-                        <div class="more-info d-flex align-items-start mt-3 gap-4 flex-lg-row flex-column">
-                            <div class="flex-fill w-100">
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t("programs.cardInfo.trip.from") }}
-                                    </label>
-                                    <span
-                                        class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block text-capitalize"
-                                        v-if="flightTrip.from">
-                                        {{
-                                            $i18n.locale === "en"
-                                            ? flightTrip.from.english_name
-                                            : flightTrip.from.arabic_name
-                                        }}
-                                    </span>
-                                </div>
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t('programs.cardInfo.trip.deptDateTime') }}
-                                    </label>
-                                    <div class="d-flex gap-2 w-100">
-                                        <span
-                                            class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                            {{ flightTrip.departureDate }}
-                                        </span>
-                                        <span
-                                            class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                            {{ flightTrip.departureTime }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t("programs.cardInfo.trip.allowedWeight") }}
-                                    </label>
-                                    <span class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                        {{ +flightTrip.allowedWeight }}
-                                    </span>
-                                </div>
+                </div>
+                <div
+                    :class="programmsImages.length == 0 ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5 slider' : 'col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-5 slider'">
+
+                    <h2 class="head text-center mb-5">
+                        {{ $t("programs.cardInfo.details") }}
+                    </h2>
+                    <div class="go-trip">
+                        <h3 class="mb-3">
+                            {{ $t("programs.cardInfo.trip.go") }}
+                        </h3>
+                        <div class="info">
+                            <div class="detail-label">
+                                <label class="position-relative mb-1">
+                                    {{ $t("programs.cardInfo.trip.flightLine") }}
+                                </label>
+                                <span
+                                    class="p-2 px-3 rounded-1 bg-secondary text-center fw-bold text-capitalize bg-opacity-25 text-muted d-block"
+                                    v-if="flightTrip.flightAirLine">
+                                    {{
+                                        $i18n.locale === "en"
+                                        ? flightTrip.flightAirLine.name_en
+                                        : flightTrip.flightAirLine.name_ar
+                                    }}
+                                </span>
                             </div>
-                            <div class="flex-fill w-100">
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t("programs.cardInfo.trip.to") }}
-                                    </label>
-                                    <span
-                                        class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block text-capitalize"
-                                        v-if="flightTrip.to">
-                                        {{
-                                            $i18n.locale === "en"
-                                            ? flightTrip.to.english_name
-                                            : flightTrip.to.arabic_name
-                                        }}
-                                    </span>
-                                </div>
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t('programs.cardInfo.trip.arrivalDateTime') }}
-                                    </label>
-                                    <div class="d-flex gap-2 w-100">
+                            <div class="more-info d-flex align-items-start mt-3 gap-4 flex-lg-row flex-column">
+                                <div class="flex-fill w-100">
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t("programs.cardInfo.trip.from") }}
+                                        </label>
                                         <span
-                                            class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                            {{ flightTrip.arrivDate22 }}
+                                            class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block text-capitalize"
+                                            v-if="flightTrip.from">
+                                            {{
+                                                $i18n.locale === "en"
+                                                ? flightTrip.from.english_name
+                                                : flightTrip.from.arabic_name
+                                            }}
                                         </span>
+                                    </div>
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t('programs.cardInfo.trip.deptDateTime') }}
+                                        </label>
+                                        <div class="d-flex gap-2 w-100">
+                                            <span
+                                                class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                                {{ flightTrip.departureDate }}
+                                            </span>
+                                            <span
+                                                class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                                {{ flightTrip.departureTime }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t("programs.cardInfo.trip.allowedWeight") }}
+                                        </label>
                                         <span
-                                            class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                            {{ flightTrip.arrivalTime }}
+                                            class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                            {{ +flightTrip.allowedWeight }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="detail-label my-2">
-                                    <label class="position-relative mb-1">
-                                        {{ $t("programs.cardInfo.trip.flightNum") }}
-                                    </label>
-                                    <span class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                        {{ flightTrip.flightNumber }}
-                                    </span>
+                                <div class="flex-fill w-100">
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t("programs.cardInfo.trip.to") }}
+                                        </label>
+                                        <span
+                                            class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block text-capitalize"
+                                            v-if="flightTrip.to">
+                                            {{
+                                                $i18n.locale === "en"
+                                                ? flightTrip.to.english_name
+                                                : flightTrip.to.arabic_name
+                                            }}
+                                        </span>
+                                    </div>
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t('programs.cardInfo.trip.arrivalDateTime') }}
+                                        </label>
+                                        <div class="d-flex gap-2 w-100">
+                                            <span
+                                                class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                                {{ flightTrip.arrivDate22 }}
+                                            </span>
+                                            <span
+                                                class="p-2 px-3 w-100 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                                {{ flightTrip.arrivalTime }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-label my-2">
+                                        <label class="position-relative mb-1">
+                                            {{ $t("programs.cardInfo.trip.flightNum") }}
+                                        </label>
+                                        <span
+                                            class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                            {{ flightTrip.flightNumber }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-</div>
-<div class="return-trip mt-5 flex-fill">
+                <div class="return-trip mt-5 flex-fill">
                     <h3 class="mb-3">
                         {{ $t("programs.cardInfo.trip.return") }}
                     </h3>
@@ -257,8 +266,9 @@
                                     <label v-if="returnFlightNum" class="position-relative mb-1">
                                         {{ $t("programs.cardInfo.trip.flightNum") }}
                                     </label>
-                                    <span v-if="returnFlightNum" class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                        {{ returnFlightNum }} 
+                                    <span v-if="returnFlightNum"
+                                        class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
+                                        {{ returnFlightNum }}
                                     </span>
                                 </div>
                             </div>
@@ -291,413 +301,433 @@
                 </ul>
             </div>
             <form>
-        <!--سلايدر لايشمل الطيران-->
-<!--بداية ريسبونزف السلايدر-->
-                  <!--الصور-->
-                  <!--
+                <!--سلايدر لايشمل الطيران-->
+                <!--بداية ريسبونزف السلايدر-->
+                <!--الصور-->
+                <!--
 :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'"
                   -->
-                  <div class="row mt-5">
+                <div class="row mt-5">
                     <!--start slider-->
 
-                    <div  style="border: none;" :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'" v-if="$props.searchInfo.includeFlight != 1">
-                    <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100" style="border: none;">
-    <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
-        <img v-if="img !=''" @click="uploadImageTomodal(img)" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal" class="w-100" :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
-    </slide>
-    <template #addons>
-      <navigation />
-      <Pagination class="position-absolute" />
+                    <div style="border: none;"
+                        :class="programmsImages.length == 0 ? 'd-none' : 'justify-content-center col-xl-6 col-lg-6 col-md-12 col-sm-12'"
+                        v-if="$props.searchInfo.includeFlight != 1">
+                        <carousel :autoplay="3000" :wrap-around="true" :items-to-show="1" class=" pb-5 w-100"
+                            style="border: none;">
+                            <slide v-for="img in Array.from(new Set(programmsImages))" :key="img">
+                                <img v-if="img != ''" @click="uploadImageTomodal(img)" style="cursor: pointer;"
+                                    data-toggle="modal" data-target="#exampleModal" class="w-100"
+                                    :src="`https://seasonsge.com/seasonreal/upload/${img}`" alt="" />
+                            </slide>
+                            <template #addons>
+                                <navigation />
+                                <Pagination class="position-absolute" />
 
-    </template>
-  </carousel>
-             
-</div>
-<!--end slider-->
-<div :class="programmsImages.length > 0  && $props.searchInfo.includeFlight == 1 
-? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider' 
-: programmsImages.length == 0  && $props.searchInfo.includeFlight == 1
-? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider' 
-: programmsImages.length == 0  && $props.searchInfo.includeFlight == 0
-? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider'
-: 'col-xl-6 col-lg-6 col-md-12 col-sm-12 slider'">
-            <!--بداية جزء ملىء البيانات-->
-            <div class="booking-box rounded-1 mt-1 p-3 w-100" style="border: none;">
-                    <h3 class="text-center mb-2 position-relative">
-                        {{ $t("buttons.bookNow") }}
-                    </h3>
-                    <h4 class="text-center mb-4 fw-bold">
-                        ({{ $t("programs.search.leader") }})
-                    </h4>
-                    <div class="box d-flex flex-column flex-md-row gap-3 mt-3">
-                        <label class="w-50 d-flex gap-2">
-                            <div class="w-100 p-1" v-if="bookingInfo.type === 'MR' || bookingInfo.type === 'MRS'">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.type') }} :
-                                </span>
-                                <select class="w-100 p-2 px-3 rounded-1" v-model="bookingInfo.type">
-                                    <option value="MR">MR</option>
-                                    <option value="MRS">MRS</option>
-                                </select>
-                            </div>
-                   
-                        </label>
-                        <div class="w-100 position-relative">
-                            <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.fName') }}: </span>
-                            <input :class="`p-2 px-3 w-100 rounded-1 ${validation.first_name.$error ? 'error' : ''}`"
-                                type="text" v-model="bookingInfo.first_name" placeholder="First Name" />
-                            <span v-if="validation.first_name.$error" class="error d-block text-danger fst-italic mx-2">
-                                {{
-                                    validation.first_name.$errors[0].$validator === "required"
-                                    ? "Field Reuqired"
-                                    : ""
-                                }}
-                            </span>
-                        </div>
-                        <div class="w-100 position-relative">
-                            <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.lName') }}: </span>
-                            <input :class="`p-2 px-3 w-100 rounded-1 ${validation.last_name.$error ? 'error' : ''}`"
-                                type="text" v-model="bookingInfo.last_name" placeholder="Last Name" />
-                            <span v-if="validation.last_name.$error" class="error d-block text-danger fst-italic mx-2">
-                                {{
-                                    validation.last_name.$errors[0].$validator === "required"
-                                    ? "Field Reuqired"
-                                    : ""
-                                }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column">
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.phone")
-                            }}:</span>
-                            <input :class="`p-2 px-3 rounded-1 w-100 ${validation.phone.$error ? 'error' : ''
-                                }`" type="phone" placeholder="Phone Number" v-model="bookingInfo.phone" />
-                            <span v-if="validation.phone.$error" class="error text-danger fst-italic d-block">
-                                {{
-                                    validation.phone.$errors[0].$validator === "required"
-                                    ? "Field Required"
-                                    : "Invalid Phone Number"
-                                }}
-                            </span>
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column">
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.nation")
-                            }}:</span>
-                            <input :class="`p-2 px-3 rounded-1 w-100 ${validation.nationality.$error ? 'error' : ''
-                                }`" type="text" placeholder="Nationality" v-model="bookingInfo.nationality" />
-                            <span v-if="validation.nationality.$error" class="error text-danger fst-italic d-block">
-                                {{
-                                    validation.nationality.$errors[0].$validator === "required"
-                                    ? "Field Required"
-                                    : ""
-                                }}
-                            </span>
-                        </label>
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.passportNum")
-                            }}:</span>
-                            <input :class="`p-2 px-3 rounded-1 w-100 ${validation.passport_number.$error ? 'error' : ''
-                                }`" type="text" placeholder="Passport Number" v-model="bookingInfo.passport_number" />
-                            <span v-if="validation.passport_number.$error" class="error text-danger fst-italic d-block">
-                                {{
-                                    validation.passport_number.$errors[0].$validator === "required"
-                                    ? "Field Required"
-                                    : 'Passport can"t containe special characters'
-                                }}
-                            </span>
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column" v-if="bookingInfo.personsForm.length > 0"
-                        v-for="(item, index) in bookingInfo.personsForm" :key="index">
-                        <label class="w-100 d-flex sm-flex-nowrap flex-wrap row gap-2">
-                            <div class="col-12 col-sm-3" v-if="item.type === 'MR' || item.type === 'MRS'">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t('flightReservation.flightBook.type') }} {{ `(${index + 2})` }}:
-                                </span>
-                                <select class="w-100 p-2 px-3 rounded-1" v-model="item.type">
-                                    <option value="MR">MR</option>
-                                    <option value="MRS">MRS</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-sm-3" v-if="item.type !== 'MR' && item.type !== 'MRS'">
-                                <span class="d-block mb-1 fw-semibold">
-                                    {{ $t("flightReservation.flightBook.type") }} {{ `(${index + 2})` }}:
-                                </span>
-                                <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].type.$error
-                                    ? 'error'
-                                    : ''
-                                    }`" type="text" placeholder="Type" v-model="item.type" disabled />
-                           
-                            </div>
-                            <div class="d-flex col-12 col-sm-8 gap-2">
+                            </template>
+                        </carousel>
 
-                                <div class="w-100 ">
-                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.firstName") }}
-                                        {{ `(${index + 2})` }}:
-                                    </span>
-                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].firstName.$error
-                                        ? 'error'
-                                        : ''
-                                        }`" type="text" placeholder="First Name" v-model="item.firstName" />
-                                    <span v-if="validation.personsForm.$each.$response.$data[index].firstName.$error
-                                        " class="error text-danger fst-italic d-block">
+                    </div>
+                    <!--end slider-->
+                    <div :class="programmsImages.length > 0 && $props.searchInfo.includeFlight == 1
+                        ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider'
+                        : programmsImages.length == 0 && $props.searchInfo.includeFlight == 1
+                            ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider'
+                            : programmsImages.length == 0 && $props.searchInfo.includeFlight == 0
+                                ? 'col-xl-12 col-lg-12 col-md-12 col-sm-12  slider'
+                                : 'col-xl-6 col-lg-6 col-md-12 col-sm-12 slider'">
+                        <!--بداية جزء ملىء البيانات-->
+                        <div class="booking-box rounded-1 mt-1 p-3 w-100" style="border: none;">
+                            <h3 class="text-center mb-2 position-relative">
+                                {{ $t("buttons.bookNow") }}
+                            </h3>
+                            <h4 class="text-center mb-4 fw-bold">
+                                ({{ $t("programs.search.leader") }})
+                            </h4>
+                            <div class="box d-flex flex-column flex-md-row gap-3 mt-3">
+                                <label class="w-50 d-flex gap-2">
+                                    <div class="w-100 p-1" v-if="bookingInfo.type === 'MR' || bookingInfo.type === 'MRS'">
+                                        <span class="d-block mb-1 fw-semibold">
+                                            {{ $t('flightReservation.flightBook.type') }} :
+                                        </span>
+                                        <select class="w-100 p-2 px-3 rounded-1" v-model="bookingInfo.type">
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                        </select>
+                                    </div>
+
+                                </label>
+                                <div class="w-100 position-relative">
+                                    <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.fName') }}: </span>
+                                    <input
+                                        :class="`p-2 px-3 w-100 rounded-1 ${validation.first_name.$error ? 'error' : ''}`"
+                                        type="text" v-model="bookingInfo.first_name" placeholder="First Name" />
+                                    <span v-if="validation.first_name.$error"
+                                        class="error d-block text-danger fst-italic mx-2">
                                         {{
-                                            validation.personsForm.$each.$response.$errors[index].firstName[0]
-                                                .$validator === "required"
-                                            ? "Field Required"
+                                            validation.first_name.$errors[0].$validator === "required"
+                                            ? "Field Reuqired"
                                             : ""
                                         }}
                                     </span>
                                 </div>
-                                <div class="w-100">
-                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.lastName") }}
-                                        {{ `(${index + 2})` }}:
-                                    </span>
-                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].lastName.$error
-                                        ? 'error'
-                                        : ''
-                                        }`" type="text" placeholder="Last Name" v-model="item.lastName" />
-                                    <span v-if="validation.personsForm.$each.$response.$data[index].lastName.$error
-                                        " class="error text-danger fst-italic d-block">
+                                <div class="w-100 position-relative">
+                                    <span class="d-block mb-2 fw-semibold">{{ $t('carBook.details.lName') }}: </span>
+                                    <input :class="`p-2 px-3 w-100 rounded-1 ${validation.last_name.$error ? 'error' : ''}`"
+                                        type="text" v-model="bookingInfo.last_name" placeholder="Last Name" />
+                                    <span v-if="validation.last_name.$error"
+                                        class="error d-block text-danger fst-italic mx-2">
                                         {{
-                                            validation.personsForm.$each.$response.$errors[index].lastName[0]
-                                                .$validator === "required"
-                                            ? "Field Required"
+                                            validation.last_name.$errors[0].$validator === "required"
+                                            ? "Field Reuqired"
                                             : ""
                                         }}
                                     </span>
                                 </div>
                             </div>
-                        </label>
-                    </div>
-                    <div class="box my-5 d-flex gap-3 flex-column" v-if="searchInfo.rooms.length > 0">
-                        <h3 class="text-center">Rooms</h3>
-                        <div :class="x.matches ? 'overflow-auto responsive-table  d-flex justify-content-center':'responsive-table  d-flex justify-content-center'">
-                            <table class="w-100">
-                                <thead>
-                                    <tr>
-                                        <td class="text-center">#</td>
-                                        <td>Room Type</td>
-                                        <td>Child Reservation</td>
-                                        <td>Child Count In Room</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item, index) in searchInfo.rooms" :key="index">
-                                        <td class="text-center">
-                                            {{ index + 1 }}
-                                        </td>
-                                        <td>
-                                            {{ item.roomType === '1' ? 'Single Room'
-                                                : item.roomType === '2' ?
-                                                    'Double Room' : 'Triple Room' }}
-                                        </td>
-                                        <td>
-                                            {{ item.childReservation }}
-                                        </td>
-                                        <td>
-                                            {{ item.childCount }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column">
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.phone")
+                                    }}:</span>
+                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.phone.$error ? 'error' : ''
+                                        }`" type="phone" placeholder="Phone Number" v-model="bookingInfo.phone" />
+                                    <span v-if="validation.phone.$error" class="error text-danger fst-italic d-block">
+                                        {{
+                                            validation.phone.$errors[0].$validator === "required"
+                                            ? "Field Required"
+                                            : "Invalid Phone Number"
+                                        }}
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column">
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.nation")
+                                    }}:</span>
+                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.nationality.$error ? 'error' : ''
+                                        }`" type="text" placeholder="Nationality" v-model="bookingInfo.nationality" />
+                                    <span v-if="validation.nationality.$error" class="error text-danger fst-italic d-block">
+                                        {{
+                                            validation.nationality.$errors[0].$validator === "required"
+                                            ? "Field Required"
+                                            : ""
+                                        }}
+                                    </span>
+                                </label>
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.passportNum")
+                                    }}:</span>
+                                    <input :class="`p-2 px-3 rounded-1 w-100 ${validation.passport_number.$error ? 'error' : ''
+                                        }`" type="text" placeholder="Passport Number" v-model="bookingInfo.passport_number" />
+                                    <span v-if="validation.passport_number.$error"
+                                        class="error text-danger fst-italic d-block">
+                                        {{
+                                            validation.passport_number.$errors[0].$validator === "required"
+                                            ? "Field Required"
+                                            : 'Passport can"t containe special characters'
+                                        }}
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 mt-3 flex-lg-row flex-column"
+                                v-if="bookingInfo.personsForm.length > 0" v-for="(item, index) in bookingInfo.personsForm"
+                                :key="index">
+                                <label class="w-100 d-flex sm-flex-nowrap flex-wrap row gap-2">
+                                    <div class="col-12 col-sm-3" v-if="item.type === 'MR' || item.type === 'MRS'">
+                                        <span class="d-block mb-1 fw-semibold">
+                                            {{ $t('flightReservation.flightBook.type') }} {{ `(${index + 2})` }}:
+                                        </span>
+                                        <select class="w-100 p-2 px-3 rounded-1" v-model="item.type">
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-3" v-if="item.type !== 'MR' && item.type !== 'MRS'">
+                                        <span class="d-block mb-1 fw-semibold">
+                                            {{ $t("flightReservation.flightBook.type") }} {{ `(${index + 2})` }}:
+                                        </span>
+                                        <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].type.$error
+                                            ? 'error'
+                                            : ''
+                                            }`" type="text" placeholder="Type" v-model="item.type" disabled />
+
+                                    </div>
+                                    <div class="d-flex col-12 col-sm-8 gap-2">
+
+                                        <div class="w-100 ">
+                                            <span class="d-block mb-1 fw-semibold">{{
+                                                $t("flightReservation.flightBook.firstName") }}
+                                                {{ `(${index + 2})` }}:
+                                            </span>
+                                            <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].firstName.$error
+                                                ? 'error'
+                                                : ''
+                                                }`" type="text" placeholder="First Name" v-model="item.firstName" />
+                                            <span v-if="validation.personsForm.$each.$response.$data[index].firstName.$error
+                                                " class="error text-danger fst-italic d-block">
+                                                {{
+                                                    validation.personsForm.$each.$response.$errors[index].firstName[0]
+                                                        .$validator === "required"
+                                                    ? "Field Required"
+                                                    : ""
+                                                }}
+                                            </span>
+                                        </div>
+                                        <div class="w-100">
+                                            <span class="d-block mb-1 fw-semibold">{{
+                                                $t("flightReservation.flightBook.lastName") }}
+                                                {{ `(${index + 2})` }}:
+                                            </span>
+                                            <input :class="`p-2 px-3 rounded-1 w-100 ${validation.personsForm.$each.$response.$data[index].lastName.$error
+                                                ? 'error'
+                                                : ''
+                                                }`" type="text" placeholder="Last Name" v-model="item.lastName" />
+                                            <span v-if="validation.personsForm.$each.$response.$data[index].lastName.$error
+                                                " class="error text-danger fst-italic d-block">
+                                                {{
+                                                    validation.personsForm.$each.$response.$errors[index].lastName[0]
+                                                        .$validator === "required"
+                                                    ? "Field Required"
+                                                    : ""
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="box my-5 d-flex gap-3 flex-column" v-if="searchInfo.rooms.length > 0">
+                                <h3 class="text-center">Rooms</h3>
+                                <div
+                                    :class="x.matches ? 'overflow-auto responsive-table  d-flex justify-content-center' : 'responsive-table  d-flex justify-content-center'">
+                                    <table class="w-100">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center">#</td>
+                                                <td>Room Type</td>
+                                                <td>Child Reservation</td>
+                                                <td>Child Count In Room</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item, index) in searchInfo.rooms" :key="index">
+                                                <td class="text-center">
+                                                    {{ index + 1 }}
+                                                </td>
+                                                <td>
+                                                    {{ item.roomType === '1' ? 'Single Room'
+                                                        : item.roomType === '2' ?
+                                                            'Double Room' : 'Triple Room' }}
+                                                </td>
+                                                <td>
+                                                    {{ item.childReservation }}
+                                                </td>
+                                                <td>
+                                                    {{ item.childCount }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="box my-5 d-flex gap-3 flex-column">
+                                <h3 class="text-center">Cities In Program</h3>
+                                <div
+                                    :class="x.matches ? 'overflow-auto responsive-data3localfgrgregrggrgregtable  d-flex justify-content-center' : 'responsive-table  d-flex justify-content-center'">
+                                    <table class="w-100">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center">#</td>
+                                                <td v-if="city">City</td>
+                                                <td>Hotel Name</td>
+                                                <td>Check In</td>
+                                                <td>Check Out</td>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr v-for="(item, index) in allCities" :key="index">
+                                                <td class="text-center">
+                                                    {{ index + 1 }}
+                                                </td>
+                                                <td>
+                                                    {{
+                                                        $i18n.locale === "en"
+                                                        ? item.city?.name_en
+                                                        : item.city?.name
+                                                    }}
+                                                </td>
+                                                <td>
+                                                    {{
+                                                        $i18n.locale === "en"
+                                                        ? item.hotel_name_english
+                                                        : item.hotel_name_arabic
+                                                    }}
+                                                </td>
+                                                <td>
+                                                    {{$props.searchInfo.includeFlight ?item.registration_date  : item.startDate }}
+                                                </td>
+                                                <td>
+                                                    {{ $props.searchInfo.includeFlight ?item.departure_date  : item.endDate }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="box d-flex gap-3 mt-3 flex-md-row flex-column">
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.meal')
+                                    }}:</span>
+                                    <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">{{
+                                        mealType }}</span>
+                                </label>
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.transport')
+                                    }}:</span>
+                                    <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">
+                                        <label class="position-relative mb-1">
+                                            {{ carsHistory[0] ?
+                                                $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name
+
+                                                : ''
+
+                                            }}
+
+                                        </label>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 mt-3 flex-md-row flex-column">
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("flightReservation.flightBook.adults") }}:
+
+                                    </span>
+                                    <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
+                                        v-model="persons.adults" disabled />
+                                </label>
+                                <label class="w-100" v-if="persons.children > 0">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("flightReservation.flightBook.children") }}:
+                                    </span>
+                                    <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
+                                        v-model="persons.children" disabled />
+                                </label>
+                                <label class="w-100" v-if="persons.infants > 0">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("flightReservation.flightBook.infants") }}:
+                                    </span>
+                                    <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
+                                        v-model="persons.infants" disabled />
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
+                                <label class="w-100" v-if="prices.has('1')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.singlePrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_adult_individual) }}
+                                    </span>
+                                </label>
+                                <label class="w-100" v-if="prices.has('2')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.doublePrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_adult_double) }}
+                                    </span>
+                                </label>
+                                <label class="w-100" v-if="prices.has('3')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.triplePrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_adult_triple) }}
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
+                                <label class="w-100" v-if="prices.has('4')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.childWithoutBedPrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_child_no_bed) }}
+                                    </span>
+                                </label>
+                                <label class="w-100" v-if="prices.has('5')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.childWithBedPrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_child_with_bed) }}
+                                    </span>
+                                </label>
+                                <label class="w-100" v-if="prices.has('6')">
+                                    <span class="d-block mb-1 fw-semibold">
+                                        {{ $t("programs.search.infantPrice") }}:
+                                    </span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(programDetails.price_per_infant) }}
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="box d-flex gap-3 flex-column mt-3">
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.total")
+                                    }}:</span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(bookingInfo.total) }}
+                                    </span>
+                                </label>
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.tax")
+                                    }}:</span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ isNaN(+bookingInfo.tax) ? 0 : bookingInfo.tax }}%
+                                    </span>
+                                </label>
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.agentDiscount') }}:</span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ bookingInfo.agent_discount }}%
+                                    </span>
+                                </label>
+                                <label class="w-100">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.net")
+                                    }}:</span>
+                                    <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
+                                        {{ USDollar.format(bookingInfo.net_total) }}
+                                    </span>
+                                </label>
+                                <!--رفع صورة-->
+
+                                <label class="w-100" v-if="$props.searchInfo.includeFlight != 1">
+                                    <span class="d-block mb-1 fw-semibold">{{ $t('programs.search.flight_ticket') }}:</span>
+                                    <input id="img" class="rounded-1 p-2 px-3 w-100" type="file" accept="image/*"
+                                        @change="handleImageUpload">
+                                    <span v-if="validation.picture.$error" class="error text-danger fst-italic d-block">
+                                        {{ validation.picture.$errors[0].$validator === 'required' ? 'image tecket required'
+                                            : '' }}
+                                    </span>
+                                            </label>
+                                <button class="butn rounded-1 p-2 px-3 text-uppercase mt-3" @click.prevent="submission"
+                                    v-if="buttonVisible">
+                                    {{ $t("buttons.confirm") }}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="box my-5 d-flex gap-3 flex-column">
-                        <h3 class="text-center">Cities In Program</h3>
-                        <div :class="x.matches ? 'overflow-auto responsive-data3localfgrgregrggrgregtable  d-flex justify-content-center':'responsive-table  d-flex justify-content-center'">
-                            <table class="w-100">
-                                <thead>
-                                    <tr>
-                                        <td class="text-center">#</td>
-                                        <td v-if="city">City</td>
-                                        <td>Hotel Name</td>
-                                        <td>Check In</td>
-                                        <td>Check Out</td>
-                                       
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    <tr v-for="(item, index) in allCities" :key="index">
-                                        <td class="text-center">
-                                            {{ index + 1 }}
-                                        </td>
-                                        <td >
-                                            {{
-                                                $i18n.locale === "en"
-                                                ? item.city?.name_en
-                                                : item.city?.name
-                                            }}
-                                        </td>
-                                        <td>
-                                            {{
-                                                $i18n.locale === "en"
-                                                ? item.hotel_name_english
-                                                : item.hotel_name_arabic
-                                            }}
-                                        </td>
-                                        <td>
-                                            {{item.startDate }}
-                                        </td>
-                                        <td>
-                                            {{ item.endDate }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="box d-flex gap-3 mt-3 flex-md-row flex-column">
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.meal') }}:</span>
-                            <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">{{ mealType }}</span>
-                        </label>
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.transport')
-                            }}:</span>
-                            <span class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25 d-block w-100">
-                                <label class="position-relative mb-1">
-                                {{ carsHistory[0]?
-                                 $i18n.locale === 'en' ? carsHistory[0].name_en : carsHistory[0].name 
-                                
-                                :'' 
-                                
-                                }}
-                              
-                            </label>
-                            </span>
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 mt-3 flex-md-row flex-column">
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("flightReservation.flightBook.adults") }}:
-                              
-                            </span>
-                            <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
-                                v-model="persons.adults" disabled />
-                        </label>
-                        <label class="w-100" v-if="persons.children > 0">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("flightReservation.flightBook.children") }}:
-                            </span>
-                            <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
-                                v-model="persons.children" disabled />
-                        </label>
-                        <label class="w-100" v-if="persons.infants > 0">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("flightReservation.flightBook.infants") }}:
-                            </span>
-                            <input class="p-2 px-3 rounded-1 w-100 bg-secondary bg-opacity-25" type="number" min="0"
-                                v-model="persons.infants" disabled />
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
-                        <label class="w-100" v-if="prices.has('1')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.singlePrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_adult_individual) }}
-                            </span>
-                        </label>
-                        <label class="w-100" v-if="prices.has('2')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.doublePrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_adult_double) }}
-                            </span>
-                        </label>
-                        <label class="w-100" v-if="prices.has('3')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.triplePrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_adult_triple) }}
-                            </span>
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
-                        <label class="w-100" v-if="prices.has('4')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.childWithoutBedPrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_child_no_bed) }}
-                            </span>
-                        </label>
-                        <label class="w-100" v-if="prices.has('5')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.childWithBedPrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_child_with_bed) }}
-                            </span>
-                        </label>
-                        <label class="w-100" v-if="prices.has('6')">
-                            <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.infantPrice") }}:
-                            </span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(programDetails.price_per_infant) }}
-                            </span>
-                        </label>
-                    </div>
-                    <div class="box d-flex gap-3 flex-column mt-3">
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.total")
-                            }}:</span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(bookingInfo.total) }}
-                            </span>
-                        </label>
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.tax") }}:</span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ isNaN(+bookingInfo.tax) ? 0 : bookingInfo.tax  }}%
-                            </span>
-                        </label>
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t('carBook.details.agentDiscount') }}:</span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ bookingInfo.agent_discount }}%
-                            </span>
-                        </label>
-                        <label class="w-100">
-                            <span class="d-block mb-1 fw-semibold">{{ $t("flightReservation.flightBook.net") }}:</span>
-                            <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
-                                {{ USDollar.format(bookingInfo.net_total) }}
-                            </span>
-                        </label>
-                        <!--رفع صورة-->
-                        
-                    <label class="w-100" v-if="$props.searchInfo.includeFlight != 1">
-                        <span class="d-block mb-1 fw-semibold">{{ $t('programs.search.flight_ticket') }}:</span>
-                        <input id="img" class="rounded-1 p-2 px-3 w-100" type="file" accept="image/*" @change="handleImageUpload">
-                        <span v-if="validation.picture.$error" class="error text-danger fst-italic d-block">
-                            {{ validation.picture.$errors[0].$validator === 'required' ? 'image tecket required' : '' }}
-                        </span>
-                    </label>
-                        <button class="butn rounded-1 p-2 px-3 text-uppercase mt-3" @click.prevent="submission"
-                            v-if="buttonVisible">
-                            {{ $t("buttons.confirm") }}
-                        </button>
-                    </div>
+
                 </div>
-        </div>
 
-                  </div>
-                  
 
-          
-              <!--نهاية جزء ملىء البيانات-->
 
-                
+                <!--نهاية جزء ملىء البيانات-->
+
+
             </form>
             <div class="alert alert-success alert-dismissible text-center position-fixed" role="alert">
                 <div class="d-flex align-items-center gap-2">
@@ -721,7 +751,7 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, computed, watch , onBeforeMount } from 'vue'
+import { ref, onMounted, computed, watch, onBeforeMount } from 'vue'
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, numeric, alphaNum, helpers } from "@vuelidate/validators";
 import Loader from '../Loader.vue';
@@ -730,7 +760,7 @@ import i18n from '../../i18n';
 import router from '../../router';
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import { addDays, format ,parse } from 'date-fns';
+import { addDays, format, parse } from 'date-fns';
 const x = ref(window.matchMedia("(max-width:412px)"))
 const flightNumber = ref('');
 const prices = ref(new Set())
@@ -758,15 +788,15 @@ const bookingInfo = ref({
     phone: "",
     nationality: "",
     passport_number: "",
-    type:"MR",
-    picture:'',
+    type: "MR",
+    picture: '',
     personsForm: [],
     adults_count: computed(() => persons.value.infants + persons.value.children + persons.value.adults),
     tax: computed(() => programDetails.value.tax),
     total: 0,
-    agent_discount: computed(() => ( userInfo.value.discount) ),
+    agent_discount: computed(() => (userInfo.value.discount)),
     net_total: computed(() => {
-        return bookingInfo.value.total + ((bookingInfo.value.tax / 100) * bookingInfo.value.total) - ((userInfo.value.discount/ 100) * (bookingInfo.value.total ))
+        return bookingInfo.value.total + ((bookingInfo.value.tax / 100) * bookingInfo.value.total) - ((userInfo.value.discount / 100) * (bookingInfo.value.total))
     }),
     // net_total: computed(() => {
 
@@ -782,7 +812,7 @@ const rules = {
     phone: { required, numeric },
     nationality: { required },
     passport_number: { required, alphaNum },
-    picture:{required},
+    picture: { required },
     personsForm: {
         $each: helpers.forEach({
             firstName: { required },
@@ -803,7 +833,7 @@ const handleImageUpload = (event) => {
             bookingInfo.value.picture = file;
         };
         reader.readAsDataURL(file);
-    }
+    }
 }
 // Formating Balanc
 const USDollar = Intl.NumberFormat("en-US", {
@@ -827,26 +857,26 @@ watch(i18n.global.locale, newVal => {
 const buttonVisible = ref(true)
 
 const submission = async () => {
-   /* let getImage;
-    let postImage;
-    let getData =  await axios.get('https://seasonreal.seasonsge.com/appv1real/program-booking');
-    if(getData.status == 200){
-        getImage = getData.data;
-       // console.log(getImage);
-    }
-    console.log('iam fetch');
-   await axios.post('https://seasonreal.seasonsge.com/appv1real/program-booking' , {
-        image_name: selectedImage.value ,
-    
-   }).then((data)=>{
-    let myData = data.data;
-    console.log(myData);
-   })*/
+    /* let getImage;
+     let postImage;
+     let getData =  await axios.get('https://seasonreal.seasonsge.com/appv1real/program-booking');
+     if(getData.status == 200){
+         getImage = getData.data;
+        // console.log(getImage);
+     }
+     console.log('iam fetch');
+    await axios.post('https://seasonreal.seasonsge.com/appv1real/program-booking' , {
+         image_name: selectedImage.value ,
+     
+    }).then((data)=>{
+     let myData = data.data;
+     console.log(myData);
+    })*/
     let img = document.getElementById('img');
-//   console.log(img.files[0]);
+    //   console.log(img.files[0]);
     const data = new FileReader();
     console.log(data);
-   validation.value.$validate();
+    validation.value.$validate();
     if (!validation.value.$error) {
         if (localStorage.getItem("login")) {
             const userId = JSON.parse(localStorage.getItem("login"))
@@ -860,7 +890,7 @@ const submission = async () => {
             formData.append("city", props.searchInfo.city.toString())
             formData.append("include_flight", props.searchInfo.includeFlight)
             formData.append("flightNumber", flightNumber.value)
-            formData.append("firstName",`${bookingInfo.value.type} ${bookingInfo.value.first_name}` )
+            formData.append("firstName", `${bookingInfo.value.type} ${bookingInfo.value.first_name}`)
             formData.append("lastName", bookingInfo.value.last_name)
             formData.append("email", bookingInfo.value.email)
             formData.append("phoneNumber", bookingInfo.value.phone)
@@ -872,7 +902,7 @@ const submission = async () => {
             formData.append("total", bookingInfo.value.total)
             formData.append("tax", bookingInfo.value.tax)
             formData.append("net", bookingInfo.value.net_total)
-            formData.append("image" , bookingInfo.value.picture)
+            formData.append("image", bookingInfo.value.picture)
 
             buttonVisible.value = false;
 
@@ -890,17 +920,17 @@ const submission = async () => {
                         .then(data => {
                             console.log(data);
                         })
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData ,{
+                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
-    }
+                        }
                     })
                         .then(response => {
                             // console.log(response);
                             randomCode.value = response.data.booking_id
                             document.querySelector(".alert").classList.add("active")
                             loading.value = false
-                          console.log(response.data);
+                            console.log(response.data);
                             const allRooms = new FormData()
                             props.searchInfo.rooms.forEach(el => {
                                 allRooms.append("id_hotel", randomCode.value)
@@ -929,7 +959,7 @@ const submission = async () => {
                     tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
                     await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                         .then(data => {
-                            
+
                             console.log(data);
                         })
                     const returnTickets = new FormData()
@@ -939,10 +969,10 @@ const submission = async () => {
                         .then(data => {
                             console.log(data);
                         })
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData,{
+                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
-    }
+                        }
                     }
                     )
                         .then(response => {
@@ -978,10 +1008,10 @@ const submission = async () => {
                     loading.value = false
                 }
             } else {
-                await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData ,{
+                await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
-    }
+                    }
                 })
                     .then(response => {
                         console.log(response.data);
@@ -1026,11 +1056,11 @@ const removeAlert = () => {
     document.querySelector(`.alert`).classList.remove("active")
 }
 
- 
+
 let image = ref(null);
-const uploadImageTomodal = (img)=>{
-image.value = img;
-// console.log(image.value);
+const uploadImageTomodal = (img) => {
+    image.value = img;
+    // console.log(image.value);
 }
 
 let programmsImages = ref([]);
@@ -1043,101 +1073,101 @@ const hotel_name_english = ref('')
 const city = ref('')
 const checkIn = ref('')
 const checkOut = ref('')
-onBeforeMount(async() => {
+onBeforeMount(async () => {
     city.value = localStorage.getItem('programmCity')
-    let arr =  localStorage.getItem('allprogramms'); 
+    let arr = localStorage.getItem('allprogramms');
     let id = localStorage.getItem('programmId');
     programmsImages.value = JSON.parse(arr);
-    let filterImages = programmsImages.value.filter((img)=>{
+    let filterImages = programmsImages.value.filter((img) => {
         return img.id == id
     })
     console.log(filterImages);
-      programmsImages.value = [];
-    if(filterImages[0].image_1 != '' && filterImages[0].image_1 != null){
+    programmsImages.value = [];
+    if (filterImages[0].image_1 != '' && filterImages[0].image_1 != null) {
         programmsImages.value.push(filterImages[0].image_1);
 
     }
-    if(filterImages[0].image_2 != '' && filterImages[0].image_2 != null){
+    if (filterImages[0].image_2 != '' && filterImages[0].image_2 != null) {
         programmsImages.value.push(filterImages[0].image_2);
 
     }
-    if(filterImages[0].image_3 != '' && filterImages[0].image_3 != null){
+    if (filterImages[0].image_3 != '' && filterImages[0].image_3 != null) {
         programmsImages.value.push(filterImages[0].image_3);
 
     }
-    if(filterImages[0].image_4 != '' && filterImages[0].image_4 != null){
+    if (filterImages[0].image_4 != '' && filterImages[0].image_4 != null) {
         programmsImages.value.push(filterImages[0].image_4);
 
     }
-    if(filterImages[0].image_5 != '' && filterImages[0].image_5 != null){
+    if (filterImages[0].image_5 != '' && filterImages[0].image_5 != null) {
         programmsImages.value.push(filterImages[0].image_5);
 
     }
     flightNumber.value = filterImages[0].flight_number;
     mealType.value = filterImages[0].meal_type;
-hotel_name_arabic.value = filterImages[0].program_title_arabic;
-hotel_name_english.value = filterImages[0].program_title_english;
-checkIn.value = filterImages[0].from_date 
-checkOut.value = filterImages[0].to_date 
-localStorage.setItem('data1' , JSON.stringify(filterImages[0]));
+    hotel_name_arabic.value = filterImages[0].program_title_arabic;
+    hotel_name_english.value = filterImages[0].program_title_english;
+    checkIn.value = filterImages[0].from_date
+    checkOut.value = filterImages[0].to_date
+    localStorage.setItem('data1', JSON.stringify(filterImages[0]));
 
 
-let flightLine;
+    let flightLine;
 
-if(props.searchInfo.includeFlight == 1){
-    await axios.get(`https://seasonreal.seasonsge.com/appv1real/airline_id?id=${filterImages[0].flight_number}`)
-.then((flightData)=>{
-    console.log('iam flightData');
-    console.log(flightData.data); 
-    console.log('iam flightData');
-    allowedWeight.value = flightData.data[0].allowedWeight;
-    flightLine = flightData.data[0].flightLine;
-    if(flightData.data.length > 1){
-        console.log('flightData' ,flightData.data);
-        returnFlightNum.value = flightData.data[1].returnFlightNumber
-        localStorage.setItem('data2' , JSON.stringify(flightData.data[0])) 
-        localStorage.setItem('data3' , JSON.stringify(flightData.data[1]))
-    console.log('test data');
-    console.log(flightData.data[0]);
-    console.log(flightData.data[1]);
-    }else{
-        returnFlightNum.value = flightData.data[0].returnFlightNumber
-        localStorage.setItem('data2' , JSON.stringify(flightData.data[0]))
-    console.log('test data');
-        console.log(flightData.data[0]);
+    if (props.searchInfo.includeFlight == 1) {
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/airline_id?id=${filterImages[0].flight_number}`)
+            .then((flightData) => {
+                console.log('iam flightData');
+                console.log(flightData.data);
+                console.log('iam flightData');
+                allowedWeight.value = flightData.data[0].allowedWeight;
+                flightLine = flightData.data[0].flightLine;
+                if (flightData.data.length > 1) {
+                    console.log('flightData', flightData.data);
+                    returnFlightNum.value = flightData.data[1].returnFlightNumber
+                    localStorage.setItem('data2', JSON.stringify(flightData.data[0]))
+                    localStorage.setItem('data3', JSON.stringify(flightData.data[1]))
+                    console.log('test data');
+                    console.log(flightData.data[0]);
+                    console.log(flightData.data[1]);
+                } else {
+                    returnFlightNum.value = flightData.data[0].returnFlightNumber
+                    localStorage.setItem('data2', JSON.stringify(flightData.data[0]))
+                    console.log('test data');
+                    console.log(flightData.data[0]);
 
+                }
+            });
+        // get airl line
+        await axios.get('https://seasonreal.seasonsge.com/appv1real/airlines-view')
+            .then((lineOfFlight) => {
+                let line = [];
+                line.push(...lineOfFlight.data.airlines);
+                let filterLine = line.filter((line) => { return line.id == flightLine });
+                airLine.value = filterLine[0].name_en
+                localStorage.setItem('airLine', airLine.value)
+                localStorage.setItem('airLineData', JSON.stringify(filterLine[0]));
+                console.log('iam line');
+                console.log(filterLine);
+                console.log('iam line');
+
+            })
+
+
+
+        /*
+         programmsImages.value.push(filterImages[0].image_2);
+         programmsImages.value.push(filterImages[0].image_3);
+         programmsImages.value.push(filterImages[0].image_4);
+         programmsImages.value.push(filterImages[0].image_5);
+          */
+        console.log('iamges');
+        console.log(filterImages[0]);
+        console.log('iamges');
+
+    } else {
+        localStorage.setItem('no data', -1)
     }
-});
-// get airl line
- await axios.get('https://seasonreal.seasonsge.com/appv1real/airlines-view')
- .then((lineOfFlight)=>{
-       let line = [];
-       line.push(...lineOfFlight.data.airlines);
-       let filterLine = line.filter((line)=>{ return line.id == flightLine });
-        airLine.value = filterLine[0].name_en
-        localStorage.setItem('airLine' , airLine.value)
-        localStorage.setItem('airLineData' ,JSON.stringify(filterLine[0]));
-    console.log('iam line');
-    console.log(filterLine);
-    console.log('iam line');
-
- })
-
-
-
-    /*
-     programmsImages.value.push(filterImages[0].image_2);
-     programmsImages.value.push(filterImages[0].image_3);
-     programmsImages.value.push(filterImages[0].image_4);
-     programmsImages.value.push(filterImages[0].image_5);
-      */ 
-   console.log('iamges');
-   console.log(filterImages[0] );  
-   console.log('iamges'); 
-
-}else{
-    localStorage.setItem('no data' , -1)
-}
 
 });
 
@@ -1145,7 +1175,7 @@ if(props.searchInfo.includeFlight == 1){
 const newcheckIn = ref()
 const newcheckOut = ref()
 onMounted(async () => {
-    newcheckIn.value = sessionStorage.getItem('programm-CheckIn') 
+    newcheckIn.value = sessionStorage.getItem('programm-CheckIn')
     newcheckOut.value = sessionStorage.getItem('programm-CheckOut')
     bookingInfo.value.picture = props.searchInfo.includeFlight == 1 ? new FileReader() : '';
     props.searchResults.filter((el) => {
@@ -1154,18 +1184,18 @@ onMounted(async () => {
         }
     });
     const userId = JSON.parse(localStorage.getItem("login"))
-       
-                 
+
+
     await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view")
         .then(data => {
             carsHistory = data.data.filter(el => el.id == props.searchResults[0].car_type)
-            console.log(carsHistory,'carsHistory');
-            
+            console.log(carsHistory, 'carsHistory');
+
         })
-                    
-                    
-                
-    
+
+
+
+
     await axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view").then((data) => {
         programDetails.value.destination = data.data.filter(
             (ele) => ele.id == programDetails.value.return_airline
@@ -1175,7 +1205,7 @@ onMounted(async () => {
         console.log(data.data);
 
         userInfo.value = data.data.filter((el) => el.id == route.params.userId)[0];
-        console.log("userInfo" ,userInfo);
+        console.log("userInfo", userInfo);
         loading.value = false
     });
     if (programDetails.value.includes_flight == "1") {
@@ -1197,10 +1227,10 @@ onMounted(async () => {
                 }
             });
             console.log('iam-air-lines');
-            allprogramData.value.push( ...data.data)
+            allprogramData.value.push(...data.data)
 
-            
-            
+
+
             console.log(data) ///////////////
             axios.get("https://seasonreal.seasonsge.com/appv1real/viewAirports").then((data) => {
                 if (data.data.success) {
@@ -1240,31 +1270,32 @@ onMounted(async () => {
             // console.log(data);
             if (typeof data.data === "object") {
                 console.log(data.data, '4444444444444');
-                data.data.forEach((el,i)=>{
+                data.data.forEach((el, i) => {
                     allCities.value.push(el)
 
                 })
-                
-                allCitiesIds = allCities.value.map((ele)=>{
+
+                allCitiesIds = allCities.value.map((ele) => {
                     return ele.city_name
-                }); 
+                });
+                console.log(allCities.value, 'allCities.value11111111111111 ');
 
                 axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                     .then(data => {
-                        let startDateObject1 =newcheckIn.value 
-                        let endDateObject ;
+                        let startDateObject1 = newcheckIn.value
+                        let endDateObject;
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                             const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
                             endDateObject = addDays(startDateObject, el.num_of_nights);
-                            el.startDate =startDateObject1
+                            el.startDate = startDateObject1
                             el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
-                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
-                            endDateObject =''
+                            startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
+                            endDateObject = ''
                         });
                     })
 
-                    console.log(allCities.value ,'allCities.value ');
+                console.log(allCities.value, 'allCities.value ');
                 // console.log(data);
 
                 // if (props.searchInfo.includeFlight == '0') {
@@ -1311,13 +1342,16 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-html, body {
+html,
+body {
     max-width: 100% !important;
     overflow-x: hidden !important;
 }
+
 .program-book {
-    max-width:100% !important;
+    max-width: 100% !important;
     overflow-x: hidden;
+
     .inner-box {
 
         input,
@@ -1343,6 +1377,7 @@ html, body {
 
         .flight-trip {
             max-width: 100% !important;
+
             .head {
                 position: relative;
 
@@ -1396,7 +1431,7 @@ html, body {
         .responsive-table {
             table {
                 width: 100% !important;
-              
+
 
                 td {
                     text-align: center;
@@ -1470,36 +1505,40 @@ html, body {
         }
     }
 }
+
 @media (max-width:1389px) {
-    .slider{
-margin-top: 2px !important;
+    .slider {
+        margin-top: 2px !important;
     }
-    
+
 }
+
 @media (max-width:1266px) {
-    .slider{
-margin-top: -5px !important;
+    .slider {
+        margin-top: -5px !important;
     }
-    
+
 }
+
 @media (max-width:1266px) {
-    .slider{
-margin-top: -5px !important;
+    .slider {
+        margin-top: -5px !important;
     }
-    
+
 }
+
 @media (max-width:1223px) {
-    .carousel{
+    .carousel {
         margin-top: 80px !important;
     }
-    
+
 }
+
 @media (max-width:576px) {
 
-.modalImage{
-     width: 100vw !important;
-     padding-left: 18px;
-}
+    .modalImage {
+        width: 100vw !important;
+        padding-left: 18px;
+    }
 
-}
-</style>
+}</style>
