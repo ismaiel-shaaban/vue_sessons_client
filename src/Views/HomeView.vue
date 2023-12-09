@@ -117,10 +117,10 @@
                             <div class="box overflow-hidden bg-white rounded-2 d-flex flex-column h-100">
                                 <div class="image">
                                     <router-link v-if="!item.link.includes('http')" :to="`/${$i18n.locale}/${item.link}`">
-                                        <img class="img-fluid w-100" :src="item.photo" alt="" />
+                                        <img v-if="images[index]"  class="img-fluid w-100" :src="`https://seasonreal.seasonsge.com/appv1real/${images[index].image}`" alt="" />
                                     </router-link>
                                     <a v-if="item.link.includes('http')" target="_blank" :href="item.link">
-                                        <img class="img-fluid w-100" :src="item.photo" alt="" />
+                                        <img v-if="images[index]" class="img-fluid w-100" :src="`https://seasonreal.seasonsge.com/appv1real/${images[index].image}`" alt="" />
                                     </a>
                                 </div>
                                 <div class="text flex-fill d-flex flex-column justify-content-between p-4">
@@ -184,6 +184,7 @@ import { required, helpers } from "@vuelidate/validators";
 
 
 const slider = ref([]);
+const images = ref([]);
 const newPopup = ref(false);
 const aboutPopup = ref(false);
 const offersPopup = ref(false);
@@ -292,6 +293,11 @@ watch(aboutPopup, (newVal) => {
 
 
 onMounted(async () => {
+    await axios.get(`https://seasonreal.seasonsge.com/appv1real/images` ).then((res) => {
+    
+         images.value=res.data
+   
+       });
     await axios
         .get("https://seasonreal.seasonsge.com/appv1real/slider")
         .then((data) => {
