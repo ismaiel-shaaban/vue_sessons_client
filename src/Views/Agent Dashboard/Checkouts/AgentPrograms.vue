@@ -303,6 +303,7 @@
                 <tr>
                     <th>Total</th>
                     <th>Tax</th>
+                    <th>Agent Discount</th>
                     <th>Net Total</th>
                 </tr>
             </thead>
@@ -310,6 +311,7 @@
                 <tr>
                     <td>{{ USDollar.format(bookInfo.total) }}</td>
                     <td>{{ bookInfo.tax }}%</td>
+                    <td>{{ userInfo.discount }}%</td>
                     <td>{{ USDollar.format(bookInfo.net) }} </td>
                 </tr>
             </tbody>

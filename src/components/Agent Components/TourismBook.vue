@@ -882,7 +882,7 @@ const submission = async () => {
                 }
             }
             if (props.searchInfo.includeFlight == '1') {
-                if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets > bookingInfo.value.adults_count) {
+                if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >= bookingInfo.value.adults_count) {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
                     tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
@@ -923,7 +923,7 @@ const submission = async () => {
                                     }, 1500)
                                 })
                         })
-                } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets > bookingInfo.value.adults_count && flightTrip.value.numReturnTickets > bookingInfo.value.adults_count) {
+                } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >= bookingInfo.value.adults_count && flightTrip.value.numReturnTickets >= bookingInfo.value.adults_count) {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
                     tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
