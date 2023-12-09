@@ -647,39 +647,7 @@ const submission = async () => {
                 loading.value = false
             }
 
-            await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
-                updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookingInfo.value.net_total)
-                const balance = new FormData()
-
-                balance.append("name", userInfo.value.name)
-                balance.append("email", userInfo.value.email)
-                balance.append("password", userInfo.value.password)
-                balance.append("type", userInfo.value.type)
-                balance.append("id", userInfo.value.id)
-                balance.append("discount", userInfo.value.discount)
-                balance.append("balance", updatedBalance.value)
-
-                axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", balance)
-                    .then(userResponse => {
-                        if (userResponse.data.success) {
-                            randomCode.value = data.data.bookingId
-                            document.querySelector(".alert-success").classList.add("active")
-
-                            axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
-                                .then(data => {
-                                    const bookId = data.data.pop()
-                                    setTimeout(() => {
-                                        router.push({
-                                            name: "Agents Flights Checkout",
-                                            params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
-                                        })
-                                    }, 1500)
-                                })
-
-                            loading.value = false
-                        }
-                    })
-            })
+          
         } else {
             document.querySelector(".alert-danger").classList.add("active")
             setTimeout(() => {

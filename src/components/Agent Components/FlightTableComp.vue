@@ -230,7 +230,7 @@ const convertToSeconds = (time) => {
 };
 const disappearStops = (item)=>{
 localStorage.setItem('item-numStops' , item.numStops)
-localStorage.setItem('itemStopPlaces' , `${item.locStops} | ${item.loc_stops_return}`);
+localStorage.setItem('itemStopPlaces' , `${item.locStops | item.loc_stops_return}`);
 localStorage.setItem('stopHoursReturn' , item.hours_stops_return )
 localStorage.setItem('stopHoursDepreature' , item.hours_arriv )
 }
