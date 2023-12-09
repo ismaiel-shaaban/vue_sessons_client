@@ -1235,6 +1235,34 @@ onMounted(async () => {
                     .then(data => {
                         let startDateObject1 =newcheckIn.value 
                         let endDateObject ;
+                        const nnn = (arr)=>{
+                            let max ;
+                            let min ;
+                            let arrayOfIndex =[]
+                            let newArray=[]
+                            arr.forEach((el,i)=>{
+                                arrayOfIndex.push({index:i,date:el.registration_date})
+
+                            })
+                            arrayOfIndex.sort((a, b) => new Date(a.date) - new Date(b.date));
+                            console.log('arrayOfIndex',arrayOfIndex);
+                            arrayOfIndex.forEach((el)=>{
+                                arr.forEach((element,i)=>{
+                                    console.log('ccccccccccccccccc', element.registration_date ,  el.date );
+                                    if(el.date == element.registration_date){
+
+                                        console.log(element);
+                                        console.log('new element in new array');
+                                        newArray.push(element)
+                                    }
+
+                                })
+
+                            })
+                            console.log('kkk',newArray);
+                            return newArray
+
+                        }
                         allCities.value.forEach((el) => {
                             el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                             const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
@@ -1244,6 +1272,7 @@ onMounted(async () => {
                             startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
                             endDateObject =''
                         });
+                        allCities.value = nnn(allCities.value)
                     })
 
                 // if (props.searchInfo.includeFlight == '0') {
