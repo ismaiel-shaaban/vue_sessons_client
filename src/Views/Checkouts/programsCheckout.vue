@@ -121,10 +121,10 @@
                                       }}
                                   </td>
                                   <td>
-                                    {{item ,bookInfo}}
+                                   {{bookInfo.details.includes_flight =="1" ? item.registration_date  : item.startDate }}
                                 </td>
                                 <td>
-                                    {{ bookInfo.includeFlight ?item.departure_date  : item.endDate }}
+                                    {{ bookInfo.details.includes_flight ? item.departure_date  : item.endDate }}
                                 </td>
           </tr>
             </tbody>
