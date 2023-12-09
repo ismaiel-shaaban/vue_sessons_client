@@ -121,7 +121,7 @@
                                       }}
                                   </td>
                                   <td>
-                                    {{bookInfo.includeFlight ?item.registration_date  : item.startDate }}
+                                    {{item }}
                                 </td>
                                 <td>
                                     {{ bookInfo.includeFlight ?item.departure_date  : item.endDate }}
