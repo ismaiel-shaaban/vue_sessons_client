@@ -204,77 +204,98 @@ const search = async () => {
     validation.value.$validate()
     if (!validation.value.$error) {
         loading.value = true
-        await axios.get(`https://seasonreal.seasonsge.com/appv1real/boking-search?booking_code=${searchForm.value.searchInput}`)
+        const formData = new FormData()
+        formData.append('searchValue' ,searchForm.value.searchInput)
+        await axios.post(`https://seasonreal.seasonsge.com/appv1real/booking_search`,formData)
             .then(data => {
-                console.log(data);
-                if (data.data.bookings.length > 0) {
+                console.log("data" , data);
+
+                if (data.data.bookings && data.data.bookings.length > 0) {
                     const carsBooking = data.data.bookings[0]
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${carsBooking.account_owner}`)
                         .then(data => {
                             loading.value = false
-                            if (data.data.type === 2) {
+                            if (data.data.type == 2) {
                                 router.push({
                                     name: 'Cars Checkout',
-                                    params: { lang: i18n.global.locale.value, id: carsBooking.random_code }
+                                    params: { lang: i18n.global.locale.value, id: carsBooking.random_code ,with:1 }
                                 })
-                            } else if (data.data.type === 1) {
+                            } else if (data.data.type == 1) {
                                 router.push({
                                     name: 'Agents Cars Checkout',
-                                    params: { lang: i18n.global.locale.value, id: carsBooking.random_code, with: 3 }
+                                    params: { lang: i18n.global.locale.value, id: carsBooking.random_code, with: 2 }
+                                    
                                 })
                             }
+                           
                         })
-                } else if (data.data.bookingss.length > 0) {
+                        setTimeout(() => {
+                                  
+                            window.location.reload()
+                        }, 1000)
+                } else if (data.data.bookingss && data.data.bookingss.length > 0) {
                     const flightsBooking = data.data.bookingss[0]
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${flightsBooking.email}`)
                         .then(data => {
                             loading.value = false
-                            if (data.data.type === 2) {
+                            if (data.data.type == 2) {
                                 router.push({
                                     name: 'Flights Checkout',
-                                    params: { lang: i18n.global.locale.value, id: flightsBooking.booking_id }
+                                    params: { lang: i18n.global.locale.value, id: flightsBooking.booking_id , with: 1}
                                 })
-                            } else if (data.data.type === 1) {
+                            } else if (data.data.type == 1) {
                                 router.push({
                                     name: 'Agents Flights Checkout',
-                                    params: { lang: i18n.global.locale.value, id: flightsBooking.booking_id, with: 3 }
+                                    params: { lang: i18n.global.locale.value, id: flightsBooking.booking_id, with: 2 }
                                 })
                             }
                         })
-                } else if (data.data.hotel_reservations.length > 0) {
+                        setTimeout(() => {
+                                  
+                                  window.location.reload()
+                        }, 1000)
+                } else if (data.data.hotel_reservations && data.data.hotel_reservations.length > 0) {
                     const HotelsBooking = data.data.hotel_reservations[0]
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${HotelsBooking.account_name}`)
                         .then(data => {
                             loading.value = false
-                            if (data.data.type === 2) {
+                            if (data.data.type == 2) {
                                 router.push({
                                     name: 'Hotels Checkout',
-                                    params: { lang: i18n.global.locale.value, id: HotelsBooking.code }
+                                    params: { lang: i18n.global.locale.value, id: HotelsBooking.code , with: 1}
                                 })
-                            } else if (data.data.type === 1) {
+                            } else if (data.data.type == 1) {
                                 router.push({
                                     name: 'Agents Hotels Checkout',
-                                    params: { lang: i18n.global.locale.value, id: HotelsBooking.code, with: 3 }
+                                    params: { lang: i18n.global.locale.value, id: HotelsBooking.code, with: 2}
                                 })
                             }
                         })
-                } else if (data.data.reservations.length > 0) {
-                    const ProgramsBooking = data.data.reservations[0]
+                        setTimeout(() => {
+                                  
+                                  window.location.reload()
+                        }, 1000)
+                } else if (data.data.book && data.data.book.length > 0) {
+                    const ProgramsBooking = data.data.book[0]
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/user-data?user_id=${ProgramsBooking.email}`)
                         .then(data => {
                             loading.value = false
-                            if (data.data.type === 2) {
+                            if (data.data.type == 2) {
                                 router.push({
                                     name: 'Programs Checkout',
-                                    params: { lang: i18n.global.locale.value, id: ProgramsBooking.booking_id }
+                                    params: { lang: i18n.global.locale.value, id: ProgramsBooking.booking_id , with: 1 }
                                 })
-                            } else if (data.data.type === 1) {
+                            } else if (data.data.type == 1) {
                                 router.push({
                                     name: 'Agents Programs Checkout',
-                                    params: { lang: i18n.global.locale.value, id: ProgramsBooking.booking_id, with: 3 }
+                                    params: { lang: i18n.global.locale.value, id: ProgramsBooking.booking_id, with: 2 }
                                 })
                             }
                         })
+                        setTimeout(() => {
+                                  
+                                  window.location.reload()
+                        }, 1000)
                 } else {
                     loading.value = false
                     searchError.value = 'There Is No Book With This Code'

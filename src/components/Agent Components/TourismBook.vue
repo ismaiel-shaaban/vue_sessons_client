@@ -912,10 +912,10 @@ const submission = async () => {
                 }
             }
             if (props.searchInfo.includeFlight == '1') {
-                if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >= bookingInfo.value.adults_count) {
+                if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
+                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
                     axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                         .then(data => {
                             console.log(data);
@@ -953,10 +953,10 @@ const submission = async () => {
                                     }, 1500)
                                 })
                         })
-                } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >= bookingInfo.value.adults_count && flightTrip.value.numReturnTickets >= bookingInfo.value.adults_count) {
+                } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants) && flightTrip.value.numReturnTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
                     const tickets = new FormData()
                     tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets - bookingInfo.value.adults_count)
+                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
                     await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                         .then(data => {
 
@@ -964,7 +964,7 @@ const submission = async () => {
                         })
                     const returnTickets = new FormData()
                     returnTickets.append("ticket_id", flightTrip.value.id)
-                    returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets - bookingInfo.value.adults_count)
+                    returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets -  (bookingInfo.value.adults_count -persons.value.infants))
                     await axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
                         .then(data => {
                             console.log(data);
