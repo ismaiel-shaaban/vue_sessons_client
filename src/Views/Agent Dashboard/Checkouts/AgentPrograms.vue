@@ -120,10 +120,10 @@
                         }}
                     </td>
                     <td>
-                        {{bookInfo.Include_flight ?item.registration_date  : item.startDate }}
+                        {{bookInfo.Include_flight==1 ? item.registration_date  : item.startDate }}
                     </td>
                     <td>
-                        {{ bookInfo.Include_flight ?item.departure_date  : item.endDate }}
+                        {{ bookInfo.Include_flight==1 ? item.departure_date  : item.endDate }}
                     </td>
                 </tr>
             </tbody>
@@ -662,36 +662,11 @@ onMounted(async () => {
 
                             axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
+                                allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+
                                     let startDateObject1 = newcheckIn.value
                                     let endDateObject;
-                                    const nnn = (arr) => {
-                                        let max;
-                                        let min;
-                                        let arrayOfIndex = []
-                                        let newArray = []
-                                        arr.forEach((el, i) => {
-                                            arrayOfIndex.push({ index: i, date: el.registration_date })
-
-                                        })
-                                        arrayOfIndex.sort((a, b) => new Date(a.date) - new Date(b.date));
-                                        console.log('arrayOfIndex', arrayOfIndex);
-                                        arrayOfIndex.forEach((el) => {
-                                            arr.forEach((element, i) => {
-                                                console.log('ccccccccccccccccc', element.registration_date, el.date);
-                                                if (el.date == element.registration_date) {
-
-                                                    console.log(element);
-                                                    console.log('new element in new array');
-                                                    newArray.push(element)
-                                                }
-
-                                            })
-
-                                        })
-                                        console.log('kkk', newArray);
-                                        return newArray
-
-                                    }
+                                 
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
@@ -701,10 +676,10 @@ onMounted(async () => {
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
                                         endDateObject = ''
                                     });
-                                    allCities.value = nnn(allCities.value)
+                                   
                                 })
                         }
-                        console.log('allCities.value', allCities.value);
+                     
 
                     });
             })
@@ -825,36 +800,11 @@ onMounted(async () => {
 
                             axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
+                        allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+
                                     let startDateObject1 = bookInfo.value.details.from_date
                                     let endDateObject;
-                                    const nnn = (arr) => {
-                                        let max;
-                                        let min;
-                                        let arrayOfIndex = []
-                                        let newArray = []
-                                        arr.forEach((el, i) => {
-                                            arrayOfIndex.push({ index: i, date: el.registration_date })
-
-                                        })
-                                        arrayOfIndex.sort((a, b) => new Date(a.date) - new Date(b.date));
-                                        console.log('arrayOfIndex', arrayOfIndex);
-                                        arrayOfIndex.forEach((el) => {
-                                            arr.forEach((element, i) => {
-                                                console.log('ccccccccccccccccc', element.registration_date, el.date);
-                                                if (el.date == element.registration_date) {
-
-                                                    console.log(element);
-                                                    console.log('new element in new array');
-                                                    newArray.push(element)
-                                                }
-
-                                            })
-
-                                        })
-                                        console.log('kkk', newArray);
-                                        return newArray
-
-                                    }
+                                   
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
                                         const startDateObject = parse(startDateObject1, 'yyyy-MM-dd', new Date());
@@ -864,7 +814,7 @@ onMounted(async () => {
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'yyyy-MM-dd', new Date()), 0), 'yyyy-MM-dd')).value
                                         endDateObject = ''
                                     });
-                                    allCities.value = nnn(allCities.value)
+                                
                                 })
                         }
                         console.log('allCities.value', allCities.value);
