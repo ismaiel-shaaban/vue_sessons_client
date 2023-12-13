@@ -373,7 +373,7 @@ const submission = async () => {
             userInfo.value.account_owner = userId.id
             loading.value = true
             userInfo.value.first_name = `${userInfo.value.type}  ${userInfo.value.first_name} `
-            userInfo.value.email = ` ${props.searchInfo.country},${localStorage.getItem('country')},${localStorage.getItem('city')}`
+            userInfo.value.email = ` ${userInfo.value.email},${localStorage.getItem('country')},${localStorage.getItem('city')}`
             await axios.post('https://seasonreal.seasonsge.com/appv1real/car-order', userInfo.value)
                 .then(response => {
                     if (response.data.status === 'success') {

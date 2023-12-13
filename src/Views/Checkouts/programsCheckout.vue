@@ -76,6 +76,7 @@
                     <th>City</th>
                     <!-- <th>To Date</th> -->
                     <th>Car</th>
+                    <th>Meal type</th>
                     <th>Number of Days & Nights</th>
                 </tr>
             </thead>
@@ -85,6 +86,7 @@
                     <td>{{ city }}</td>
                     <!-- <td>--------</td> -->
                     <td>{{ $i18n.locale === 'en' ? carInfo.name_en : carInfo.name}}</td>
+                    <td>{{ bookInfo.details?.meal_type }}</td>
                     <td> {{ bookInfo.details?.num_of_days }} & {{bookInfo.details?.num_of_nights  }} </td>
 
                 </tr>

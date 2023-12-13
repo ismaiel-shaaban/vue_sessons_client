@@ -260,7 +260,7 @@
                                         {{ $t("programs.cardInfo.trip.flightNum") }}
                                     </label>
                                     <span class="p-2 px-3 rounded-1 bg-secondary fw-bold bg-opacity-25 text-muted d-block">
-                                        {{ returnFlightNum }}
+                                        {{ flightTrip.returnFlightNumber }}
                                     </span>
                                 </div>
                             </div>
