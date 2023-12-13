@@ -125,7 +125,7 @@
             <div class="group-5 d-flex gap-3 mt-3 flex-md-row flex-column" v-if="searchInfo.allow_return == '1'">
                 <label class="w-100">
                     <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.deptDate') }}:</span>
-                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-md-row flex-column">
+                    <div class="d-flex  justify-content-center mx-auto gap-3 flex-md-row flex-column">
                         <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                             {{ flightDetails.returnStartDate }}
                         </span>
@@ -136,7 +136,7 @@
                 </label>
                 <label class="w-100">
                     <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.arrivalDate') }}:</span>
-                    <div class="d-flex w-75 justify-content-center mx-auto gap-3 flex-md-row flex-column">
+                    <div class="d-flex  justify-content-center mx-auto gap-3 flex-md-row flex-column">
                         <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                             {{ flightDetails.returnEndDate }}
                         </span>
