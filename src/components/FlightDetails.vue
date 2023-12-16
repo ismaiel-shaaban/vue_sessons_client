@@ -146,7 +146,7 @@
                 </label>
             </div>
          
-            <div class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
+            <div v-if="searchInfo.allow_return == '1'" class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
                 <div class="d-flex align-items-center gap-3 w-100">
                     <label v-if="stopsNums > 0" class="w-100">
                         <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopNumReturn') }}:</span>
@@ -531,7 +531,7 @@ const submission = async () => {
                 tickets.append("new_number_of_tickets", flightDetails.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
                 axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                     .then(data => {
-                        debugger
+                
                         console.log(data);
                     })
                 await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
@@ -544,7 +544,7 @@ const submission = async () => {
                             setTimeout(() => {
                                 router.push({
                                     name: "Flights Checkout",
-                                    params: { lang: i18n.global.locale.value, id: bookId.id }
+                                    params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
                                 })
                             }, 1500)
                         })

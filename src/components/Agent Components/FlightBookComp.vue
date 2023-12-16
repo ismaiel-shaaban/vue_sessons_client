@@ -147,7 +147,7 @@
                 </label>
             </div>
          
-            <div class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
+            <div v-if="searchInfo.allow_return == '1'" class="group-7 d-flex gap-3 mt-3 flex-md-row flex-column">
                 <div class="d-flex align-items-center gap-3 w-100">
                     <label v-if="stopsNums > 0" class="w-100">
                         <span class="d-block mb-1 fw-semibold">{{ $t('flightReservation.flightBook.stopNumReturn') }}:</span>

@@ -171,7 +171,7 @@
                 <tr>
                     <td v-if="bookInfo.flight">{{ bookInfo.flight.numStops }}</td>
                     <td>{{ stopsNums  == 0 ? "Direct" : 'transit'  }}</td>
-                    <td>{{ stopsNums == 0 ? 'Direct/without stop places'  : stopplaces }}</td>
+                    <td>{{ stopsNums == 0 ? 'Direct/without stop places'  : bookInfo.flight.locStops }}</td>
                     <td>{{ +bookInfo.number_of_adults + +bookInfo.number_of_children + +bookInfo.number_of_infants }}</td>
                     <td v-if="stopsNums > 0">{{ stopsNums > 0 ? stopHoursDepreature :'' }}</td>
                     <td v-if="stopsNums > 0 && stopHoursReturn != ''">{{ stopsNums > 0 ?  stopHoursReturn : '' }}</td>
