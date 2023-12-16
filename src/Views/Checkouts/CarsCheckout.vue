@@ -15,7 +15,9 @@
                 <span>
                     
                     Date:
-                    <span class="ms-2">{{ (bookInfo.created_at) }}</span>
+                    <span class="ms-2">{{
+                        formatDate( new Date(new Date( bookInfo.created_at).getTime() + 4 * 60 * 60 * 1000))
+                        }}</span>
                 </span>
             </div>
         </div>
@@ -262,6 +264,18 @@ onBeforeMount(() => {
 
 
 
+const formatDate = (date) => {
+    const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  
+}
 const exportToPDF = () => {
     html2pdf(document.querySelector(".orderSummary"), {
         margin: [15, 3],
@@ -281,33 +295,7 @@ const exportToPDF = () => {
         }
     });
 
-    // var doc = new jsPDF('p', 'pt', 'a4', true);
-    // const response = axios.get(
-    //     "https://seasonreal.seasonsge.com/images/Agents/1683991258.jpg",
-    //     {
-    //         responseType: "arraybuffer", // تأكد من تعيين نوع الاستجابة لنصف بايت
-    //     }
-    // );
-
-    // doc.html(checkout.value, {
-    //     autoPaging: true,
-    //     margin: [10, 10],
-    //     width: 552,
-    //     html2canvas: {
-    //         scale: 0.74
-    //     },
-    //     callback: function (doc) {
-    //         doc.addImage(
-    //             Uint8Array.from(response.data),
-    //             "JPEG",
-    //             10,
-    //             10,
-    //             100, // عرض الصورة
-    //             100 // ارتفاع الصورة
-    //         );
-    //         doc.save('SeasonsGE.pdf');
-    //     }
-    // });
+  
 }
 
 const exportToPDFWith = () => {

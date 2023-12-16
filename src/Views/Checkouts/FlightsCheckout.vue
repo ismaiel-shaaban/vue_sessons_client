@@ -14,7 +14,7 @@
                 </span>
                 <span>
                     Date:
-                    <span class="ms-2">{{ new Date(bookInfo.registration_date).toLocaleString() }}</span>
+                    <span class="ms-2">{{  formatDate( new Date(new Date( bookInfo.registration_date ).getTime() + 4 * 60 * 60 * 1000))}}</span>
                 </span>
             </div>
         </div>
@@ -171,7 +171,7 @@
                 <tr>
                     <td v-if="bookInfo.flight">{{ bookInfo.flight.numStops }}</td>
                     <td>{{ stopsNums  == 0 ? "Direct" : 'transit'  }}</td>
-                    <td>{{ stopsNums == 0 ? 'Direct/without stop places'  : bookInfo.flight.locStops }}</td>
+                    <td>{{ stopsNums == 0 ? 'Direct/without stop places'  : bookInfo.flight?.locStops }}</td>
                     <td>{{ +bookInfo.number_of_adults + +bookInfo.number_of_children + +bookInfo.number_of_infants }}</td>
                     <td v-if="stopsNums > 0">{{ stopsNums > 0 ? stopHoursDepreature :'' }}</td>
                     <td v-if="stopsNums > 0 && stopHoursReturn != ''">{{ stopsNums > 0 ?  stopHoursReturn : '' }}</td>
@@ -297,7 +297,18 @@ const USDollar = Intl.NumberFormat('en-US', {
     currency: 'USD',
     style: 'currency',
 })
+const formatDate = (date) => {
+    const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
 
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+  
+}
 const exportToPDF = () => {
     html2pdf(document.querySelector(".orderSummary"), {
 
