@@ -333,7 +333,7 @@ const bookInfo = ref({
     agent_discount: computed(() => {
         return ( userInfo.value.discount) 
     }),
-    net_amount: computed(() => ((myPrice.value * bookInfo.value.total_days) + (viewCarId.value[0].tax/100 * (myPrice.value * bookInfo.value.total_days)))  - ( (bookInfo.value.agent_discount/100) * ((myPrice.value * bookInfo.value.total_days) )) || 0),
+    net_amount: computed(() => ((myPrice.value * bookInfo.value.total_days) + (viewCarId.value[0].tax/100 * (myPrice.value * bookInfo.value.total_days)))  - ( (bookInfo.value.agent_discount/100) * (((myPrice.value * bookInfo.value.total_days) + (viewCarId.value[0].tax/100 * (myPrice.value * bookInfo.value.total_days)))  )) || 0),
     notes: "",
     account_owner: computed(() => userInfo.value.id),
 });
