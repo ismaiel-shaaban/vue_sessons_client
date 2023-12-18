@@ -21,6 +21,8 @@
                             <td>Last Name</td>
                             <td>Email</td>
                             <td>Phone Number</td>
+                            <td>Country</td>
+                            <td>City</td>
                             <td>Car Type</td>
                             <td>Driver</td>
                             <td>Start Date</td>
@@ -42,6 +44,8 @@
                             <td>{{ item.last_name }}</td>
                             <td v-if="item.user">{{ item.user.email }}</td>
                             <td>{{ item.phone_number }}</td>
+                            <td>{{ item.email?.split(',')[1]}}</td>
+                            <td>{{ item.email?.split(',')[2]}}</td>
                             <td v-if="item.carType">
                                 {{ $i18n.locale === 'en' ? item.carType.name_en : item.carType.name }}
                             </td>

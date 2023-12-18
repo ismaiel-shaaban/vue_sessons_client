@@ -8,6 +8,8 @@
                         <td>Reservation Code</td>
                         <td>First Name</td>
                         <td>Last Name</td>
+                        <td>Country</td>
+                        <td>City</td>
                         <td>Car Type</td>
                         <td>Driver</td>
                         <td>Start Date</td>
@@ -24,6 +26,8 @@
                         <td>{{ item.random_code }}</td>
                         <td>{{ item.first_name}}</td>
                         <td>{{ item.last_name}}</td>
+                        <td>{{ item.email?.split(',')[1]}}</td>
+                        <td>{{ item.email?.split(',')[2]}}</td>
                         <td v-if="item.carType" class="text-capitalize">
                             {{ $i18n.locale === 'en' ? item.carType.name_en : item.carType.name }}
                         </td>
@@ -37,7 +41,7 @@
                         <td>%{{ item.tax }}</td>
                         <td>{{ USDollar.format(item.net_amount) }}</td>
                         <td>
-                            <router-link class="d-block text-center text-decoration-none" :to="{name: 'Cars Checkout', params: {lang: $i18n.locale, id: item.id}}">
+                            <router-link class="d-block text-center text-decoration-none" :to="{name: 'Cars Checkout', params: {lang: $i18n.locale, id: item.id,with:1}}">
                                 Export As PDF
                                 <i class="fa-solid fa-share ms-1"></i>
                             </router-link>

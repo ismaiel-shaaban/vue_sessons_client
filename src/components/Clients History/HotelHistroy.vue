@@ -32,7 +32,7 @@
                         <td>%{{item.tax}}</td>
                         <td>{{USDollar.format(item.net_total)}}</td>
                         <td>
-                            <router-link class="d-block text-center text-decoration-none" :to="{name: 'Hotels Checkout', params: {lang: $i18n.locale, id: item.id}}">
+                            <router-link class="d-block text-center text-decoration-none" :to="{name: 'Hotels Checkout', params: {lang: $i18n.locale, id: item.id,with:1}}">
                                 Export As PDF
                                 <i class="fa-solid fa-share ms-1"></i>
                             </router-link>
