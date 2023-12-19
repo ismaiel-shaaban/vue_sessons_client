@@ -82,8 +82,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ country }}</td>
-                    <td>{{ city }}</td>
+                    <td>{{  bookInfo.countryName }}</td>
+                    <td>{{ bookInfo.cityName }}</td>
                     <!-- <td>--------</td> -->
                     <td>{{ $i18n.locale === 'en' ? carInfo?.name_en : carInfo?.name }}</td>
                     <td>{{ bookInfo.details?.meal_type }}</td>
