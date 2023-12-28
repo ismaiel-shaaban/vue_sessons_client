@@ -112,8 +112,8 @@
                                     </td>
                                     <td>
                                         <select class="rounded-1 p-2 px-3 w-100" name="room type"
-                                            v-model="item.childReservation">
-                                            <option value="none">{{ $t('programs.search.none') }}</option>
+                                        :v-model="!item.childCount ? 'none' :item.childReservation  ">
+                                            <option v-if="!item.childCount" value="none">{{ $t('programs.search.none') }}</option>
                                             <option value="child without bed">{{ $t('programs.search.childWithoutBed') }}
                                             </option>
                                             <option value="child with bed">{{ $t('programs.search.childWithBed') }}</option>
@@ -300,6 +300,14 @@ const deleteRoom = (room) => {
 
 
 const search = async () => {
+    searchInfo.value.rooms.forEach((el)=>{
+        if(el.childCount >0 && el.childReservation == "none"){
+            el.childReservation ="child without bed"
+        }
+        if(el.childCount == 0 && el.childReservation != "none"){
+            el.childReservation ="none"
+        }
+    })
     sessionStorage.setItem('programm-CheckIn' , searchInfo.value.departureDate.toLocaleDateString());
     sessionStorage.setItem('programm-CheckOut' ,searchInfo.value.toDate.toLocaleDateString());
     validation.value.$validate()
