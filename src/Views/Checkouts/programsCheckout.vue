@@ -152,9 +152,9 @@
         <table class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr v-if="bookInfo.details">
-                    <th v-if="bookInfo.destination.has('1')">Single Room Price</th>
-                    <th v-if="bookInfo.destination.has('2')">Double Room Price</th>
-                    <th v-if="bookInfo.destination.has('3')">Triple Room Price</th>
+                    <th v-if="bookInfo.destination.has('1')">   {{ $t("programs.search.singlePrice") }}</th>
+                    <th v-if="bookInfo.destination.has('2')">{{ $t("programs.search.doublePrice") }}</th>
+                    <th v-if="bookInfo.destination.has('3')">{{ $t("programs.search.triplePrice") }}</th>
                 </tr>
             </thead>
             <tbody>
