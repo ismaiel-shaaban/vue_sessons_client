@@ -534,21 +534,22 @@ const submission = async () => {
                 
                         console.log(data);
                     })
-                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
-                    randomCode.value = data.data.bookingId
-                    document.querySelector(".alert-success").classList.add("active")
+                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(response => {
+                    randomCode.value = response.data.bookingId
+                    // document.querySelector(".alert-success").classList.add("active")
                     loading.value = false
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
                         .then(data => {
                             const bookId = data.data.pop()
                             setTimeout(() => {
-                                router.push({
-                                    name: "Flights Checkout",
-                                    params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                })
+                                location.href = response.data.URL
+                                // router.push({
+                                //     name: "Flights Checkout",
+                                //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                // })
                             }, 1500)
                         })
-                    console.log(data)
+                   
                 })
 
             } else if (flightDetails.value.allowReturn == 1 && flightDetails.value.numReturnTickets >=  (bookingInfo.value.adults_count -persons.value.infants) && flightDetails.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
@@ -568,18 +569,19 @@ const submission = async () => {
                         console.log(data);
                     })
 
-                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(data => {
-                    randomCode.value = data.data.bookingId
-                    document.querySelector(".alert-success").classList.add("active")
+                await axios.post('https://seasonreal.seasonsge.com/appv1real/flight-booking', formData).then(response => {
+                    randomCode.value = response.data.bookingId
+                    // document.querySelector(".alert-success").classList.add("active")
                     loading.value = false
                     axios.get(`https://seasonreal.seasonsge.com/appv1real/fli-rr?id=${userId.id}`)
                         .then(data => {
                             const bookId = data.data.pop()
                             setTimeout(() => {
-                                router.push({
-                                    name: "Flights Checkout",
-                                    params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                })
+                                location.href = response.data.URL
+                                // router.push({
+                                //     name: "Flights Checkout",
+                                //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                // })
                             }, 1500)
                         })
                 })

@@ -528,7 +528,7 @@ const submission = () => {
             axios.post("https://seasonreal.seasonsge.com/appv1real/new-hotel-booking", formData)
                 .then(response => {
                     if (response.data.success) {
-                        document.querySelector(".alert").classList.add("active")
+                        // document.querySelector(".alert").classList.add("active")
                         randomCode.value = response.data.code
                         loading.value = false
                         const allRooms = new FormData()
@@ -545,10 +545,11 @@ const submission = () => {
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
-                                    router.push({
-                                        name: "Hotels Checkout",
-                                        params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                    })
+                                    location.href = response.data.URL
+                                    // router.push({
+                                    //     name: "Hotels Checkout",
+                                    //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                    // })
                                 }, 1500)
                             })
                     }

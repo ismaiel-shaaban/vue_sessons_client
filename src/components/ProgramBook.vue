@@ -891,7 +891,7 @@ const submission = async () => {
                         .then(response => {
                             // console.log(response);
                             randomCode.value = response.data.booking_id
-                            document.querySelector(".alert").classList.add("active")
+                            // document.querySelector(".alert").classList.add("active")
                             loading.value = false
                             console.log('iam booking data');
                           console.log(response.data);
@@ -912,10 +912,11 @@ const submission = async () => {
                                     const bookId = data.data.pop()
                                     console.log('mmmmmmmmmmmmmmmmmmm');
                                     setTimeout(() => {
-                                        router.push({
-                                            name: "Programs Checkout",
-                                            params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                        })
+                                        location.href = response.data.URL
+                                        // router.push({
+                                        //     name: "Programs Checkout",
+                                        //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                        // })
                                     }, 1500)
                                 })
                         })
@@ -945,7 +946,7 @@ const submission = async () => {
                             // console.log(response);
                             randomCode.value = response.data.booking_id
                             console.log(response.data);
-                            document.querySelector(".alert").classList.add("active")
+                            // document.querySelector(".alert").classList.add("active")
                             loading.value = false
                             const allRooms = new FormData()
                             props.searchInfo.rooms.forEach(el => {
@@ -961,10 +962,12 @@ const submission = async () => {
                                 .then(data => {
                                     const bookId = data.data.pop()
                                     setTimeout(() => {
-                                        router.push({
-                                            name: "Programs Checkout",
-                                            params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                        })
+                                        location.href = response.data.URL
+
+                                        // router.push({
+                                        //     name: "Programs Checkout",
+                                        //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                        // })
                                     }, 1500)
                                 })
                         })
@@ -982,7 +985,7 @@ const submission = async () => {
                     .then(response => {
                         console.log(response.data);
                         randomCode.value = response.data.booking_id
-                        document.querySelector(".alert").classList.add("active")
+                        // document.querySelector(".alert").classList.add("active")
                         loading.value = false
 
                         const allRooms = new FormData()
@@ -1000,10 +1003,12 @@ const submission = async () => {
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
-                                    router.push({
-                                        name: "Programs Checkout",
-                                        params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
-                                    })
+                                    location.href = response.data.URL
+
+                                    // router.push({
+                                    //     name: "Programs Checkout",
+                                    //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                    // })
                                 }, 1500)
                             })
                     })
