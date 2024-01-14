@@ -374,46 +374,35 @@ const submission = async () => {
             loading.value = true
             userInfo.value.first_name = `${userInfo.value.type}  ${userInfo.value.first_name} `
             userInfo.value.email = ` ${userInfo.value.email},${localStorage.getItem('country')},${localStorage.getItem('city')}`
-            localStorage.setItem('paymentOrder',userInfo.value)
-            const formData = new FormData()
-            formData.append('price' ,userInfo.value.net_amount)
-            await axios.post('https://seasonreal.seasonsge.com/appv1real/payment',formData)
-            .then(res=>{
-                if (res.data.status === 'success'){
-                    location.href=res.data.URL
-
-                }
-
-            })
-            // await axios.post('https://seasonreal.seasonsge.com/appv1real/car-order', userInfo.value)
-            //     .then(response => {
-            //         if (response.data.status === 'success') {
-            //             document.querySelector('.alert').classList.add("active")
-            //             randomCode.value = response.data.random_code
-            //             loading.value = false
-            //             axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
-            //                 .then(data => {
-            //                     const bookId = data.data.pop()
-            //                     setTimeout(() => {
-                                    
-            //                         router.push({
-            //                             name: "Cars Checkout",
-            //                             params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+            await axios.post('https://seasonreal.seasonsge.com/appv1real/car-order', userInfo.value)
+                .then(response => {
+                    if (response.data.status === 'success') {
+                        // document.querySelector('.alert').classList.add("active")
+                        randomCode.value = response.data.random_code
+                        loading.value = false
+                        axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
+                            .then(data => {
+                                const bookId = data.data.pop()
+                                setTimeout(() => {
+                                    location.href = response.data.URL
+                                    // router.push({
+                                    //     name: "Cars Checkout",
+                                    //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
                                        
-            //                         })
-            //                     }, 1500)
-            //                 })
-            //                 buttonVisible.value = false;
-            //             }
-            //         }).catch(error => {
-            //             console.log(error);
-            //         })
-            //         } else {
-            //             router.push({
-            //                 name: "Clients Login",
-            //                 params: { lang: i18n.global.locale.value }
-            //             })
-                   }
+                                    // })
+                                }, 1500)
+                            })
+                            buttonVisible.value = false;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+        } else {
+            router.push({
+                name: "Clients Login",
+                params: { lang: i18n.global.locale.value }
+            })
+        }
 
     }
 };
