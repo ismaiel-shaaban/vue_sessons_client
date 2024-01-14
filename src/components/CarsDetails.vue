@@ -377,18 +377,19 @@ const submission = async () => {
             await axios.post('https://seasonreal.seasonsge.com/appv1real/car-order', userInfo.value)
                 .then(response => {
                     if (response.data.status === 'success') {
-                        document.querySelector('.alert').classList.add("active")
+                        // document.querySelector('.alert').classList.add("active")
                         randomCode.value = response.data.random_code
                         loading.value = false
                         axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
-                                    router.push({
-                                        name: "Cars Checkout",
-                                        params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
+                                    location.href = response.data.URL
+                                    // router.push({
+                                    //     name: "Cars Checkout",
+                                    //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
                                        
-                                    })
+                                    // })
                                 }, 1500)
                             })
                             buttonVisible.value = false;
