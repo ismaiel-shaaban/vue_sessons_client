@@ -912,7 +912,7 @@ const submission = async () => {
                                     const bookId = data.data.pop()
                                     console.log('mmmmmmmmmmmmmmmmmmm');
                                     setTimeout(() => {
-                                        console.log('response.data',response.data);
+                                        location.href = response.data.URL
                                         // router.push({
                                         //     name: "Programs Checkout",
                                         //     params: { lang: i18n.global.locale.value, id: bookId.id ,with:1}
@@ -962,7 +962,7 @@ const submission = async () => {
                                 .then(data => {
                                     const bookId = data.data.pop()
                                     setTimeout(() => {
-                                        console.log('response.data',response.data);
+                                        location.href = response.data.URL
 
                                         // router.push({
                                         //     name: "Programs Checkout",
@@ -1003,8 +1003,7 @@ const submission = async () => {
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
-                                    console.log('response.data',response.data);
-                                    
+                                    location.href = response.data.URL
 
                                     // router.push({
                                     //     name: "Programs Checkout",

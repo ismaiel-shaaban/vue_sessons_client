@@ -527,7 +527,7 @@ const submission = () => {
 
             axios.post("https://seasonreal.seasonsge.com/appv1real/new-hotel-booking", formData)
                 .then(response => {
-                    if (response.data.success) {
+                    if (response.data.status) {
                         // document.querySelector(".alert").classList.add("active")
                         randomCode.value = response.data.code
                         loading.value = false
