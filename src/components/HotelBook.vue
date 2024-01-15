@@ -545,6 +545,7 @@ const submission = () => {
                             .then(data => {
                                 const bookId = data.data.pop()
                                 setTimeout(() => {
+                                    console.log('response.data',response.data);
                                     location.href = response.data.URL
                                     // router.push({
                                     //     name: "Hotels Checkout",
