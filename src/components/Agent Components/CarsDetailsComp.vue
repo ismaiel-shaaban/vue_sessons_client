@@ -204,6 +204,13 @@
                 <i class="fa-solid fa-circle-xmark fs-5"></i>
                 {{ $t('carBook.noBalance') }}
             </div>
+            <div>
+                <span>amount :</span>
+                <span>
+                    <input v-model="paymentBalance" type="number">
+                </span>
+                <span @click="goToPayment()">pay</span>
+            </div>
             <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
         </div>
         <Loader v-if="loading"></Loader>
@@ -247,9 +254,10 @@ const carInfo = ref({});
 const randomCode = ref("");
 const updatedBalance = ref('')
 const props = defineProps(['searchInfo', 'carId' , 'country' , 'city'])
+let total = ref();
+let paymentBalance = ref();
 let myPrice = ref();
 let tax = ref();
-let total = ref();
 let price = ()=>{
 myPrice.value = +(document.querySelector(".price").textContent.slice(1));
 tax.value =+(`0.${viewCarId.value[0].tax}`.slice(0,-3));
@@ -402,20 +410,23 @@ const submission = async () => {
                 });
         } else {
             document.querySelector(".alert-danger").classList.add("active")
-            
+            const goToPayment = ()=>{
                 const balance = new FormData()
 
                 balance.append("user_id", userInfo.value.id)
-                balance.append("total", 100)
+                balance.append("total", paymentBalance.value)
 
                 axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
                     setTimeout(() => {
                         document.querySelector(".alert-danger").classList.remove("active")
                         location.href = userResponse.data.URL
                     }, 3000)
-                    loading.value = false
+                loading.value = false
 
-                })
+})
+
+            }
+           
           
         }
     }
