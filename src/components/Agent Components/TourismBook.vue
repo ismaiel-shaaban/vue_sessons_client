@@ -776,6 +776,7 @@ const airLine = ref('')
 const allowedWeight = ref('');
 const userInfo = ref({});
 const route = useRoute()
+const updatedBalance = ref('')
 const loading = ref(false)
 const props = defineProps(["programId", "searchResults", "searchInfo", "cities", 'countries']);
 const programDetails = ref({});
