@@ -402,10 +402,21 @@ const submission = async () => {
                 });
         } else {
             document.querySelector(".alert-danger").classList.add("active")
-            setTimeout(() => {
-                document.querySelector(".alert-danger").classList.remove("active")
-            }, 3000)
-            loading.value = false
+            
+                const balance = new FormData()
+
+                balance.append("user_id", userInfo.value.id)
+                balance.append("total", 100)
+
+                axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
+                    setTimeout(() => {
+                        document.querySelector(".alert-danger").classList.remove("active")
+                        location.href = userResponse.data.URL
+                    }, 3000)
+                    loading.value = false
+
+                })
+          
         }
     }
 };

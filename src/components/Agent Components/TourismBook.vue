@@ -735,7 +735,14 @@
                     {{ $t('flightReservation.bookMessage') }}
                 </div>
                 <span class="d-block mt-1">{{ `${$t('flightReservation.bookingCode')}: ${randomCode}` }}</span>
-                <button @click="removeAlert()" type="button" class="btn-close"></button>
+                <button @click="removeAlert('success')" type="button" class="btn-close"></button>
+            </div>
+            <div class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-circle-xmark fs-5"></i>
+                    {{ $t('flightReservation.noBalance') }}
+                </div>
+                <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
             </div>
             <div id="alert-2" class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
                 <div class="d-flex align-items-center gap-2">
@@ -911,138 +918,192 @@ const submission = async () => {
                     formData.append(`person${2 + i}`, `${bookingInfo.value.personsForm[i].firstName},${bookingInfo.value.personsForm[i].lastName}-${bookingInfo.value.personsForm[i].type}`)
                 }
             }
-            if (props.searchInfo.includeFlight == '1') {
-                if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
-                    const tickets = new FormData()
-                    tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
-                    axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
-                        .then(data => {
-                            console.log(data);
-                        })
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        }
-                    })
-                        .then(response => {
-                            // console.log(response);
-                            randomCode.value = response.data.booking_id
-                            document.querySelector(".alert").classList.add("active")
-                            loading.value = false
-                            console.log(response.data);
-                            const allRooms = new FormData()
-                            props.searchInfo.rooms.forEach(el => {
-                                allRooms.append("id_hotel", randomCode.value)
-                                allRooms.append("room_type", el.roomType)
-                                allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                                axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
-                                    .then(data => {
-                                        console.log(data);
-                                    })
-                            })
+            if (userInfo.value.balance > bookingInfo.value.net_total) {
 
-                            axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
-                                .then(data => {
-                                    const bookId = data.data.pop()
-                                    setTimeout(() => {
-                                        router.push({
-                                            name: "Agents Programs Checkout",
-                                            params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
-                                        })
-                                    }, 1500)
-                                })
-                        })
-                } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants) && flightTrip.value.numReturnTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
-                    const tickets = new FormData()
-                    tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
-                        .then(data => {
-
-                            console.log(data);
-                        })
-                    const returnTickets = new FormData()
-                    returnTickets.append("ticket_id", flightTrip.value.id)
-                    returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets -  (bookingInfo.value.adults_count -persons.value.infants))
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
-                        .then(data => {
-                            console.log(data);
-                        })
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        }
-                    }
-                    )
-                        .then(response => {
-                            // console.log(response);
-                            randomCode.value = response.data.booking_id
-                            console.log(response.data);
-                            document.querySelector(".alert").classList.add("active")
-                            loading.value = false
-                            const allRooms = new FormData()
-                            props.searchInfo.rooms.forEach(el => {
-                                allRooms.append("id_hotel", randomCode.value)
-                                allRooms.append("room_type", el.roomType)
-                                allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                                axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
-                                    .then(data => {
-                                        console.log(data);
-                                    })
-                            })
-                            axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
-                                .then(data => {
-                                    const bookId = data.data.pop()
-                                    setTimeout(() => {
-                                        router.push({
-                                            name: "Agents Programs Checkout",
-                                            params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
-                                        })
-                                    }, 1500)
-                                })
-                        })
-                } else {
-                    console.log("There Is No Tickets Enough");
-                    document.querySelector("#alert-2").classList.add("active")
-                    loading.value = false
-                }
-            } else {
-                await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    }
-                })
-                    .then(response => {
-                        console.log(response.data);
-                        randomCode.value = response.data.booking_id
-                        document.querySelector(".alert").classList.add("active")
-                        loading.value = false
-
-                        const allRooms = new FormData()
-                        props.searchInfo.rooms.forEach(el => {
-                            allRooms.append("id_hotel", randomCode.value)
-                            allRooms.append("room_type", el.roomType)
-                            allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
-                            axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
-                                .then(data => {
-                                    console.log(data);
-                                })
-                        })
-
-                        axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
+                if (props.searchInfo.includeFlight == '1') {
+                    if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
+                        const tickets = new FormData()
+                        tickets.append("ticket_id", flightTrip.value.id)
+                        tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
+                        axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
                             .then(data => {
-                                const bookId = data.data.pop()
-                                setTimeout(() => {
-                                    router.push({
-                                        name: "Agents Programs Checkout",
-                                        params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
-
-                                    })
-                                }, 1500)
+                                console.log(data);
                             })
+                        await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            }
+                        })
+                            .then(response => {
+                                // console.log(response);
+                                updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookingInfo.value.net_total)
+                                const balance = new FormData()
+
+                                balance.append("name", userInfo.value.name)
+                                balance.append("email", userInfo.value.email)
+                                balance.append("password", userInfo.value.password)
+                                balance.append("type", userInfo.value.type)
+                                balance.append("id", userInfo.value.id)
+                                balance.append("discount", userInfo.value.discount)
+                                balance.append("balance", updatedBalance.value)
+
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", balance).then(userResponse => {
+                                  
+
+                                })
+                                randomCode.value = response.data.booking_id
+                                document.querySelector(".alert").classList.add("active")
+                                loading.value = false
+                                console.log(response.data);
+                                const allRooms = new FormData()
+                                props.searchInfo.rooms.forEach(el => {
+                                    allRooms.append("id_hotel", randomCode.value)
+                                    allRooms.append("room_type", el.roomType)
+                                    allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
+                                    axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
+                                        .then(data => {
+                                            console.log(data);
+                                        })
+                                })
+    
+                                axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
+                                    .then(data => {
+                                        const bookId = data.data.pop()
+                                        setTimeout(() => {
+                                            router.push({
+                                                name: "Agents Programs Checkout",
+                                                params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
+                                            })
+                                        }, 1500)
+                                    })
+                            })
+                    } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >=  (bookingInfo.value.adults_count -persons.value.infants) && flightTrip.value.numReturnTickets >=  (bookingInfo.value.adults_count -persons.value.infants)) {
+                        const tickets = new FormData()
+                        tickets.append("ticket_id", flightTrip.value.id)
+                        tickets.append("new_number_of_tickets", flightTrip.value.numTickets -  (bookingInfo.value.adults_count -persons.value.infants))
+                        await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
+                            .then(data => {
+    
+                                console.log(data);
+                            })
+                        const returnTickets = new FormData()
+                        returnTickets.append("ticket_id", flightTrip.value.id)
+                        returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets -  (bookingInfo.value.adults_count -persons.value.infants))
+                        await axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
+                            .then(data => {
+                                console.log(data);
+                            })
+                        await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            }
+                        }
+                        )
+                            .then(response => {
+                                // console.log(response);
+                                updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookingInfo.value.net_total)
+                                const balance = new FormData()
+
+                                balance.append("name", userInfo.value.name)
+                                balance.append("email", userInfo.value.email)
+                                balance.append("password", userInfo.value.password)
+                                balance.append("type", userInfo.value.type)
+                                balance.append("id", userInfo.value.id)
+                                balance.append("discount", userInfo.value.discount)
+                                balance.append("balance", updatedBalance.value)
+
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", balance).then(userResponse => {
+                                  
+
+                                })
+                                randomCode.value = response.data.booking_id
+                                console.log(response.data);
+                                document.querySelector(".alert").classList.add("active")
+                                loading.value = false
+                                const allRooms = new FormData()
+                                props.searchInfo.rooms.forEach(el => {
+                                    allRooms.append("id_hotel", randomCode.value)
+                                    allRooms.append("room_type", el.roomType)
+                                    allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
+                                    axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
+                                        .then(data => {
+                                            console.log(data);
+                                        })
+                                })
+                                axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
+                                    .then(data => {
+                                        const bookId = data.data.pop()
+                                        setTimeout(() => {
+                                            router.push({
+                                                name: "Agents Programs Checkout",
+                                                params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
+                                            })
+                                        }, 1500)
+                                    })
+                            })
+                    } else {
+                        console.log("There Is No Tickets Enough");
+                        document.querySelector("#alert-2").classList.add("active")
+                        loading.value = false
+                    }
+                } else {
+                    await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        }
                     })
-            }
+                        .then(response => {
+                            updatedBalance.value = parseFloat(userInfo.value.balance) - parseFloat(bookingInfo.value.net_total)
+                                const balance = new FormData()
+
+                                balance.append("name", userInfo.value.name)
+                                balance.append("email", userInfo.value.email)
+                                balance.append("password", userInfo.value.password)
+                                balance.append("type", userInfo.value.type)
+                                balance.append("id", userInfo.value.id)
+                                balance.append("discount", userInfo.value.discount)
+                                balance.append("balance", updatedBalance.value)
+
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/user-edit", balance).then(userResponse => {
+                                  
+
+                                })
+                            console.log(response.data);
+                            randomCode.value = response.data.booking_id
+                            document.querySelector(".alert").classList.add("active")
+                            loading.value = false
+    
+                            const allRooms = new FormData()
+                            props.searchInfo.rooms.forEach(el => {
+                                allRooms.append("id_hotel", randomCode.value)
+                                allRooms.append("room_type", el.roomType)
+                                allRooms.append("child_room", `${el.childReservation},${el.childCount}`)
+                                axios.post("https://seasonreal.seasonsge.com/appv1real/program-room", allRooms)
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                            })
+    
+                            axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
+                                .then(data => {
+                                    const bookId = data.data.pop()
+                                    setTimeout(() => {
+                                        router.push({
+                                            name: "Agents Programs Checkout",
+                                            params: { lang: i18n.global.locale.value, id: bookId.id, with: 3 }
+    
+                                        })
+                                    }, 1500)
+                                })
+                        })
+                }
+            }else {
+            document.querySelector(".alert-danger").classList.add("active")
+            setTimeout(() => {
+                document.querySelector(".alert-danger").classList.remove("active")
+            }, 3000)
+            loading.value = false
+        }
         } else {
             router.push({
                 name: "Clients Login",
@@ -1052,8 +1113,8 @@ const submission = async () => {
     }
 };
 
-const removeAlert = () => {
-    document.querySelector(`.alert`).classList.remove("active")
+const removeAlert = (type) => {
+    document.querySelector(`.alert-${type}`).classList.remove("active")
 }
 
 
