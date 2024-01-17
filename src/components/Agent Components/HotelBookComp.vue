@@ -374,6 +374,13 @@
                         <i class="fa-solid fa-circle-xmark fs-5"></i>
                         {{ $t('carBook.noBalance') }}
                     </div>
+                    <div>
+                        <span>amount :</span>
+                        <span class="m-2">
+                            <input class="rounded-1 " v-model="paymentBalance" type="number">
+                        </span>
+                        <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
+                    </div>
                     <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
                 </div>
             </div>
@@ -412,6 +419,7 @@ const props = defineProps(['searchResults', 'searchInfo', 'hotelId', 'cities', '
 const social = ref({})
 const loading = ref(false)
 const route = useRoute();
+let paymentBalance = ref(1000);
 const userInfo = ref({});
 const hotelDetails = ref({});
 const updatedBalance = ref('')
@@ -427,7 +435,22 @@ const USDollar = Intl.NumberFormat("en-US", {
     style: "currency"
 })
 
+const goToPayment = ()=>{
+                const balance = new FormData()
 
+                balance.append("user_id", userInfo.value.id)
+                balance.append("total", paymentBalance.value)
+
+                axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
+                    setTimeout(() => {
+                        document.querySelector(".alert-danger").classList.remove("active")
+                        location.href = userResponse.data.URL
+                    }, 3000)
+                loading.value = false
+
+                })
+
+}
 const hotelBooking = ref({
     hotel_name: computed(() =>
         route.params.lang === "en" ? hotelDetails.value.name_en : hotelDetails.value.name
@@ -571,10 +594,7 @@ visibleButton.value = false;
                 })
         } else {
             document.querySelector(".alert-danger").classList.add("active")
-            setTimeout(() => {
-                document.querySelector(".alert-danger").classList.remove("active")
-            }, 3000)
-            loading.value = false
+         
         }
     }
 };

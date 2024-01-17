@@ -206,10 +206,10 @@
             </div>
             <div>
                 <span>amount :</span>
-                <span>
-                    <input v-model="paymentBalance" type="number">
+                <span class="m-2">
+                    <input class="rounded-1 " v-model="paymentBalance" type="number">
                 </span>
-                <span @click="goToPayment()">pay</span>
+                <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
             </div>
             <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
         </div>
@@ -255,7 +255,7 @@ const randomCode = ref("");
 const updatedBalance = ref('')
 const props = defineProps(['searchInfo', 'carId' , 'country' , 'city'])
 let total = ref();
-let paymentBalance = ref();
+let paymentBalance = ref(1000);
 let myPrice = ref();
 let tax = ref();
 let price = ()=>{
@@ -264,7 +264,22 @@ tax.value =+(`0.${viewCarId.value[0].tax}`.slice(0,-3));
 total.value = +(myPrice.value) * tax.value;
 console.log(total.value);
 }
+const goToPayment = ()=>{
+                const balance = new FormData()
 
+                balance.append("user_id", userInfo.value.id)
+                balance.append("total", paymentBalance.value)
+
+                axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
+                    setTimeout(() => {
+                        document.querySelector(".alert-danger").classList.remove("active")
+                        location.href = userResponse.data.URL
+                    }, 3000)
+                loading.value = false
+
+                })
+
+}
 let filterCarId = ref({});
 let viewCarId = ref([]);
 onBeforeMount(async()=>{
@@ -410,22 +425,7 @@ const submission = async () => {
                 });
         } else {
             document.querySelector(".alert-danger").classList.add("active")
-            const goToPayment = ()=>{
-                const balance = new FormData()
 
-                balance.append("user_id", userInfo.value.id)
-                balance.append("total", paymentBalance.value)
-
-                axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
-                    setTimeout(() => {
-                        document.querySelector(".alert-danger").classList.remove("active")
-                        location.href = userResponse.data.URL
-                    }, 3000)
-                loading.value = false
-
-})
-
-            }
            
           
         }
