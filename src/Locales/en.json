@@ -158,7 +158,7 @@
         "bookMessage": "Your Booking Has Been Completed",
         "bookingCode": "Your Reservation Code Is",
         "yourBalance": "Your Balance Is ",
-        "noBalance": "No Enough Balance please recharge your wallet"
+        "noBalance": "No Enough Balance please recharge your wallet to complete booking"
     },
 
     "hotelReservation": "Hotel Reservations",

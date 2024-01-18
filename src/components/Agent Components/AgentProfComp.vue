@@ -11,7 +11,11 @@
                             </h2>
                             <i class="fa-solid fa-sack-dollar fa-3x opacity-25"></i>
                         </div>
-                        <span class="d-block mt-2 fs-1 fw-bold">{{ USDollar.format(userData.balance) }}</span>
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <span class="d-block mt-2 fs-1 fw-bold">{{ USDollar.format(userData.balance) }}</span>
+                            <button class="btn btn-primary py-1 px-4 mt-2" @click="payment()">شحن المحفظة</button>
+                        </div>
                     </div>
                     <div :class="`box p-4 rounded-3 text-${$i18n.locale === 'en' ? 'start' : 'end'} flex-fill`">
                         <div class="d-flex justify-content-between align-items-center">
@@ -22,8 +26,24 @@
                         </div>
                         <span class="d-block mt-2 fs-1 fw-bold">{{ userData.discount }}%</span>
                     </div>
+                    <div class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                           
+                            شحن المحظة
+                        </div>
+                        <div>
+                            <div> :القيمة </div>
+                            <div class="m-2">
+                                <input class="rounded-1 " v-model="paymentBalance" type="number">
+                            </div>
+                            <button class="btn btn-primary py-1 px-4" @click="goToPayment()">دفع</button>
+                        </div>
+                        <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
+                    </div>
                 </div>
+                
             </div>
+            
         </div>
         <Loader v-if="loading"></Loader>
     </div>
@@ -37,15 +57,34 @@ import Loader from '../Loader.vue';
 const loading = ref(false)
 const route = useRoute()
 const userData = ref({})
+let paymentBalance = ref(1000);
+const goToPayment = ()=>{
+                const balance = new FormData()
 
+                balance.append("user_id", userData.value.id)
+                balance.append("total", paymentBalance.value)
 
+                axios.post("https://seasonreal.seasonsge.com/appv1real/user_balance", balance).then(userResponse => {
+                    setTimeout(() => {
+                        document.querySelector(".alert-danger").classList.remove("active")
+                        location.href = userResponse.data.URL
+                    }, 3000)
+                loading.value = false
+
+                })
+
+}
 // Formating Balanc 
 const USDollar = Intl.NumberFormat("en-US", {
     currency: "USD",
     style: "currency"
 })
-
-
+const payment = ()=>{
+    document.querySelector(".alert-danger").classList.add("active")
+}
+const removeAlert = (type) => {
+    document.querySelector(`.alert-${type}`).classList.remove("active")
+}
 onMounted(async () => {
     loading.value = true
     await axios.get("https://seasonreal.seasonsge.com/appv1real/usersview").then(data => {
@@ -56,6 +95,48 @@ onMounted(async () => {
 })
 </script>
 <style lang="scss" scoped>
+
+.alert-danger{
+    background-color: var(--blue-color);
+    color: white;
+    border: solid 1px var(--blue-color);
+}
+
+.alert {
+    top: -25%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.3s;
+    width: fit-content;
+    z-index: 555555555;
+
+    &.active {
+        top: 5%;
+    }
+
+    button {
+        box-shadow: none;
+        outline: none;
+    }
+}
+
+ @media (max-width: 767px) {
+        .alert {
+            width: 90%;
+            text-align: start !important;
+            font-size: 12px;
+
+            i {
+                font-size: 16px !important;
+            }
+        }
+
+       
+
+        .content {
+            padding: 20px 15px !important;
+        }
+    }
 .agent-tab-one {
     .content {
         .welcome {

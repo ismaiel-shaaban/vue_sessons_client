@@ -205,10 +205,10 @@
                 {{ $t('carBook.noBalance') }}
             </div>
             <div>
-                <span>amount :</span>
-                <span class="m-2">
+                <div>amount :</div>
+                <div class="m-2">
                     <input class="rounded-1 " v-model="paymentBalance" type="number">
-                </span>
+                </div>
                 <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
             </div>
             <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
@@ -439,6 +439,11 @@ const removeAlert = (type) => {
 
 </script>
 <style lang="scss" scoped>
+.alert-danger{
+    background-color: #375e70;
+    color: white;
+    border: solid 1px var(--blue-color);
+}
 .car-reservation {
 
     input,
