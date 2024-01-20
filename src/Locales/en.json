@@ -209,7 +209,7 @@
         "bookMessage": "Your Booking Has Been Completed",
         "bookingCode": "Your Reservation Code Is",
         "yourBalance": "Your Balance Is ",
-        "noBalance": "No Enough Balance"
+        "noBalance": "No Enough Balance please recharge your wallet to complete booking"
     },
 
     "flightReservation": {
@@ -288,7 +288,7 @@
         "bookMessage": "Your Booking Has Been Completed",
         "bookingCode": "Your Reservation Code Is",
         "yourBalance": "Your Balance Is ",
-        "noBalance": "No Enough Balance"
+        "noBalance": "No Enough Balance please recharge your wallet to complete booking"
     },
 
     "buttons": {
@@ -343,7 +343,9 @@
         "agent": {
             "welcome": "Welcome",
             "balance": "Agent Balance",
-            "discount": "Agent Discount"
+            "discount": "Agent Discount",
+            "recharge":"Recharge wallet"
+
         },
         "profile": {
             "name": "Name",

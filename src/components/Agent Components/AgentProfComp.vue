@@ -28,7 +28,7 @@
                     </div>
                     <div class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
                         <div class="d-flex align-items-center justify-content-center gap-2">
-                           
+                            {{ $t('dashAside.agent.recharge') }}
                             شحن المحظة
                         </div>
                         <div>
