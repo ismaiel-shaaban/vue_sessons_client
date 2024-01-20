@@ -960,7 +960,7 @@ const submission = async () => {
                             })
                             axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
                                 .then(data => {
-                                    const bookId = data.data.pop()
+                                    // const bookId = data.data.pop()
                                     setTimeout(() => {
                                         location.href = response.data.URL
 
@@ -1001,7 +1001,7 @@ const submission = async () => {
 
                         axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
                             .then(data => {
-                                const bookId = data.data.pop()
+                                // const bookId = data.data.pop()
                                 setTimeout(() => {
                                     location.href = response.data.URL
 
