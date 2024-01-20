@@ -29,10 +29,11 @@
                     <div class="alert alert-danger alert-dismissible text-center position-fixed" role="alert">
                         <div class="d-flex align-items-center justify-content-center gap-2">
                             {{ $t('dashAside.agent.recharge') }}
-                            شحن المحظة
+                            
+                             
                         </div>
                         <div>
-                            <div> :القيمة </div>
+                            <div> : {{ $t('amount') }} </div>
                             <div class="m-2">
                                 <input class="rounded-1 " v-model="paymentBalance" type="number">
                             </div>

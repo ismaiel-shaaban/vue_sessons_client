@@ -375,7 +375,7 @@
                         {{ $t('carBook.noBalance') }}
                     </div>
                     <div>
-                        <div>amount :</div>
+                        <div> {{ $t('amount') }} :</div>
                         <div class="m-2">
                             <input class="rounded-1 " v-model="paymentBalance" type="number">
                         </div>
