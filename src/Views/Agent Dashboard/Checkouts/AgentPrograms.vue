@@ -710,7 +710,7 @@ onMounted(async () => {
             console.log('carInfo', carInfo);
         });
 
-        await axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.brogram_id}`)
+        await axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.booking_id}`)
             .then(data => {
                 console.log(data, "وطمممممممممممممممممممممم");
                 rooms.value = data.data
@@ -847,7 +847,7 @@ onMounted(async () => {
                     console.log('carInfo', carInfo);
                 });
 
-                axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.brogram_id}`)
+                axios.get(`https://seasonreal.seasonsge.com/appv1real/get-room?id_hotel=${bookInfo.value.booking_id}`)
                     .then(data => {
                         rooms.value = data.data
                         rooms.value.map(el => {
