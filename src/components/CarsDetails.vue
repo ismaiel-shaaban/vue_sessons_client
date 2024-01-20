@@ -382,7 +382,7 @@ const submission = async () => {
                         loading.value = false
                         axios.get(`https://seasonreal.seasonsge.com/appv1real/car-rr?id=${userId.id}`)
                             .then(data => {
-                                const bookId = data.data.pop()
+                                // const bookId = data.data.pop()
                                 setTimeout(() => {
                                     location.href = response.data.URL
                                     // router.push({

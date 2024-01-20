@@ -543,7 +543,7 @@ const submission = () => {
                         })
                         axios.get(`https://seasonreal.seasonsge.com/appv1real/hotel--rr?id=${userId.id}`)
                             .then(data => {
-                                const bookId = data.data.pop()
+                                // const bookId = data.data.pop()
                                 setTimeout(() => {
                                     console.log('response.data',response.data);
                                     location.href = response.data.URL
