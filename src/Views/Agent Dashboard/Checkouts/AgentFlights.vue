@@ -469,13 +469,13 @@ onMounted(async () => {
 
                 for (let i = 2; i <= 8; i++) {
                     if (bookInfo.value[`person${i}`] === '') {
-                        continue
-                    }
-                    passengers.value.push({
+                        passengers.value.push({
                         firstName: bookInfo.value[`person${i}`].split('-')[0].split(',')[0],
                         lastName: bookInfo.value[`person${i}`].split('-')[0].split(',')[1],
                         type: bookInfo.value[`person${i}`].split('-')[1],
-                    })
+                        })
+                    }
+                   
                 }
                 axios.get(`https://seasonreal.seasonsge.com/appv1real/flights?flight_id=${bookInfo.value.flight_number}`)
                     .then(data => {
@@ -516,13 +516,13 @@ onMounted(async () => {
                 bookInfo.value = data.data.bookingss[0]
                 for (let i = 2; i <= 8; i++) {
                     if (bookInfo.value[`person${i}`] === '') {
-                        continue
-                    }
-                    passengers.value.push({
+                        passengers.value.push({
                         firstName: bookInfo.value[`person${i}`].split('-')[0].split(',')[0],
                         lastName: bookInfo.value[`person${i}`].split('-')[0].split(',')[1],
                         type: bookInfo.value[`person${i}`].split('-')[1],
                     })
+                    }
+                  
                 }
                 axios.get(`https://seasonreal.seasonsge.com/appv1real/flights?flight_id=${bookInfo.value.flight_number}`)
                     .then(data => {
