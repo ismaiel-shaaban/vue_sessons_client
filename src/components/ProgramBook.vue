@@ -1168,7 +1168,7 @@ onMounted(async () => {
             flightTrip.value = data.data.filter((ele) => {
                 if (
                     ele.flightNumber == programDetails.value.flight_number &&
-                    ele.departureDate >= new Date().toLocaleDateString("en-CA")
+                    ele.departureDate >= new Date().toLocaleDateString("en-CA") && ele.departureDate== programDetails.value.from_date
                 ) {
                     console.log(ele,"ismaaaaaaaaaaaaa");
                     return ele;
