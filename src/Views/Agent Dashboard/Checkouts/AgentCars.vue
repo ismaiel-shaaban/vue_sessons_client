@@ -15,7 +15,8 @@
                 <span>
                    
                     Date:
-                    <span class="ms-2">{{   formatDate( new Date(new Date( bookInfo.created_at).getTime() + 4 * 60 * 60 * 1000)) }}</span>
+                    <span class="ms-2">{{   formatDate( new Date(new Date( bookInfo.created_at).getTime() + 8 * 60 * 60 * 1000)) }}</span>
+                    <span class="ms-2">{{   bookInfo.created_at }}</span>
                 </span>
             </div>
         </div>
