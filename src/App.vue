@@ -12,8 +12,12 @@ import axios from 'axios';
         .then((data) => {
             
             localStorage.setItem('websiteInfo', JSON.stringify( data.data[0]))
+            document.getElementById("favicon").href = `https://seasonreal.seasonsge.com/${data.data[0].favicon}`;
           
         })
+
+       
+     
     // import { onMounted, onBeforeUnmount } from 'vue';
     // const preventContextMenu = (e) => {
     //   e.preventDefault();

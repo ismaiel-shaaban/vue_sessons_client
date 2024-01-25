@@ -15,8 +15,8 @@
                 <span>
                    
                     Date:
-                    <span class="ms-2">{{   formatDate( new Date(new Date( bookInfo.created_at).getTime() + 8 * 60 * 60 * 1000)) }}</span>
-                    <span class="ms-2">{{   bookInfo.created_at }}</span>
+                    <span class="ms-2">{{ formatDate( new Date(new Date( bookInfo.created_at).getTime() + 4 * 60 * 60 * 1000))   }}</span>
+                    
                 </span>
             </div>
         </div>
@@ -56,7 +56,7 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.random_code }}</td>
-                <td>{{ new Date(bookInfo.created_at).toLocaleString() }}</td>
+                <td>{{ formatDate( new Date(new Date( bookInfo.created_at).getTime() + 4 * 60 * 60 * 1000)).toLocaleString() }}</td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>

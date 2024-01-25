@@ -59,7 +59,7 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.booking_id }}</td>
-                <td>{{ new Date(bookInfo.registration_date).toLocaleString() }}</td>
+                <td>{{ formatDate( new Date(new Date( bookInfo.registration_date ).getTime() + 4 * 60 * 60 * 1000)).toLocaleString() }}</td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>
@@ -163,18 +163,20 @@
                     <th>Transit/Direct</th>
                     <th>Stop And Transit Places</th>
                     <th># Of Persons</th>
-                    <th v-if="stopsNums > 0">Stopping Deprature Time</th>
-                    <th v-if="stopsNums > 0 && stopHoursReturn != ''">Stopping Return Time</th>
+                    <th v-if="bookInfo.flight.numStops > 0">Stopping Deprature Time</th>
+                    <th v-if="bookInfo.flight.numStops > 0 && bookInfo.flight.hours_stops_return != ''">Stopping Return Time</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    
                     <td v-if="bookInfo.flight">{{ bookInfo.flight.numStops }}</td>
-                    <td>{{ stopsNums  == 0 ? "Direct" : 'transit'  }}</td>
-                    <td>{{ stopsNums == 0 ? 'Direct/without stop places'  : bookInfo.flight?.locStops }}</td>
+                    <td>{{ bookInfo.flight.numStops  == 0 ? "Direct" : 'transit'  }}</td>
+                    <td>{{ bookInfo.flight.numStops == 0 ? 'Direct/without stop places'  : bookInfo.flight.locStops}}</td>
                     <td>{{ +bookInfo.number_of_adults + +bookInfo.number_of_children + +bookInfo.number_of_infants }}</td>
-                    <td v-if="stopsNums > 0">{{ stopsNums > 0 ? stopHoursDepreature :'' }}</td>
-                    <td v-if="stopsNums > 0 && stopHoursReturn != ''">{{ stopsNums > 0 ?  stopHoursReturn : '' }}</td>
+                    <td v-if="bookInfo.flight.numStops > 0">{{ bookInfo.flight.numStops > 0 ? bookInfo.flight.hours_arriv :'' }}</td>
+                    <td v-if="bookInfo.flight.numStops > 0 && bookInfo.flight.hours_stops_return != ''">{{ bookInfo.flight.numStops > 0 ?  bookInfo.flight.hours_stops_return : '' }}</td>
+                    
                 </tr>
             </tbody>
         </table>

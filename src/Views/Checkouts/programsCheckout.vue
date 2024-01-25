@@ -61,7 +61,7 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.booking_id }}</td>
-                <td>{{ bookInfo.registration_date }}</td>
+                <td>{{ formatDate( new Date(new Date( bookInfo.registration_date).getTime() + 4 * 60 * 60 * 1000))}}</td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>

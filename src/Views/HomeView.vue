@@ -314,6 +314,7 @@ watch(aboutPopup, (newVal) => {
 
 
 onMounted(async () => {
+    
     await axios.get(`https://seasonreal.seasonsge.com/appv1real/images` ).then((res) => {
     
          images.value=res.data

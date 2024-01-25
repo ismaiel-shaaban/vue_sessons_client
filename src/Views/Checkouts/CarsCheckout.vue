@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.random_code }}</td>
-                <td>{{ new Date(bookInfo.created_at).toLocaleString() }}</td>
+                <td>{{ formatDate( new Date(new Date( bookInfo.created_at).getTime() + 4 * 60 * 60 * 1000)).toLocaleString() }}</td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>

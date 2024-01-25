@@ -14,9 +14,8 @@ const router = createRouter({
       path: "/:lang",
       name: "Home",
       component: async () => {
-        const { default: component } = websiteInfo.status
-          ? await import("../Views/TechnicalUpdates.vue")
-          : await import("../Views/HomeView.vue");
+        const { default: component } = 
+           await import("../Views/HomeView.vue");
         return component;
       },
     },

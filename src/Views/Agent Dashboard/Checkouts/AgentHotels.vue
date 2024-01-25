@@ -56,7 +56,7 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.code }}</td>
-                <td>{{ bookInfo.date_order }}</td>
+                <td>{{ formatDate( new Date(new Date( bookInfo.date_order).getTime() + 4 * 60 * 60 * 1000)) }}</td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>
