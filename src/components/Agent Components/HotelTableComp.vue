@@ -19,7 +19,14 @@
                     </div>
                     <div class="info p-3">
                         <h5 class="text-muted">{{ item.name }}</h5>
-                        <span>{{ item.rating }}</span>
+                       
+                        <div class="ratings">
+                            <i :class="item.rating>0 ? 'rating-color' :''" class="fa fa-star "></i>
+                            <i :class="item.rating>1 ? 'rating-color' :''" class="fa fa-star "></i>
+                            <i :class="item.rating>2 ? 'rating-color' :''" class="fa fa-star "></i>
+                            <i :class="item.rating>3 ? 'rating-color' :''" class="fa fa-star "></i>
+                            <i :class="item.rating>4 ? 'rating-color' :''" class="fa fa-star"></i>
+                        </div>
                         <p class="text-black-50">{{ $i18n.locale === 'en' ? item.details_en : item.details }}</p>
                         <h4 v-if="item.cityObj" class="fw-bold">{{ $i18n.locale === 'en' ? item.cityObj.name_en :
                             item.cityObj.name }}</h4>
@@ -52,6 +59,15 @@ onMounted(async () => {
 })
 </script>
 <style lang="scss" scoped>
+.ratings i{
+    
+    color:#cecece;
+    font-size:32px;
+}
+
+.rating-color{
+    color:#fbc634 !important;
+}
 .hotel-table {
     h2 {
         color: var(--blue-color);

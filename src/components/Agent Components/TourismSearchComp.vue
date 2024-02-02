@@ -112,7 +112,7 @@
                                     </td>
                                     <td>
                                         <select class="rounded-1 p-2 px-3 w-100" name="room type"
-                                        :v-model="!item.childCount ? 'none' :item.childReservation  ">
+                                        v-model="item.childReservation  ">
                                             <option v-if="!item.childCount" value="none">{{ $t('programs.search.none') }}</option>
                                             <option value="child without bed">{{ $t('programs.search.childWithoutBed') }}
                                             </option>
