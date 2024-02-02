@@ -623,7 +623,6 @@ onMounted(async () => {
                 if (bookInfo.value.Include_flight == "1") {
                     axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then((data) => {
                         flightTrip.value = data.data.filter((ele) => {
-                            console.log('flightTrip.value', flightTrip.value);
 
                             if (
                                 ele.flightNumber == bookInfo.value.flight_number &&
@@ -632,7 +631,7 @@ onMounted(async () => {
                                 return ele;
                             }
                         })[0];
-                        console.log('hhhhhh', flightTrip.value);
+                        console.log('hhhhhhhhhhhhhhhhhhhh', flightTrip.value);
                         if (flightTrip.value !== undefined) {
                             axios.get("https://seasonreal.seasonsge.com/appv1real/airlines-view").then((data) => {
                                 if (data.data.success) {
@@ -677,13 +676,17 @@ onMounted(async () => {
                                 .then(data => {
                                 allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 
-                                    let startDateObject1 = newcheckIn.value
+                                    let startDateObject1 = newcheckIn.value 
+                                    console.log('iiiiiiiiiiiiiiiiiiiiiiiii',bookInfo.value.booking_start_date ,newcheckIn.value);
                                     let endDateObject;
                                  
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
+                                        console.log('startDateObject1' ,startDateObject1);
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
+                                        console.log('startDateObject' ,startDateObject);
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
+                                        console.log('endDateObject', endDateObject);
                                         el.startDate = startDateObject1
                                         el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
@@ -738,7 +741,7 @@ onMounted(async () => {
 
                 axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
-                        console.log(data.data);
+                        console.log( 'dddddddddddddddddddd', data.data);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
                     })
 
@@ -762,13 +765,15 @@ onMounted(async () => {
                     .then(data => {
                         bookInfo.value.cityName = data.data.filter(el => el.id == bookInfo.value.City)[0].name_en
                     })
+                    console.log('hhhhhhhhhhhhhhhhhhhh', bookInfo.value);
+
                 if (bookInfo.value.Include_flight == "1") {
                     axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then((data) => {
-                        console.log('flightTrip.value', flightTrip.value);
+                        console.log('flightTrip.value', data.data);
                         flightTrip.value = data.data.filter((ele) => {
                             if (
-                                ele.id == bookInfo.value.flight_number &&
-                                ele.departureDate >= new Date().toLocaleDateString("en-CA")
+                                ele.flightNumber == bookInfo.value.flight_number &&
+                                ele.departureDate == new Date().toLocaleDateString("en-CA")
                             ) {
                                 return ele;
                             }
@@ -813,18 +818,21 @@ onMounted(async () => {
 
                             axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
-                        allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+                                    allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 
-                                    let startDateObject1 = bookInfo.value.details.from_date
+                                    let startDateObject1 = bookInfo.value.booking_start_date
                                     let endDateObject;
-                                   
+                                    console.log('bbbbbbbbbbb',bookInfo.value.booking_start_date ,newcheckIn.value);
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
-                                        const startDateObject = parse(startDateObject1, 'yyyy-MM-dd', new Date());
+                                        console.log('startDateObject1' ,startDateObject1);
+                                        const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
+                                        console.log('startDateObject' ,startDateObject);
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
+                                        console.log('endDateObject', endDateObject);
                                         el.startDate = startDateObject1
-                                        el.endDate = ref(format(endDateObject, 'yyyy-MM-dd')).value;
-                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'yyyy-MM-dd', new Date()), 0), 'yyyy-MM-dd')).value
+                                        el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
+                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
                                         endDateObject = ''
                                     });
                                 

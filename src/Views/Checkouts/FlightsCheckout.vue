@@ -416,7 +416,7 @@ onMounted(async () => {
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
 
                 for (let i = 2; i <= 8; i++) {
-                    if (bookInfo.value[`person${i}`] === '') {
+                    if (bookInfo.value[`person${i}`] != null) {
                         continue
                     }
                     passengers.value.push({
@@ -460,7 +460,7 @@ onMounted(async () => {
             .then(data => {
                 bookInfo.value = data.data.bookingss[0]
                 for (let i = 2; i <= 8; i++) {
-                    if (bookInfo.value[`person${i}`] === '') {
+                    if (bookInfo.value[`person${i}`] != null) {
                         continue
                     }
                     passengers.value.push({

@@ -747,7 +747,7 @@
                     <div class="m-2">
                         <input class="rounded-1 " v-model="paymentBalance" type="number">
                     </div>
-                    <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
+                    <button class="btn btn-primary py-1 px-4" @click.prevent="goToPayment()">pay</button>
                 </div>
                 <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
             </div>
@@ -819,6 +819,7 @@ const bookingInfo = ref({
     //     return ( bookingInfo.value.total + ((bookingInfo.value.tax / 100) * bookingInfo.value.total))-((userInfo.value.discount/ 100) * (bookingInfo.value.total + ((bookingInfo.value.tax / 100) * bookingInfo.value.total))),
     // }),
 });
+console.log('mmmmmmmmmmmm' ,new Date(props.searchInfo.departureDate).toLocaleDateString('en-CA',{ month: 'numeric', day: 'numeric', year: 'numeric',}) );
 
 const goToPayment = ()=>{
                 const balance = new FormData()
@@ -934,6 +935,9 @@ const submission = async () => {
             formData.append("tax", bookingInfo.value.tax)
             formData.append("net", bookingInfo.value.net_total)
             formData.append("image", bookingInfo.value.picture)
+            formData.append("booking_start_date", props.searchInfo.departureDate.toLocaleDateString())
+            
+           
 
             buttonVisible.value = false;
 
@@ -1375,6 +1379,7 @@ onMounted(async () => {
                             el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
                             startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
                             endDateObject = ''
+                            console.log(el);
                         });
                         
                         

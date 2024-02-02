@@ -665,7 +665,7 @@ newUrl.value = url.id;
                                 .then(data => {
                                     allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 
-                                    let startDateObject1 =newcheckIn.value 
+                                    let startDateObject1 =bookInfo.value.booking_start_date
                                     let endDateObject ;
                        
                                     allCities.value.forEach((el) => {
@@ -805,17 +805,17 @@ newUrl.value = url.id;
                                 .then(data => {
                         allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 
-                                    let startDateObject1 =bookInfo.value.details.from_date
+                                    let startDateObject1 =bookInfo.value.booking_start_date
 
                                     let endDateObject ;
                        
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
-                                        const startDateObject = parse(startDateObject1, 'yyyy-MM-dd', new Date());
+                                        const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         el.startDate =startDateObject1
-                                        el.endDate = ref(format(endDateObject, 'yyyy-MM-dd')).value;
-                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'yyyy-MM-dd', new Date()) , 0), 'yyyy-MM-dd')).value  
+                                        el.endDate = ref(format(endDateObject, 'MM/dd/yyyy')).value;
+                                        startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()) , 0), 'MM/dd/yyyy')).value  
                                         endDateObject =''
                                     });
                                    

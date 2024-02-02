@@ -4,8 +4,8 @@
         <div class="inner-program py-5 min-vh-100">
             <div class="container">
                 <div class="details d-flex align-items-start gap-5">
-                    <img v-if="programDetails.main_image !== ''"
-                        :src="`https://seasonreal.seasonsge.com/upload/${programDetails.main_image}`" alt="">
+                    <img v-if="programDetails.main_imagee !== ''"
+                        :src="`https://seasonreal.seasonsge.com/upload/${programDetails.main_imagee}`" alt="">
                     <img v-else class="img-fluid rounded-1" src="https://placehold.co/500x500?text=?"
                         style="object-fit: cover;" alt="">
                     <div class="left-side flex-fill">

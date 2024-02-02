@@ -209,7 +209,7 @@
                 <div class="m-2">
                     <input class="rounded-1 " v-model="paymentBalance" type="number">
                 </div>
-                <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
+                <button class="btn btn-primary py-1 px-4" @click.prevent="goToPayment()">pay</button>
             </div>
             <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
         </div>

@@ -17,7 +17,7 @@
                 storeIdOfProgramm(item)
                 ">
                     <div>
-                        <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/upload/${item.main_image}`" alt="">
+                        <img class="img-fluid" :src="`https://seasonreal.seasonsge.com/upload/${item.main_imagee}`" alt="">
                     </div>
                     <div class="info p-3 bg-white">
                         <h4 class="text-capitalize fw-bold mb-0" v-if="item.destination">

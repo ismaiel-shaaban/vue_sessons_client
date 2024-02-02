@@ -60,7 +60,7 @@
                     </p>
                 </div>
                 <div class="apps d-flex align-items-center justify-content-center gap-5 mt-5">
-                    <a target="_blank" :href="info.google_play_link">
+                    <a target="_blank" href="https://play.google.com/store/apps/details?id=com.seasonTour.season">
                         <img class="img-fluid" src="/images/googleplay.png" alt="" />
                     </a>
                     <a target="_blank" :href="info.app_store_link">

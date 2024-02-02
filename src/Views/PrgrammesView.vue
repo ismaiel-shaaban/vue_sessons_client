@@ -28,8 +28,8 @@
                             <div class="box rounded-1 d-flex flex-column h-100">
                                 <router-link class="img-cont"
                                     :to="{ name: 'Program Details', params: { programId: item.id } }">
-                                    <img class="img-fluid rounded-1" v-if="item.main_image !== ''"
-                                        :src="`https://seasonreal.seasonsge.com/upload/${item.main_image}`" alt="">
+                                    <img class="img-fluid rounded-1" v-if="item.main_imagee !== ''"
+                                        :src="`https://seasonreal.seasonsge.com/upload/${item.main_imagee}`" alt="">
                                     <img v-else class="img-fluid rounded-1" src="https://placehold.co/500x300?text=?" style="object-fit: cover;" alt="">
                                 </router-link>
                                 <div class="inner-box flex-fill p-3 d-flex flex-column justify-content-between">

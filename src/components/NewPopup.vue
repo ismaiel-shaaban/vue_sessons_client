@@ -11,8 +11,8 @@
                     <i class="fa-solid fa-envelope text-white fs-5"></i>
                     {{ info.email }}
                 </a>
-                <div v-else class="butn h-25 text-uppercase text-decoration-none p-2 px-3 rounded-1" >
-                    حمل التطبيق للحصول على أداء أفضل            </div>
+                <a href="https://www.apps-seasonsge.online" target="_blank" v-else class="butn bbbb h-25 text-uppercase text-decoration-none p-2 px-3 rounded-1" >
+                    حمل التطبيق للحصول على أداء أفضل            </a>
             </div>
         </div>
     </div>
@@ -37,6 +37,9 @@ onMounted(async () => {
 })
 </script>
 <style lang="scss" scoped>
+.bbbb{
+
+}
 .overlay {
     background-color: rgba(0, 0, 0, 0.623);
     left: 0;

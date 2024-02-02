@@ -866,6 +866,7 @@ const submission = async () => {
             formData.append("tax", bookingInfo.value.tax)
             formData.append("net", bookingInfo.value.net_total)
             formData.append("image" , bookingInfo.value.picture)
+            formData.append("booking_start_date", props.searchInfo.departureDate.toLocaleDateString())
 
             buttonVisible.value = false;
 

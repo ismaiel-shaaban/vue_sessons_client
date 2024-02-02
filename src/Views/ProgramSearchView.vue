@@ -329,9 +329,9 @@ const search = async () => {
             if(el.status == 1){
 
                 if (searchInfo.value.includeFlight == '1') {
-                    console.log(el,'el');
+                    console.log(el,'el' , el.from_date == searchInfo.value.departureDate.toLocaleDateString("en-CA"),searchInfo.value.city);
                     if (el.return_airline == searchInfo.value.city && // <-- program destination
-                        el.from_date >= searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
+                        el.from_date == searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
                         el.includes_flight == searchInfo.value.includeFlight
                     ) {
                         searchResults.value.push(el)

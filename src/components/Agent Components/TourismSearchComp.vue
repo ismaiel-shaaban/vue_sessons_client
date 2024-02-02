@@ -328,7 +328,7 @@ const search = async () => {
 
                 if (searchInfo.value.includeFlight == '1') {
                     if (el.return_airline == searchInfo.value.city && // <-- program destination
-                        el.from_date >= searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
+                    el.from_date == searchInfo.value.departureDate.toLocaleDateString("en-CA") &&
                         el.includes_flight == searchInfo.value.includeFlight
                     ) {
                         searchResults.value.push(el)

@@ -411,7 +411,7 @@
                     <div class="m-2">
                         <input class="rounded-1 " v-model="paymentBalance" type="number">
                     </div>
-                    <button class="btn btn-primary py-1 px-4" @click="goToPayment()">pay</button>
+                    <button class="btn btn-primary py-1 px-4" @click.prevent="goToPayment()">pay</button>
                 </div>
                 <button @click="removeAlert('danger')" type="button" class="btn-close"></button>
             </div>
@@ -466,6 +466,8 @@ const USDollar = Intl.NumberFormat("en-US", {
     style: "currency"
 })
 const goToPayment = ()=>{
+   
+    
                 const balance = new FormData()
 
                 balance.append("user_id", userInfo.value.id)
