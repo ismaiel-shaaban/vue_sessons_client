@@ -63,7 +63,7 @@
                     <a target="_blank" href="https://play.google.com/store/apps/details?id=com.seasonTour.season">
                         <img class="img-fluid" src="/images/googleplay.png" alt="" />
                     </a>
-                    <a target="_blank" :href="info.app_store_link">
+                    <a target="_blank" href="https://apps.apple.com/us/app/seasonstour-مواسم-السياحة/id6476261781">
                         <img class="img-fluid" src="/images/appstore.png" alt="" />
                     </a>
                 </div>

@@ -936,6 +936,8 @@ const submission = async () => {
             formData.append("net", bookingInfo.value.net_total)
             formData.append("image", bookingInfo.value.picture)
             formData.append("booking_start_date", props.searchInfo.departureDate.toLocaleDateString())
+            formData.append("numOfTickets",null )
+            formData.append("ticket_id",null )
             
            
 

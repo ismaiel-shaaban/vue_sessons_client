@@ -867,6 +867,8 @@ const submission = async () => {
             formData.append("net", bookingInfo.value.net_total)
             formData.append("image" , bookingInfo.value.picture)
             formData.append("booking_start_date", props.searchInfo.departureDate.toLocaleDateString())
+            formData.append("numOfTickets",(bookingInfo.value.adults_count -persons.value.infants) )
+            formData.append("ticket_id",flightTrip.value.id )
 
             buttonVisible.value = false;
 
@@ -877,13 +879,13 @@ const submission = async () => {
             }
             if (props.searchInfo.includeFlight == '1') {
                 if (flightTrip.value.allowReturn != 1 && flightTrip.value.numTickets >= (bookingInfo.value.adults_count -persons.value.infants)) {
-                    const tickets = new FormData()
-                    tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets - (bookingInfo.value.adults_count -persons.value.infants))
-                    axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
-                        .then(data => {
-                            console.log(data);
-                        })
+                    // const tickets = new FormData()
+                    // tickets.append("ticket_id", flightTrip.value.id)
+                    // tickets.append("new_number_of_tickets", flightTrip.value.numTickets - (bookingInfo.value.adults_count -persons.value.infants))
+                    // axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
+                    //     .then(data => {
+                    //         console.log(data);
+                    //     })
                     await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData ,{
                         headers: {
                             "Content-Type": "multipart/form-data",
@@ -922,21 +924,21 @@ const submission = async () => {
                                 })
                         })
                 } else if (flightTrip.value.allowReturn == 1 && flightTrip.value.numTickets >= (bookingInfo.value.adults_count -persons.value.infants) && flightTrip.value.numReturnTickets >= (bookingInfo.value.adults_count -persons.value.infants)) {
-                    const tickets = new FormData()
-                    tickets.append("ticket_id", flightTrip.value.id)
-                    tickets.append("new_number_of_tickets", flightTrip.value.numTickets - (bookingInfo.value.adults_count -persons.value.infants))
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
-                        .then(data => {
+                    // const tickets = new FormData()
+                    // tickets.append("ticket_id", flightTrip.value.id)
+                    // tickets.append("new_number_of_tickets", flightTrip.value.numTickets - (bookingInfo.value.adults_count -persons.value.infants))
+                    // await axios.post("https://seasonreal.seasonsge.com/appv1real/ticket-out", tickets)
+                    //     .then(data => {
                             
-                            console.log(data);
-                        })
-                    const returnTickets = new FormData()
-                    returnTickets.append("ticket_id", flightTrip.value.id)
-                    returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets - (bookingInfo.value.adults_count -persons.value.infants))
-                    await axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
-                        .then(data => {
-                            console.log(data);
-                        })
+                    //         console.log(data);
+                    //     })
+                    // const returnTickets = new FormData()
+                    // returnTickets.append("ticket_id", flightTrip.value.id)
+                    // returnTickets.append("new_number_of_tickets", flightTrip.value.numReturnTickets - (bookingInfo.value.adults_count -persons.value.infants))
+                    // await axios.post("https://seasonreal.seasonsge.com/appv1real/return_ticket", returnTickets)
+                    //     .then(data => {
+                    //         console.log(data);
+                    //     })
                     await axios.post("https://seasonreal.seasonsge.com/appv1real/program-booking", formData,{
                         headers: {
                             "Content-Type": "multipart/form-data",

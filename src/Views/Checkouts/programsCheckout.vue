@@ -253,10 +253,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ departureTime }} <br> {{  }}</td>
+                    <td> {{ flightTrip.departureTime }}</td>
                     <td> {{ flightTrip.arrivalTime }}</td>
-                    <td>{{ allowedWeight }} KG</td>
-                    <td>{{ flightNumber }}</td>
+                    <td>{{flightTrip.allowedWeight }} KG</td>
+                    <td>{{ flightTrip.flightNumber     }}</td>
                 </tr>
             </tbody>
         </table>
@@ -286,7 +286,7 @@
                 <tr >
                     <td> {{ flightTrip.returnEndDate1 }}</td>
                     <td> {{ flightTrip.returnEndDate2 }}</td>
-                    <td>{{ allowedWeight }} KG</td>
+                    <td>{{flightTrip.allowedWeightReturn }} KG</td>
                     <td>{{ flightTrip.returnFlightNumber }}</td>
                 </tr>
             </tbody>
@@ -591,7 +591,7 @@ newUrl.value = url.id;
                     .then(data => {
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
                     })
-                for (let i = 2; i <= 8; i++) {
+                for (let i = 2; i <= 9; i++) {
                     if (bookInfo.value[`person${i}`] == null) {
                         continue
                     }
@@ -732,7 +732,7 @@ newUrl.value = url.id;
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
                     })
 
-                for (let i = 2; i <= 8; i++) {
+                for (let i = 2; i <= 9; i++) {
                     if (bookInfo.value[`person${i}`] == null) {
                         continue
                     }
