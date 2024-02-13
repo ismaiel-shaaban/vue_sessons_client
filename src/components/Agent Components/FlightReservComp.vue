@@ -85,7 +85,7 @@
                         </label>
                     </div>
                     <span v-if="numValidation" class="error text-danger w-100 d-block fst-italic">
-                        Number Of Persons Can't Be More Than 10
+                        Number Of Persons Can't Be More Than 8
                     </span>
                     <button class="butn p-2 px-3 rounded-1" @click.prevent="searching">
                         {{ $t('buttons.search') }}
@@ -163,7 +163,7 @@ const removeAlert = (type) => {
 const validation = useVuelidate(rules, searchInfo)
 
 const numValidation = computed(() => {
-    if ((searchInfo.value.no_infants + searchInfo.value.no_children + searchInfo.value.no_adults) > 10) {
+    if ((searchInfo.value.no_infants + searchInfo.value.no_children + searchInfo.value.no_adults) > 8) {
         return true
     } else return false
 })

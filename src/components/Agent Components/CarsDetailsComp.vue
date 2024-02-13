@@ -162,7 +162,7 @@
                                       
                                     
         
-                                     USDollar.format(((myPrice * bookInfo.total_days) + (viewCarId[0].tax/100 * (myPrice * bookInfo.total_days)))  - ( (bookInfo.agent_discount/100) * ((myPrice * bookInfo.total_days) )))  
+                                     USDollar.format(((myPrice * bookInfo.total_days) + (viewCarId[0].tax/100 * (myPrice * bookInfo.total_days)))  - ( (bookInfo.agent_discount/100) * ((myPrice * bookInfo.total_days) + (viewCarId[0].tax/100 * (myPrice * bookInfo.total_days))) )) 
                                     
                                     
                                        

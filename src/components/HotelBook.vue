@@ -286,7 +286,7 @@
                     <div class="box d-flex gap-3 mt-4 flex-md-row flex-column">
                         <label class="w-100" v-if="prices.has('1')">
                             <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.singlePrice") }}:
+                                {{ $t("hotelBook.details.singlePrice") }}:
                             </span>
                             <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                                 {{ USDollar.format(hotelDetails.single_price) }}
@@ -294,7 +294,7 @@
                         </label>
                         <label class="w-100" v-if="prices.has('2')">
                             <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.doublePrice") }}:
+                                {{ $t("hotelBook.details.doublePrice") }}:
                             </span>
                             <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                                 {{ USDollar.format(hotelDetails.double_price) }}
@@ -302,7 +302,7 @@
                         </label>
                         <label class="w-100" v-if="prices.has('3')">
                             <span class="d-block mb-1 fw-semibold">
-                                {{ $t("programs.search.triplePrice") }}:
+                                {{ $t("hotelBook.details.triplePrice") }}:
                             </span>
                             <span class="mb-1 bg-secondary bg-opacity-25 w-100 d-block rounded-1 p-2 px-3">
                                 {{ USDollar.format(hotelDetails.triple_price) }}

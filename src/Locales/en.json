@@ -192,6 +192,9 @@
                 "with":"Child With Bed",
                 "without":"Child Without Bed"
             },
+            "singlePrice": " Single Room Price ",
+            "doublePrice": " Double Room Price ",
+            "triplePrice": " Triple Room Price",
             "roomPrice": "Room Price Per Night",
             "childPrice": "Child Reservation Price",
             "fName": "First Name",

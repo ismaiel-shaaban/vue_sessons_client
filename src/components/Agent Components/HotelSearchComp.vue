@@ -76,7 +76,7 @@
                             </label>
                         </div>
                         <span v-if="numValidation" class="error text-danger w-100 d-block fst-italic">
-                            Number Of Persons Can't Be More Than 10
+                            Number Of Persons Can't Be More Than 8
                         </span>
                         <div class="select-room">
                             <span class="d-block mb-2" style="font-size: 12px;">
@@ -240,7 +240,7 @@ const rules = {
 const validation = useVuelidate(rules, searchInfo)
 
 const numValidation = computed(() => {
-    if ((searchInfo.value.no_infants + searchInfo.value.no_children + searchInfo.value.no_adults) > 10) {
+    if ((searchInfo.value.no_infants + searchInfo.value.no_children + searchInfo.value.no_adults) > 8) {
         return true
     } else return false
 })
