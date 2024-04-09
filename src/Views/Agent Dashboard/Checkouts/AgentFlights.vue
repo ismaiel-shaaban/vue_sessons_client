@@ -23,7 +23,7 @@
         <div class="logo-cont text-start mt-4 d-flex align-items-center justify-content-between">
             <!-- <img class="logo" src="/images/logo.png" width="200" alt=""> -->
             <img class="logo" :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" width="200" alt="">
-            <img class="fly-jordan-logo" src="/images/FJR_FlyJordan_Logo.png" width="200" alt="">
+         
         </div>
         <h3>Customer Information</h3>
         <div class="info pb-3">

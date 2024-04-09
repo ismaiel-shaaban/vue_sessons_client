@@ -14,16 +14,17 @@
                 </span>
                 <span>
                     Date:
-                    <span class="ms-2">{{    formatDate( new Date(new Date( bookInfo.registration_date).getTime() + 4 * 60 * 60 * 1000)) }}</span>
+                    <span class="ms-2">{{ formatDate(new Date(new Date(bookInfo.registration_date).getTime() + 4 * 60
+                        * 60 * 1000)) }}</span>
                 </span>
             </div>
         </div>
         <h1>Seasonsge Order Summary</h1>
         <!-- <img src="/images/program.jpeg" style="display: block" alt="" height="300" width="768"> -->
         <div class="logo-cont text-start mt-4 d-flex align-items-center justify-content-between">
-            <img class="logo" :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" width="200" alt="">
-            <img v-if="bookInfo.Include_flight == '1'" class="fly-jordan-logo" src="/images/FJR_FlyJordan_Logo.png"
-                width="200" alt="">
+            <img class="logo" :src="`https://seasonreal.seasonsge.com/images/Agents/${userInfo.img}`" width="200"
+                alt="">
+           
 
         </div>
         <h3>Customer Information</h3>
@@ -61,7 +62,8 @@
             </tr>
             <tr>
                 <td>{{ bookInfo.booking_id }}</td>
-                <td>{{ formatDate( new Date(new Date( bookInfo.registration_date).getTime() + 4 * 60 * 60 * 1000)) }}</td>
+                <td>{{ formatDate(new Date(new Date(bookInfo.registration_date).getTime() + 4 * 60 * 60 * 1000)) }}
+                </td>
                 <td>{{ userInfo.id }}</td>
                 <td>DUE UPON RECEIPT</td>
             </tr>
@@ -82,7 +84,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{  bookInfo.countryName }}</td>
+                    <td>{{ bookInfo.countryName }}</td>
                     <td>{{ bookInfo.cityName }}</td>
                     <!-- <td>--------</td> -->
                     <td>{{ $i18n.locale === 'en' ? carInfo?.name_en : carInfo?.name }}</td>
@@ -109,23 +111,23 @@
 
                     <td>
                         {{
-                            $i18n.locale === "en"
+                        $i18n.locale === "en"
                             ? item.city?.name_en
                             : item.city?.name
-                        }}
+                    }}
                     </td>
                     <td>
                         {{
                             $i18n.locale === "en"
-                            ? item.hotel_name_english
-                            : item.hotel_name_arabic
+                                ? item.hotel_name_english
+                                : item.hotel_name_arabic
                         }}
                     </td>
                     <td>
-                        {{bookInfo.Include_flight==1 ? item.registration_date  : item.startDate }}
+                        {{ bookInfo.Include_flight == 1 ? item.registration_date : item.startDate }}
                     </td>
                     <td>
-                        {{ bookInfo.Include_flight==1 ? item.departure_date  : item.endDate }}
+                        {{ bookInfo.Include_flight == 1 ? item.departure_date : item.endDate }}
                     </td>
                 </tr>
             </tbody>
@@ -151,18 +153,21 @@
         <table class="hide" v-if="$route.params.with != 2">
             <thead>
                 <tr v-if="bookInfo.details">
-                    <th v-if="bookInfo.destination.has('1')">   {{ $t("programs.search.singlePrice") }}</th>
+                    <th v-if="bookInfo.destination.has('1')"> {{ $t("programs.search.singlePrice") }}</th>
                     <th v-if="bookInfo.destination.has('2')">{{ $t("programs.search.doublePrice") }}</th>
                     <th v-if="bookInfo.destination.has('3')">{{ $t("programs.search.triplePrice") }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-if="bookInfo.details">
-                    <td v-if="bookInfo.destination.has('1')">{{ USDollar.format(bookInfo.details.price_per_adult_individual)
+                    <td v-if="bookInfo.destination.has('1')">{{
+                        USDollar.format(bookInfo.details.price_per_adult_individual)
                     }}</td>
-                    <td v-if="bookInfo.destination.has('2')">{{ USDollar.format(bookInfo.details.price_per_adult_double) }}
+                    <td v-if="bookInfo.destination.has('2')">{{ USDollar.format(bookInfo.details.price_per_adult_double)
+                        }}
                     </td>
-                    <td v-if="bookInfo.destination.has('3')">{{ USDollar.format(bookInfo.details.price_per_adult_triple) }}
+                    <td v-if="bookInfo.destination.has('3')">{{ USDollar.format(bookInfo.details.price_per_adult_triple)
+                        }}
                     </td>
                 </tr>
             </tbody>
@@ -176,9 +181,11 @@
             </thead>
             <tbody>
                 <tr v-if="bookInfo.details">
-                    <td v-if="bookInfo.destination.has('4')">{{ USDollar.format(bookInfo.details.price_per_child_no_bed) }}
+                    <td v-if="bookInfo.destination.has('4')">{{ USDollar.format(bookInfo.details.price_per_child_no_bed)
+                        }}
                     </td>
-                    <td v-if="bookInfo.destination.has('5')">{{ USDollar.format(bookInfo.details.price_per_child_with_bed)
+                    <td v-if="bookInfo.destination.has('5')">{{
+                        USDollar.format(bookInfo.details.price_per_child_with_bed)
                     }}</td>
                 </tr>
             </tbody>
@@ -211,12 +218,12 @@
                 <tr v-for="(item, index) in rooms" :key="index">
                     <td>
                         {{
-                            item.room_type == '1' ?
+                        item.room_type == '1' ?
                             'Single Room' :
                             item.room_type == '2' ?
                                 'Double Room' :
                                 'Triple Room'
-                        }}
+                    }}
                     </td>
                     <td>{{ item.child_room }}</td>
                     <td>{{ item.child_count }}</td>
@@ -256,13 +263,14 @@
                 <tr>
                     <td> {{ flightTrip.departureTime }}</td>
                     <td> {{ flightTrip.arrivalTime }}</td>
-                    <td>{{flightTrip.allowedWeight }} KG</td>
-                    <td>{{ flightTrip.flightNumber     }}</td>
+                    <td>{{ flightTrip.allowedWeight }} KG</td>
+                    <td>{{ flightTrip.flightNumber }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <h4 v-if="bookInfo.Include_flight == '1' && flightTrip !== undefined && flightTrip.allowReturn == '1'">Return Trip
+        <h4 v-if="bookInfo.Include_flight == '1' && flightTrip !== undefined && flightTrip.allowReturn == '1'">Return
+            Trip
         </h4>
         <table v-if="bookInfo.Include_flight == '1' && flightTrip !== undefined">
             <thead>
@@ -293,7 +301,7 @@
                 <tr>
                     <td> {{ flightTrip.returnEndDate1 }}</td>
                     <td> {{ flightTrip.returnEndDate2 }}</td>
-                    <td>{{flightTrip.allowedWeightReturn }} KG</td>
+                    <td>{{ flightTrip.allowedWeightReturn }} KG</td>
                     <td>{{ flightTrip.returnFlightNumber }}</td>
                 </tr>
             </tbody>
@@ -387,7 +395,8 @@
                 Download PDF With Price
                 <i class="fa-solid fa-download"></i>
             </button>
-            <button class="rounded-pill btn btn-success px-4 d-flex align-items-center gap-2" @click="exportToPDFWithout">
+            <button class="rounded-pill btn btn-success px-4 d-flex align-items-center gap-2"
+                @click="exportToPDFWithout">
                 Download PDF Without Price
                 <i class="fa-solid fa-download"></i>
             </button>
@@ -489,15 +498,15 @@ const exportToPDFWith = () => {
 }
 const formatDate = (date) => {
     const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-  
+
 }
 const exportToPDFWithout = () => {
     document.querySelectorAll(".hide").forEach(el => el.setAttribute("data-html2canvas-ignore", true))
@@ -591,10 +600,10 @@ onMounted(async () => {
             })
         const userId = JSON.parse(localStorage.getItem("login"))
         await axios.get(`https://seasonreal.seasonsge.com/appv1real/br-rr?id=${userId.id}`)
-            .then(data => {
+            .then(async (data) => {
                 bookInfo.value = data.data.filter(el => el.id == route.params.id)[0]
                 bookInfo.value.destination = new Set(bookInfo.value.destination.split(","))
-                axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
+                await axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
                         console.log(';;lllllllllllllllllll', data.data);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
@@ -674,17 +683,17 @@ onMounted(async () => {
 
                             axios.get("https://seasonreal.seasonsge.com/appv1real/cities-view")
                                 .then(data => {
-                                allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+                                    allCities.value = allCities.value.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 
-                                    let startDateObject1 = newcheckIn.value 
-                                    console.log('iiiiiiiiiiiiiiiiiiiiiiiii',bookInfo.value.booking_start_date ,newcheckIn.value);
+                                    let startDateObject1 = newcheckIn.value
+                                    console.log('iiiiiiiiiiiiiiiiiiiiiiiii', bookInfo.value.booking_start_date, newcheckIn.value);
                                     let endDateObject;
-                                 
+
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
-                                        console.log('startDateObject1' ,startDateObject1);
+                                        console.log('startDateObject1', startDateObject1);
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
-                                        console.log('startDateObject' ,startDateObject);
+                                        console.log('startDateObject', startDateObject);
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         console.log('endDateObject', endDateObject);
                                         el.startDate = startDateObject1
@@ -692,19 +701,21 @@ onMounted(async () => {
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
                                         endDateObject = ''
                                     });
-                                   
+
                                 })
                         }
-                     
+
 
                     });
             })
 
         await axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view").then((data) => {
-            console.log('bookInfo', bookInfo.value);
+            console.log('bookInfo', bookInfo.value.details);
             console.log(' data.data', data.data);
+            const idCar = bookInfo.value.details.car_type
+            console.log('car', idCar);
             data.data.filter(el => {
-                if (el.id == bookInfo.value.details.car_type) {
+                if (el.id == idCar) {
                     carInfo.value = el
 
                 }
@@ -735,13 +746,13 @@ onMounted(async () => {
     } else {
         url.value = window.location.href
         await axios.get(`https://seasonreal.seasonsge.com/appv1real/boking-search?booking_code=${route.params.id}`)
-            .then(data => {
+            .then(async (data) => {
                 bookInfo.value = data.data.reservations[0]
                 bookInfo.value.destination = new Set(bookInfo.value.destination.split(","))
 
-                axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
+                await axios.get("https://seasonreal.seasonsge.com/appv1real/all-program")
                     .then(data => {
-                        console.log( 'dddddddddddddddddddd', data.data);
+                        console.log('dddddddddddddddddddd', data.data);
                         bookInfo.value.details = data.data.filter(el => el.id == bookInfo.value.brogram_id)[0]
                     })
 
@@ -765,7 +776,7 @@ onMounted(async () => {
                     .then(data => {
                         bookInfo.value.cityName = data.data.filter(el => el.id == bookInfo.value.City)[0].name_en
                     })
-                    console.log('hhhhhhhhhhhhhhhhhhhh', bookInfo.value);
+                console.log('hhhhhhhhhhhhhhhhhhhh', bookInfo.value);
 
                 if (bookInfo.value.Include_flight == "1") {
                     axios.get("https://seasonreal.seasonsge.com/appv1real/flights?all").then((data) => {
@@ -822,12 +833,12 @@ onMounted(async () => {
 
                                     let startDateObject1 = bookInfo.value.booking_start_date
                                     let endDateObject;
-                                    console.log('bbbbbbbbbbb',bookInfo.value.booking_start_date ,newcheckIn.value);
+                                    console.log('bbbbbbbbbbb', bookInfo.value.booking_start_date, newcheckIn.value);
                                     allCities.value.forEach((el) => {
                                         el.city = data.data.filter((ele) => ele.id == el.city_name)[0];
-                                        console.log('startDateObject1' ,startDateObject1);
+                                        console.log('startDateObject1', startDateObject1);
                                         const startDateObject = parse(startDateObject1, 'MM/dd/yyyy', new Date());
-                                        console.log('startDateObject' ,startDateObject);
+                                        console.log('startDateObject', startDateObject);
                                         endDateObject = addDays(startDateObject, el.num_of_nights);
                                         console.log('endDateObject', endDateObject);
                                         el.startDate = startDateObject1
@@ -835,7 +846,7 @@ onMounted(async () => {
                                         startDateObject1 = ref(format(addDays(parse(el.endDate, 'MM/dd/yyyy', new Date()), 0), 'MM/dd/yyyy')).value
                                         endDateObject = ''
                                     });
-                                
+
                                 })
                         }
                         console.log('allCities.value', allCities.value);
@@ -844,9 +855,11 @@ onMounted(async () => {
 
                 axios.get("https://seasonreal.seasonsge.com/appv1real/cars-type-view").then((data) => {
                     console.log('bookInfo', bookInfo.value.details);
+                    const idCar = bookInfo.value.details.car_type
+                    console.log('car', idCar);
                     console.log(' data.data', data.data);
                     data.data.filter(el => {
-                        if (el.id == bookInfo.value.details.car_type) {
+                        if (el.id == idCar) {
                             carInfo.value = el
 
                         }

@@ -22,8 +22,7 @@
         <!-- <img src="/images/program.jpeg" style="display: block" alt="" height="300" width="768"> -->
         <div class="logo-cont text-start mt-4 d-flex align-items-center justify-content-between">
             <img class="logo" src="/images/logo.png" width="200" alt="">
-            <img v-if="bookInfo.Include_flight == '1'" class="fly-jordan-logo" src="/images/FJR_FlyJordan_Logo.png"
-                width="200" alt="">
+           
 
         </div>
         <h3>Customer Information</h3>
